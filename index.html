@@ -182,6 +182,10 @@
                 </a></li>
                 <li><a href="#" onclick="showTab('top20')" class="block px-6 py-4 hover:bg-szgray transition text-lg"><i class="fas fa-star w-8 text-yellow-400"></i> Top 20</a></li>
                 <li><a href="#" onclick="showTab('infoSemanal')" class="block px-6 py-4 hover:bg-szgray transition text-lg"><i class="fas fa-bullhorn w-8 text-emerald-400"></i> Info Semanal</a></li>
+                <li><a href="#" onclick="showTab('promocoes')" class="block px-6 py-4 hover:bg-szgray transition text-lg flex items-center justify-between">
+                    <span><i class="fas fa-tags w-8 text-rose-400"></i> Promoções & Campanhas</span>
+                    <span id="badgePromocoes" class="bg-rose-600 text-white text-xs font-bold px-2 py-0.5 rounded-full hidden">0</span>
+                </a></li>
                 <li><a href="#" onclick="showTab('salesforce')" class="block px-6 py-4 hover:bg-szgray transition text-lg flex items-center justify-between">
                     <span><i class="fas fa-cloud w-8 text-sky-400"></i> Salesforce</span>
                     <span id="badgeSfLive" class="bg-emerald-500 text-black text-[10px] font-extrabold px-1.5 py-0.5 rounded uppercase hidden">LIVE</span>
@@ -229,6 +233,7 @@
                             <option value="briefing">Briefing Diário</option>
                             <option value="top20">Top 20</option>
                             <option value="infoSemanal">Info Semanal</option>
+                            <option value="promocoes">Promoções & Campanhas</option>
                             <option value="sprays">Sprays</option>
                             <option value="ferias2027">Férias 2027</option>
                         </select>
@@ -534,7 +539,7 @@
 
             <div class="flex items-center gap-2 sm:gap-3 relative flex-shrink-0">
                 <!-- Indicador Estado Nuvem GitHub -->
-                <div id="cloudSyncStatusPill" onclick="if(perfilAtual && perfilAtual.role==='admin') showTab('carregar')" class="cursor-pointer bg-szgray border border-gray-700 px-2.5 py-1.5 rounded-lg flex items-center gap-1.5 text-[11px] font-bold text-gray-400" title="Estado de sincronização entre dispositivos">
+                <div id="cloudSyncStatusPill" onclick="if(globalCloudConfig.ativo){ puxarDadosDoGitHub(true); } else if(perfilAtual && perfilAtual.role==='admin'){ showTab('carregar'); }" class="cursor-pointer bg-szgray hover:bg-gray-700 border border-gray-700 px-2.5 py-1.5 rounded-lg flex items-center gap-1.5 text-[11px] font-bold text-gray-400 transition" title="Clica para sincronizar agora">
                     <span id="cloudSyncDot" class="w-2 h-2 rounded-full bg-gray-500"></span>
                     <span id="cloudSyncLabel" class="hidden sm:inline">Modo Local</span>
                 </div>
@@ -918,7 +923,12 @@
             <div class="bg-gradient-to-r from-szgray to-black p-6 rounded-xl border-2 border-emerald-500/60 shadow-2xl mb-6">
                 <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
                     <h3 class="text-xl font-bold text-emerald-400"><i class="fab fa-github mr-2"></i> 0. Sincronização Equipa (Tempo Real entre Telemóveis)</h3>
-                    <span id="badgeCloudCardStatus" class="bg-gray-700 text-gray-300 text-xs font-bold px-3 py-1 rounded-full">Desligado (Só neste dispositivo)</span>
+                    <div class="flex items-center gap-2">
+                        <span id="badgeCloudCardStatus" class="bg-gray-700 text-gray-300 text-xs font-bold px-3 py-1 rounded-full">Desligado (Só neste dispositivo)</span>
+                        <button onclick="puxarDadosDoGitHub(true)" class="bg-szlightgray hover:bg-emerald-500 hover:text-black text-white text-xs font-bold px-3 py-1 rounded-full transition" title="Forçar leitura da nuvem agora">
+                            <i class="fas fa-sync-alt mr-1"></i> Sincronizar Agora
+                        </button>
+                    </div>
                 </div>
                 <p class="text-gray-300 mb-4 text-xs">Liga a aplicação ao teu <strong>GitHub</strong> para que as Vendas do Dia, Prémio do Mês, Tarefas, Rotinas, Kudos e Links apareçam automaticamente em todos os telemóveis da equipa!</p>
 
@@ -1248,6 +1258,9 @@
                     <p class="text-gray-400 text-sm mt-1">Define quem cria a tarefa e quem fica encarregue de a executar.</p>
                 </div>
                 <div class="flex flex-wrap gap-2 items-center">
+                    <button onclick="puxarDadosDoGitHub(true)" class="bg-emerald-500/20 hover:bg-emerald-500 text-emerald-300 hover:text-black border border-emerald-500/40 font-bold px-3 py-2 rounded-lg text-sm transition flex items-center gap-1.5" title="Sincronizar tarefas agora">
+                        <i class="fas fa-sync-alt"></i> <span class="hidden sm:inline">Sincronizar</span>
+                    </button>
                     <select id="filtroColaboradorTarefa" onchange="renderizarTarefas()" class="bg-szgray text-white border border-gray-600 rounded-lg px-3 py-2 text-sm font-bold focus:border-pink-400 focus:outline-none">
                         <option value="TODOS">Filtrar: Todos</option>
                         <option value="Equipa Geral">Para: Equipa Geral</option>
@@ -1366,6 +1379,55 @@
                 <p class="text-xl text-gray-400">Ainda não carregaste o PDF da Informação Semanal.</p>
             </div>
             <div id="infoSemanal-views" class="hidden flex flex-col items-center space-y-8 pb-12"></div>
+        </div>
+
+        <!-- Tab Promoções e Campanhas (Com Alertas Automáticos 48h Antes do Início e 1 Dia Antes do Fim) -->
+        <div id="promocoes" class="tab-content max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+                <div>
+                    <h2 class="text-3xl font-bold flex items-center"><i class="fas fa-tags text-rose-400 mr-4"></i> Promoções & Campanhas</h2>
+                    <p class="text-gray-400 text-sm mt-1">Agenda datas de início e fim de campanhas (ex.: Saldos). A app cria automaticamente lembretes <strong>48h antes do início</strong> para planear e <strong>1 dia antes do fim</strong> para retirar!</p>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="filtrarCampanhas('TODAS')" id="filtroCampanha-TODAS" class="bg-rose-600 text-white font-bold px-4 py-2 rounded-lg text-sm transition">Todas</button>
+                    <button onclick="filtrarCampanhas('ATIVAS')" id="filtroCampanha-ATIVAS" class="bg-szgray text-gray-300 hover:text-white font-bold px-4 py-2 rounded-lg text-sm transition">Ativas / Próximas</button>
+                    <button onclick="filtrarCampanhas('TERMINADAS')" id="filtroCampanha-TERMINADAS" class="bg-szgray text-gray-300 hover:text-white font-bold px-4 py-2 rounded-lg text-sm transition">Terminadas</button>
+                </div>
+            </div>
+
+            <!-- Formulário para Adicionar Promoção / Campanha -->
+            <div class="bg-szgray p-6 rounded-xl border border-rose-500/40 shadow-2xl mb-8">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">
+                    <div class="md:col-span-4">
+                        <label class="block text-xs text-rose-300 font-bold uppercase mb-1"><i class="fas fa-tag mr-1"></i> Nome da Promoção / Campanha</label>
+                        <input type="text" id="campanhaNomeInput" placeholder="Ex: Saldos de Inverno / Black Friday / Mid Season" class="w-full bg-black text-white border border-gray-600 rounded-lg px-4 py-3 text-sm focus:border-rose-400 focus:outline-none">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-xs text-emerald-400 font-bold uppercase mb-1"><i class="fas fa-play-circle mr-1"></i> Data Início</label>
+                        <input type="date" id="campanhaDataInicio" class="w-full bg-black text-white border border-emerald-500/50 rounded-lg px-3 py-3 text-sm focus:border-emerald-400 focus:outline-none">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-xs text-amber-400 font-bold uppercase mb-1"><i class="fas fa-stop-circle mr-1"></i> Data Fim</label>
+                        <input type="date" id="campanhaDataFim" class="w-full bg-black text-white border border-amber-500/50 rounded-lg px-3 py-3 text-sm focus:border-amber-400 focus:outline-none">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-xs text-gray-400 font-bold uppercase mb-1">Notas (Opcional)</label>
+                        <input type="text" id="campanhaNotasInput" placeholder="Ex: Montra + Pódio" class="w-full bg-black text-white border border-gray-600 rounded-lg px-3 py-3 text-sm focus:border-rose-400 focus:outline-none" onkeypress="if(event.key==='Enter') adicionarCampanhaPromocao()">
+                    </div>
+                    <div class="md:col-span-2">
+                        <button onclick="adicionarCampanhaPromocao()" class="w-full bg-rose-600 hover:bg-rose-500 text-white font-bold py-3 px-4 rounded-lg transition shadow-lg">
+                            <i class="fas fa-plus mr-1"></i> Adicionar
+                        </button>
+                    </div>
+                </div>
+                <div class="mt-3 pt-3 border-t border-gray-800 flex flex-wrap gap-4 text-[11px] text-gray-400">
+                    <span><i class="fas fa-clock text-emerald-400 mr-1"></i> <strong>Regra Início:</strong> Cria alerta automático <strong>48h (2 dias) antes</strong> para planear montagem/etiquetas.</span>
+                    <span><i class="fas fa-bell text-amber-400 mr-1"></i> <strong>Regra Fim:</strong> Cria alerta automático <strong>1 dia antes</strong> para retirar comunicação/preços.</span>
+                </div>
+            </div>
+
+            <!-- Lista de Promoções & Campanhas -->
+            <div id="listaCampanhasPromocoes" class="space-y-3 pb-12"></div>
         </div>
 
         <!-- Tab Salesforce (Live Google Sheets + Ficheiros) -->
@@ -1772,7 +1834,7 @@
 
         function getAdminPinsMap() {
             try {
-                const saved = JSON.parse(localStorage.getItem('storeDashAdminPinsMapV53') || '{}');
+                const saved = JSON.parse(localStorage.getItem('storeDashAdminPinsMapV58') || '{}');
                 return { ...DEFAULT_ADMIN_PINS, ...saved };
             } catch (e) {
                 return { ...DEFAULT_ADMIN_PINS };
@@ -1804,7 +1866,7 @@
 
             const pins = getAdminPinsMap();
             pins[alvo] = novoPin;
-            localStorage.setItem('storeDashAdminPinsMapV53', JSON.stringify(pins));
+            localStorage.setItem('storeDashAdminPinsMapV58', JSON.stringify(pins));
             enviarDadosParaGitHub();
             document.getElementById('novoPinAdminInput').value = '';
             registarNotificacao(`Alterou o PIN individual de ${alvo}`, 'carregar');
@@ -1860,7 +1922,7 @@
 
                 if (isAdmin) {
                     const defaultHint = DEFAULT_ADMIN_PINS[perfil.nome] || '1234';
-                    const hasCustomPin = Boolean(JSON.parse(localStorage.getItem('storeDashAdminPinsMapV53') || '{}')[perfil.nome]);
+                    const hasCustomPin = Boolean(JSON.parse(localStorage.getItem('storeDashAdminPinsMapV58') || '{}')[perfil.nome]);
                     document.getElementById('pinHintIndividual').innerHTML = hasCustomPin
                         ? 'PIN individual personalizado ativo.'
                         : `PIN inicial de ${perfil.nome.split(' ')[0]}: <span class="text-gray-300 font-mono font-bold">${defaultHint}</span> (podes mudar em Meu Perfil)`;
@@ -1956,10 +2018,38 @@
 
                     const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
                     globalPerfisFotos[perfilAtual.nome] = dataUrl;
-                    try { localStorage.setItem('storeDashPerfisFotosV53', JSON.stringify(globalPerfisFotos)); } catch (err) {}
+                    try { localStorage.setItem('storeDashPerfisFotosV58', JSON.stringify(globalPerfisFotos)); } catch (err) {}
                     enviarDadosParaGitHub();
                     atualizarAvatarSidebar();
-                    renderizarEcraLogin();
+                    // 1. Ler configuração da nuvem guardada localmente OU vinda no link (?key=... ou #key=...)
+            const guardadoCloud = localStorage.getItem('storeDashCloudConfigV58');
+            if (guardadoCloud) {
+                try { globalCloudConfig = JSON.parse(guardadoCloud); } catch (e) {}
+            }
+            const urlParams = new URLSearchParams(window.location.search);
+            const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ''));
+            const rawIncomingKey = urlParams.get('key') || hashParams.get('key') || '';
+            const incomingKey = decodeURIComponent(rawIncomingKey).trim();
+            if (incomingKey && incomingKey.startsWith('SD_KEY_')) {
+                try {
+                    const dec = JSON.parse(atob(incomingKey.replace('SD_KEY_', '')));
+                    if (dec.t && dec.g) {
+                        globalCloudConfig = { ativo: true, token: dec.t, gistId: dec.g, lastUpdated: 0 };
+                        localStorage.setItem('storeDashCloudConfigV58', JSON.stringify(globalCloudConfig));
+                    }
+                } catch (e) {}
+            }
+            if (globalCloudConfig && globalCloudConfig.ativo && globalCloudConfig.token && globalCloudConfig.gistId) {
+                const inpTok = document.getElementById('ghTokenInput');
+                const inpGist = document.getElementById('ghGistIdInput');
+                if (inpTok) inpTok.value = globalCloudConfig.token;
+                if (inpGist) inpGist.value = globalCloudConfig.gistId;
+                atualizarIndicadorCloudUI('Nuvem Ativa', 'verde');
+                iniciarLoopSincronizacaoCloud();
+                puxarDadosDoGitHub(true);
+            }
+
+            renderizarEcraLogin();
                     abrirModalMeuPerfil();
                     registarNotificacao('Atualizou a sua fotografia de perfil', 'dashboard');
                 };
@@ -1971,9 +2061,37 @@
         function removerFotoPerfilAtual() {
             if (!perfilAtual) return;
             delete globalPerfisFotos[perfilAtual.nome];
-            try { localStorage.setItem('storeDashPerfisFotosV53', JSON.stringify(globalPerfisFotos)); } catch (e) {}
+            try { localStorage.setItem('storeDashPerfisFotosV58', JSON.stringify(globalPerfisFotos)); } catch (e) {}
             enviarDadosParaGitHub();
             atualizarAvatarSidebar();
+            // 1. Ler configuração da nuvem guardada localmente OU vinda no link (?key=... ou #key=...)
+            const guardadoCloud = localStorage.getItem('storeDashCloudConfigV58');
+            if (guardadoCloud) {
+                try { globalCloudConfig = JSON.parse(guardadoCloud); } catch (e) {}
+            }
+            const urlParams = new URLSearchParams(window.location.search);
+            const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ''));
+            const rawIncomingKey = urlParams.get('key') || hashParams.get('key') || '';
+            const incomingKey = decodeURIComponent(rawIncomingKey).trim();
+            if (incomingKey && incomingKey.startsWith('SD_KEY_')) {
+                try {
+                    const dec = JSON.parse(atob(incomingKey.replace('SD_KEY_', '')));
+                    if (dec.t && dec.g) {
+                        globalCloudConfig = { ativo: true, token: dec.t, gistId: dec.g, lastUpdated: 0 };
+                        localStorage.setItem('storeDashCloudConfigV58', JSON.stringify(globalCloudConfig));
+                    }
+                } catch (e) {}
+            }
+            if (globalCloudConfig && globalCloudConfig.ativo && globalCloudConfig.token && globalCloudConfig.gistId) {
+                const inpTok = document.getElementById('ghTokenInput');
+                const inpGist = document.getElementById('ghGistIdInput');
+                if (inpTok) inpTok.value = globalCloudConfig.token;
+                if (inpGist) inpGist.value = globalCloudConfig.gistId;
+                atualizarIndicadorCloudUI('Nuvem Ativa', 'verde');
+                iniciarLoopSincronizacaoCloud();
+                puxarDadosDoGitHub(true);
+            }
+
             renderizarEcraLogin();
             abrirModalMeuPerfil();
         }
@@ -1986,14 +2104,42 @@
             if (perfilAtual.role === 'admin') {
                 const pins = getAdminPinsMap();
                 pins[perfilAtual.nome] = novoPin;
-                localStorage.setItem('storeDashAdminPinsMapV53', JSON.stringify(pins));
+                localStorage.setItem('storeDashAdminPinsMapV58', JSON.stringify(pins));
             } else {
                 globalStaffPins[perfilAtual.nome] = novoPin;
-                localStorage.setItem('storeDashStaffPinsV53', JSON.stringify(globalStaffPins));
+                localStorage.setItem('storeDashStaffPinsV58', JSON.stringify(globalStaffPins));
             }
 
             enviarDadosParaGitHub();
             document.getElementById('meuPerfilNovoPinInput').value = '';
+            // 1. Ler configuração da nuvem guardada localmente OU vinda no link (?key=... ou #key=...)
+            const guardadoCloud = localStorage.getItem('storeDashCloudConfigV58');
+            if (guardadoCloud) {
+                try { globalCloudConfig = JSON.parse(guardadoCloud); } catch (e) {}
+            }
+            const urlParams = new URLSearchParams(window.location.search);
+            const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ''));
+            const rawIncomingKey = urlParams.get('key') || hashParams.get('key') || '';
+            const incomingKey = decodeURIComponent(rawIncomingKey).trim();
+            if (incomingKey && incomingKey.startsWith('SD_KEY_')) {
+                try {
+                    const dec = JSON.parse(atob(incomingKey.replace('SD_KEY_', '')));
+                    if (dec.t && dec.g) {
+                        globalCloudConfig = { ativo: true, token: dec.t, gistId: dec.g, lastUpdated: 0 };
+                        localStorage.setItem('storeDashCloudConfigV58', JSON.stringify(globalCloudConfig));
+                    }
+                } catch (e) {}
+            }
+            if (globalCloudConfig && globalCloudConfig.ativo && globalCloudConfig.token && globalCloudConfig.gistId) {
+                const inpTok = document.getElementById('ghTokenInput');
+                const inpGist = document.getElementById('ghGistIdInput');
+                if (inpTok) inpTok.value = globalCloudConfig.token;
+                if (inpGist) inpGist.value = globalCloudConfig.gistId;
+                atualizarIndicadorCloudUI('Nuvem Ativa', 'verde');
+                iniciarLoopSincronizacaoCloud();
+                puxarDadosDoGitHub(true);
+            }
+
             renderizarEcraLogin();
             abrirModalMeuPerfil();
             alert('O teu PIN pessoal foi guardado com sucesso!');
@@ -2002,8 +2148,36 @@
         function removerMeuPinStaff() {
             if (!perfilAtual || perfilAtual.role === 'admin') return;
             delete globalStaffPins[perfilAtual.nome];
-            localStorage.setItem('storeDashStaffPinsV53', JSON.stringify(globalStaffPins));
+            localStorage.setItem('storeDashStaffPinsV58', JSON.stringify(globalStaffPins));
             enviarDadosParaGitHub();
+            // 1. Ler configuração da nuvem guardada localmente OU vinda no link (?key=... ou #key=...)
+            const guardadoCloud = localStorage.getItem('storeDashCloudConfigV58');
+            if (guardadoCloud) {
+                try { globalCloudConfig = JSON.parse(guardadoCloud); } catch (e) {}
+            }
+            const urlParams = new URLSearchParams(window.location.search);
+            const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ''));
+            const rawIncomingKey = urlParams.get('key') || hashParams.get('key') || '';
+            const incomingKey = decodeURIComponent(rawIncomingKey).trim();
+            if (incomingKey && incomingKey.startsWith('SD_KEY_')) {
+                try {
+                    const dec = JSON.parse(atob(incomingKey.replace('SD_KEY_', '')));
+                    if (dec.t && dec.g) {
+                        globalCloudConfig = { ativo: true, token: dec.t, gistId: dec.g, lastUpdated: 0 };
+                        localStorage.setItem('storeDashCloudConfigV58', JSON.stringify(globalCloudConfig));
+                    }
+                } catch (e) {}
+            }
+            if (globalCloudConfig && globalCloudConfig.ativo && globalCloudConfig.token && globalCloudConfig.gistId) {
+                const inpTok = document.getElementById('ghTokenInput');
+                const inpGist = document.getElementById('ghGistIdInput');
+                if (inpTok) inpTok.value = globalCloudConfig.token;
+                if (inpGist) inpGist.value = globalCloudConfig.gistId;
+                atualizarIndicadorCloudUI('Nuvem Ativa', 'verde');
+                iniciarLoopSincronizacaoCloud();
+                puxarDadosDoGitHub(true);
+            }
+
             renderizarEcraLogin();
             abrirModalMeuPerfil();
             alert('PIN removido! A partir de agora entras diretamente em 1 toque.');
@@ -2011,7 +2185,7 @@
 
         function aplicarSessaoPerfil(perfil) {
             perfilAtual = perfil;
-            localStorage.setItem('storeDashPerfilAtivoV53', JSON.stringify(perfil));
+            localStorage.setItem('storeDashPerfilAtivoV58', JSON.stringify(perfil));
 
             document.getElementById('loginOverlay').classList.add('hidden');
             document.getElementById('sidebarUserCard').classList.remove('hidden');
@@ -2049,12 +2223,13 @@
             renderizarHorario();
             renderizarFerias2027();
             renderizarTarefas();
+            renderizarCampanhasPromocoes();
             atualizarCampainha();
         }
 
         function terminarSessaoPerfil() {
             perfilAtual = null;
-            localStorage.removeItem('storeDashPerfilAtivoV53');
+            localStorage.removeItem('storeDashPerfilAtivoV58');
             voltarSelecaoPerfil();
             document.getElementById('loginOverlay').classList.remove('hidden');
         }
@@ -2089,7 +2264,7 @@
 
             if (globalNotificacoes.length > 50) globalNotificacoes = globalNotificacoes.slice(0, 50);
             tocarSomNotificacao();
-            try { localStorage.setItem('storeDashNotificacoesV53', JSON.stringify(globalNotificacoes)); } catch (e) {}
+            try { localStorage.setItem('storeDashNotificacoesV58', JSON.stringify(globalNotificacoes)); } catch (e) {}
             atualizarCampainha();
         }
 
@@ -2139,7 +2314,7 @@
                 concluido: false
             });
 
-            try { localStorage.setItem('storeDashLembretesV53', JSON.stringify(globalLembretes)); } catch (e) {}
+            try { localStorage.setItem('storeDashLembretesV58', JSON.stringify(globalLembretes)); } catch (e) {}
             enviarDadosParaGitHub();
             registarNotificacao(`Criou um lembrete (${separador.toUpperCase()}): "${titulo}"`, separador);
             fecharModalLembrete();
@@ -2150,14 +2325,14 @@
             const item = globalLembretes.find(l => l.id === id);
             if (!item) return;
             item.concluido = true;
-            try { localStorage.setItem('storeDashLembretesV53', JSON.stringify(globalLembretes)); } catch (e) {}
+            try { localStorage.setItem('storeDashLembretesV58', JSON.stringify(globalLembretes)); } catch (e) {}
             enviarDadosParaGitHub();
             atualizarCampainha();
         }
 
         function apagarLembrete(id) {
             globalLembretes = globalLembretes.filter(l => l.id !== id);
-            try { localStorage.setItem('storeDashLembretesV53', JSON.stringify(globalLembretes)); } catch (e) {}
+            try { localStorage.setItem('storeDashLembretesV58', JSON.stringify(globalLembretes)); } catch (e) {}
             enviarDadosParaGitHub();
             atualizarCampainha();
         }
@@ -2376,19 +2551,19 @@
         function marcarNotificacaoLida(id) {
             const n = globalNotificacoes.find(x => x.id === id);
             if (n) n.lida = true;
-            try { localStorage.setItem('storeDashNotificacoesV53', JSON.stringify(globalNotificacoes)); } catch (e) {}
+            try { localStorage.setItem('storeDashNotificacoesV58', JSON.stringify(globalNotificacoes)); } catch (e) {}
             atualizarCampainha();
         }
 
         function marcarTodasNotificacoesLidas() {
             globalNotificacoes.forEach(n => n.lida = true);
-            try { localStorage.setItem('storeDashNotificacoesV53', JSON.stringify(globalNotificacoes)); } catch (e) {}
+            try { localStorage.setItem('storeDashNotificacoesV58', JSON.stringify(globalNotificacoes)); } catch (e) {}
             atualizarCampainha();
         }
 
         function limparNotificacoes() {
             globalNotificacoes = [];
-            try { localStorage.setItem('storeDashNotificacoesV53', JSON.stringify(globalNotificacoes)); } catch (e) {}
+            try { localStorage.setItem('storeDashNotificacoesV58', JSON.stringify(globalNotificacoes)); } catch (e) {}
             atualizarCampainha();
         }
 
@@ -2482,6 +2657,7 @@
                 ferias2027: globalFerias2027.tipo === 'embed' ? globalFerias2027 : null,
                 tarefas: globalTarefas,
                 lembretes: globalLembretes,
+                campanhas: globalCampanhas,
                 rotinasPorDia: globalRotinasPorDia,
                 vendasDia: globalVendasDia,
                 premioMes: globalPremioMes,
@@ -2489,7 +2665,6 @@
                 perfisFotos: globalPerfisFotos,
                 staffPins: globalStaffPins,
                 adminPinsMap: getAdminPinsMap(),
-                cloudConfig: globalCloudConfig,
                 pins: getAdminPinsMap()
             };
             const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
@@ -2508,24 +2683,25 @@
             reader.onload = function(e) {
                 try {
                     const data = JSON.parse(e.target.result);
-                    if (data.horarioSheet) { globalHorarioSheet = data.horarioSheet; localStorage.setItem('storeDashHorarioSheetV53', JSON.stringify(globalHorarioSheet));
+                    if (data.horarioSheet) { globalHorarioSheet = data.horarioSheet; localStorage.setItem('storeDashHorarioSheetV58', JSON.stringify(globalHorarioSheet));
             enviarDadosParaGitHub(); renderizarHorario(); }
-                    if (data.salesforce) { globalSalesforce = data.salesforce; localStorage.setItem('storeDashSalesforceV53', JSON.stringify(globalSalesforce));
+                    if (data.salesforce) { globalSalesforce = data.salesforce; localStorage.setItem('storeDashSalesforceV58', JSON.stringify(globalSalesforce));
             enviarDadosParaGitHub(); renderizarSalesforce(); }
-                    if (data.sprays) { globalSprays = data.sprays; localStorage.setItem('storeDashSpraysV53', JSON.stringify(globalSprays)); renderizarSprays(); }
-                    if (data.ferias2027) { globalFerias2027 = data.ferias2027; localStorage.setItem('storeDashFeriasV53', JSON.stringify(globalFerias2027)); renderizarFerias2027(); }
-                    if (data.tarefas) { globalTarefas = data.tarefas; localStorage.setItem('storeDashTarefasV53', JSON.stringify(globalTarefas));
+                    if (data.sprays) { globalSprays = data.sprays; localStorage.setItem('storeDashSpraysV58', JSON.stringify(globalSprays)); renderizarSprays(); }
+                    if (data.ferias2027) { globalFerias2027 = data.ferias2027; localStorage.setItem('storeDashFeriasV58', JSON.stringify(globalFerias2027)); renderizarFerias2027(); }
+                    if (data.tarefas) { globalTarefas = data.tarefas; localStorage.setItem('storeDashTarefasV58', JSON.stringify(globalTarefas));
             enviarDadosParaGitHub(); renderizarTarefas(); }
-                    if (data.lembretes) { globalLembretes = data.lembretes; localStorage.setItem('storeDashLembretesV53', JSON.stringify(globalLembretes)); }
-                    if (data.rotinasPorDia) { globalRotinasPorDia = data.rotinasPorDia; localStorage.setItem('storeDashRotinasPorDiaV53', JSON.stringify(globalRotinasPorDia)); renderizarChecklistRotina(); }
-                    if (data.vendasDia) { globalVendasDia = data.vendasDia; localStorage.setItem('storeDashVendasDiaV53', JSON.stringify(globalVendasDia)); renderizarVendasDia(); }
-                    if (data.premioMes) { globalPremioMes = data.premioMes; localStorage.setItem('storeDashPremioMesV53', JSON.stringify(globalPremioMes)); renderizarPremioMes(); }
-                    if (data.kudosBadgesExtra) { globalKudosBadgesExtra = data.kudosBadgesExtra; localStorage.setItem('storeDashKudosBadgesExtraV53', JSON.stringify(globalKudosBadgesExtra)); }
-                    if (data.perfisFotos) { globalPerfisFotos = data.perfisFotos; localStorage.setItem('storeDashPerfisFotosV53', JSON.stringify(globalPerfisFotos)); renderizarEcraLogin(); }
-                    if (data.staffPins) { globalStaffPins = data.staffPins; localStorage.setItem('storeDashStaffPinsV53', JSON.stringify(globalStaffPins)); renderizarEcraLogin(); }
-                    if (data.chatMensagens) { globalChatMensagens = data.chatMensagens; localStorage.setItem('storeDashChatMensagensV53', JSON.stringify(globalChatMensagens)); renderizarChatEquipa(); }
-                    if (data.cloudConfig && data.cloudConfig.ativo) { globalCloudConfig = data.cloudConfig; localStorage.setItem('storeDashCloudConfigV53', JSON.stringify(globalCloudConfig)); document.getElementById('ghTokenInput').value = globalCloudConfig.token; document.getElementById('ghGistIdInput').value = globalCloudConfig.gistId; atualizarIndicadorCloudUI('Nuvem Ativa', 'verde'); iniciarLoopSincronizacaoCloud(); puxarDadosDoGitHub(true); }
-                    if (data.pins) { localStorage.setItem('storeDashAdminPinsMapV53', JSON.stringify(data.pins)); }
+                    if (data.lembretes) { globalLembretes = data.lembretes; localStorage.setItem('storeDashLembretesV58', JSON.stringify(globalLembretes)); }
+                    if (data.campanhas) { globalCampanhas = data.campanhas; localStorage.setItem('storeDashCampanhasV58', JSON.stringify(globalCampanhas)); renderizarCampanhasPromocoes(); }
+                    if (data.rotinasPorDia) { globalRotinasPorDia = data.rotinasPorDia; localStorage.setItem('storeDashRotinasPorDiaV58', JSON.stringify(globalRotinasPorDia)); renderizarChecklistRotina(); }
+                    if (data.vendasDia) { globalVendasDia = data.vendasDia; localStorage.setItem('storeDashVendasDiaV58', JSON.stringify(globalVendasDia)); renderizarVendasDia(); }
+                    if (data.premioMes) { globalPremioMes = data.premioMes; localStorage.setItem('storeDashPremioMesV58', JSON.stringify(globalPremioMes)); renderizarPremioMes(); }
+                    if (data.kudosBadgesExtra) { globalKudosBadgesExtra = data.kudosBadgesExtra; localStorage.setItem('storeDashKudosBadgesExtraV58', JSON.stringify(globalKudosBadgesExtra)); }
+                    if (data.perfisFotos) { globalPerfisFotos = data.perfisFotos; localStorage.setItem('storeDashPerfisFotosV58', JSON.stringify(globalPerfisFotos)); renderizarEcraLogin(); }
+                    if (data.staffPins) { globalStaffPins = data.staffPins; localStorage.setItem('storeDashStaffPinsV58', JSON.stringify(globalStaffPins)); renderizarEcraLogin(); }
+                    if (data.chatMensagens) { globalChatMensagens = data.chatMensagens; localStorage.setItem('storeDashChatMensagensV58', JSON.stringify(globalChatMensagens)); renderizarChatEquipa(); }
+                    if (data.cloudConfig && data.cloudConfig.ativo) { globalCloudConfig = data.cloudConfig; localStorage.setItem('storeDashCloudConfigV58', JSON.stringify(globalCloudConfig)); document.getElementById('ghTokenInput').value = globalCloudConfig.token; document.getElementById('ghGistIdInput').value = globalCloudConfig.gistId; atualizarIndicadorCloudUI('Nuvem Ativa', 'verde'); iniciarLoopSincronizacaoCloud(); puxarDadosDoGitHub(true); }
+                    if (data.pins) { localStorage.setItem('storeDashAdminPinsMapV58', JSON.stringify(data.pins)); }
                     atualizarCampainha();
                     atualizarDashboardInicial();
                     alert('Configuração e links restaurados com sucesso!');
@@ -2659,7 +2835,7 @@
             globalVendasDia.conv = conv;
             globalVendasDia.registos.push({ hora, valor: atual, sprays, socios, online, pct, autor });
 
-            try { localStorage.setItem('storeDashVendasDiaV53', JSON.stringify(globalVendasDia)); } catch (e) {}
+            try { localStorage.setItem('storeDashVendasDiaV58', JSON.stringify(globalVendasDia)); } catch (e) {}
             enviarDadosParaGitHub();
             registarNotificacao(`Vendas às ${hora}: €${atual.toLocaleString('pt-PT')} (${pct}%) | ${sprays} Sprays | ${socios} Sócios | €${online} Online`, 'dashboard');
             fecharModalVendasDia();
@@ -2680,7 +2856,7 @@
                 conv: '',
                 registos: []
             };
-            try { localStorage.setItem('storeDashVendasDiaV53', JSON.stringify(globalVendasDia)); } catch (e) {}
+            try { localStorage.setItem('storeDashVendasDiaV58', JSON.stringify(globalVendasDia)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarVendasDia();
             renderizarPremioMes();
@@ -2789,14 +2965,14 @@
             }
             const checkKey = `${diaKey}_${idx}`;
             globalRotinaChecksHoje.feitos[checkKey] = !globalRotinaChecksHoje.feitos[checkKey];
-            try { localStorage.setItem('storeDashRotinaChecksV53', JSON.stringify(globalRotinaChecksHoje)); } catch (e) {}
+            try { localStorage.setItem('storeDashRotinaChecksV58', JSON.stringify(globalRotinaChecksHoje)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarChecklistRotina();
         }
 
         function resetarChecklistDia() {
             globalRotinaChecksHoje = { data: new Date().toISOString().split('T')[0], feitos: {} };
-            try { localStorage.setItem('storeDashRotinaChecksV53', JSON.stringify(globalRotinaChecksHoje)); } catch (e) {}
+            try { localStorage.setItem('storeDashRotinaChecksV58', JSON.stringify(globalRotinaChecksHoje)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarChecklistRotina();
         }
@@ -2895,7 +3071,7 @@
             if (!val) return;
             if (!globalRotinasPorDia[diaRotinaConfigurando]) globalRotinasPorDia[diaRotinaConfigurando] = [];
             globalRotinasPorDia[diaRotinaConfigurando].push(val);
-            try { localStorage.setItem('storeDashRotinasPorDiaV53', JSON.stringify(globalRotinasPorDia)); } catch (e) {}
+            try { localStorage.setItem('storeDashRotinasPorDiaV58', JSON.stringify(globalRotinasPorDia)); } catch (e) {}
             enviarDadosParaGitHub();
             input.value = '';
             renderizarModalConfigRotinas();
@@ -2904,7 +3080,7 @@
         function removerItemRotinaDia(idx) {
             if (!globalRotinasPorDia[diaRotinaConfigurando]) return;
             globalRotinasPorDia[diaRotinaConfigurando].splice(idx, 1);
-            try { localStorage.setItem('storeDashRotinasPorDiaV53', JSON.stringify(globalRotinasPorDia)); } catch (e) {}
+            try { localStorage.setItem('storeDashRotinasPorDiaV58', JSON.stringify(globalRotinasPorDia)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarModalConfigRotinas();
         }
@@ -2912,7 +3088,7 @@
         function restaurarRotinasPadrao() {
             if (!confirm('Repor as rotinas predefinidas de Segunda a Domingo?')) return;
             globalRotinasPorDia = JSON.parse(JSON.stringify(ROTINAS_SEMANA_PADRAO));
-            try { localStorage.setItem('storeDashRotinasPorDiaV53', JSON.stringify(globalRotinasPorDia)); } catch (e) {}
+            try { localStorage.setItem('storeDashRotinasPorDiaV58', JSON.stringify(globalRotinasPorDia)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarModalConfigRotinas();
         }
@@ -2969,7 +3145,7 @@
                 badge = customVal;
                 if (!KUDOS_BADGES_PADRAO.includes(badge) && !globalKudosBadgesExtra.includes(badge)) {
                     globalKudosBadgesExtra.push(badge);
-                    try { localStorage.setItem('storeDashKudosBadgesExtraV53', JSON.stringify(globalKudosBadgesExtra)); } catch (e) {}
+                    try { localStorage.setItem('storeDashKudosBadgesExtraV58', JSON.stringify(globalKudosBadgesExtra)); } catch (e) {}
                 }
             }
 
@@ -2978,7 +3154,7 @@
             const de = perfilAtual ? perfilAtual.nome.split(' ')[0] : 'Equipa';
             globalKudos.unshift({ id: Date.now(), colega, badge, msg, de });
             if (globalKudos.length > 15) globalKudos = globalKudos.slice(0, 15);
-            try { localStorage.setItem('storeDashKudosV53', JSON.stringify(globalKudos)); } catch (e) {}
+            try { localStorage.setItem('storeDashKudosV58', JSON.stringify(globalKudos)); } catch (e) {}
             enviarDadosParaGitHub();
             registarNotificacao(`Destacou ${colega} (${badge}): "${msg}"`, 'dashboard');
             fecharModalKudos();
@@ -3051,7 +3227,7 @@
             if (!globalFraseAtivaCiclo || globalFraseAtivaCiclo.cicloId !== cicloId || !globalFraseAtivaCiclo.texto) {
                 const escolhida = todasFrases[Math.abs(diaIndex) % todasFrases.length];
                 globalFraseAtivaCiclo = { cicloId, texto: escolhida };
-                try { localStorage.setItem('storeDashFraseAtivaV53', JSON.stringify(globalFraseAtivaCiclo)); } catch (e) {}
+                try { localStorage.setItem('storeDashFraseAtivaV58', JSON.stringify(globalFraseAtivaCiclo)); } catch (e) {}
             enviarDadosParaGitHub();
 
                 // Registar notificação matinal na campainha para o novo ciclo das 08:00
@@ -3098,7 +3274,7 @@
                 tentativas++;
             }
             globalFraseAtivaCiclo = { cicloId, texto: nova };
-            try { localStorage.setItem('storeDashFraseAtivaV53', JSON.stringify(globalFraseAtivaCiclo)); } catch (e) {}
+            try { localStorage.setItem('storeDashFraseAtivaV58', JSON.stringify(globalFraseAtivaCiclo)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarFraseDoDia();
         }
@@ -3119,10 +3295,10 @@
             const { cicloId } = getCiclo24hDesde08h();
             if (!FRASES_COMICAS_PADRAO.includes(txt) && !globalFrasesExtra.includes(txt)) {
                 globalFrasesExtra.push(txt);
-                try { localStorage.setItem('storeDashFrasesExtraV53', JSON.stringify(globalFrasesExtra)); } catch (e) {}
+                try { localStorage.setItem('storeDashFrasesExtraV58', JSON.stringify(globalFrasesExtra)); } catch (e) {}
             }
             globalFraseAtivaCiclo = { cicloId, texto: txt };
-            try { localStorage.setItem('storeDashFraseAtivaV53', JSON.stringify(globalFraseAtivaCiclo)); } catch (e) {}
+            try { localStorage.setItem('storeDashFraseAtivaV58', JSON.stringify(globalFraseAtivaCiclo)); } catch (e) {}
             enviarDadosParaGitHub();
             registarNotificacao(`Atualizou a Frase do Dia: "${txt}"`, 'dashboard');
             fecharModalNovaFrase();
@@ -3158,7 +3334,7 @@
             } else {
                 chatUltimaLeituraTs = Date.now();
             }
-            try { localStorage.setItem('storeDashChatReadTsV53', String(chatUltimaLeituraTs)); } catch (e) {}
+            try { localStorage.setItem('storeDashChatReadTsV58', String(chatUltimaLeituraTs)); } catch (e) {}
             atualizarBadgesChat();
         }
 
@@ -3217,8 +3393,8 @@
 
             chatUltimaLeituraTs = ts;
             try {
-                localStorage.setItem('storeDashChatMensagensV53', JSON.stringify(globalChatMensagens));
-                localStorage.setItem('storeDashChatReadTsV53', String(chatUltimaLeituraTs));
+                localStorage.setItem('storeDashChatMensagensV58', JSON.stringify(globalChatMensagens));
+                localStorage.setItem('storeDashChatReadTsV58', String(chatUltimaLeituraTs));
             } catch (e) {}
 
             enviarDadosParaGitHub();
@@ -3229,7 +3405,7 @@
             if (!perfilAtual || perfilAtual.role !== 'admin') return;
             if (!confirm('Apagar todo o histórico de mensagens do chat da equipa?')) return;
             globalChatMensagens = [];
-            try { localStorage.setItem('storeDashChatMensagensV53', JSON.stringify(globalChatMensagens)); } catch (e) {}
+            try { localStorage.setItem('storeDashChatMensagensV58', JSON.stringify(globalChatMensagens)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarChatEquipa();
         }
@@ -3292,6 +3468,241 @@
         }
 
         // ============================
+        // PROMOÇÕES E CAMPANHAS (ALERTAS AUTOMÁTICOS 48H ANTES DO INÍCIO E 1 DIA ANTES DO FIM)
+        // ============================
+        let globalCampanhas = []; // { id, nome, dataInicio, dataFim, notas, criadoPor, concluida }
+        let filtroAtualCampanhas = 'TODAS';
+
+        function adicionarDiasISO(dataISO, diasDelta) {
+            const dt = parseDataFlexivel(dataISO);
+            if (!dt) return '';
+            dt.setDate(dt.getDate() + diasDelta);
+            const yyyy = dt.getFullYear();
+            const mm = String(dt.getMonth() + 1).padStart(2, '0');
+            const dd = String(dt.getDate()).padStart(2, '0');
+            return `${yyyy}-${mm}-${dd}`;
+        }
+
+        function formatarDataPT(dataISO) {
+            const dt = parseDataFlexivel(dataISO);
+            if (!dt) return dataISO || '--';
+            return dt.toLocaleDateString('pt-PT', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        }
+
+        function adicionarCampanhaPromocao() {
+            const nome = document.getElementById('campanhaNomeInput').value.trim();
+            const dataInicio = document.getElementById('campanhaDataInicio').value;
+            const dataFim = document.getElementById('campanhaDataFim').value;
+            const notas = document.getElementById('campanhaNotasInput').value.trim();
+
+            if (!nome) return alert('Escreve o nome da promoção ou campanha (ex: Saldos).');
+            if (!dataInicio && !dataFim) return alert('Indica pelo menos a Data de Início ou a Data de Fim.');
+            if (dataInicio && dataFim && dataFim < dataInicio) {
+                return alert('A Data de Fim não pode ser anterior à Data de Início.');
+            }
+
+            const campId = Date.now();
+            const autor = perfilAtual ? perfilAtual.nome : 'Equipa';
+
+            globalCampanhas.unshift({
+                id: campId,
+                nome: nome,
+                dataInicio: dataInicio,
+                dataFim: dataFim,
+                notas: notas,
+                criadoPor: autor,
+                concluida: false
+            });
+
+            // Criar lembrete automático 48h (2 dias) antes do INÍCIO para planear
+            if (dataInicio) {
+                const dataPlanear48h = adicionarDiasISO(dataInicio, -2);
+                globalLembretes.unshift({
+                    id: campId + 1,
+                    campanhaId: campId,
+                    titulo: `📋 Planear início: ${nome} (arranca a ${formatarDataPT(dataInicio)})`,
+                    separador: 'promocoes',
+                    regra: 'data',
+                    dataRef: dataPlanear48h,
+                    destinatario: 'TODOS',
+                    criadoPor: autor,
+                    concluido: false
+                });
+            }
+
+            // Criar lembrete automático 1 dia antes do FIM para retirar
+            if (dataFim) {
+                const dataRetirar24h = adicionarDiasISO(dataFim, -1);
+                globalLembretes.unshift({
+                    id: campId + 2,
+                    campanhaId: campId,
+                    titulo: `🏷️ Retirar campanha amanhã: ${nome} (termina a ${formatarDataPT(dataFim)})`,
+                    separador: 'promocoes',
+                    regra: 'data',
+                    dataRef: dataRetirar24h,
+                    destinatario: 'TODOS',
+                    criadoPor: autor,
+                    concluido: false
+                });
+            }
+
+            try {
+                localStorage.setItem('storeDashCampanhasV58', JSON.stringify(globalCampanhas));
+                localStorage.setItem('storeDashLembretesV58', JSON.stringify(globalLembretes));
+            } catch (e) {}
+
+            enviarDadosParaGitHub();
+            registarNotificacao(`Agendou campanha "${nome}" (${dataInicio ? 'Início: ' + formatarDataPT(dataInicio) : ''} ${dataFim ? 'Fim: ' + formatarDataPT(dataFim) : ''})`, 'promocoes');
+
+            document.getElementById('campanhaNomeInput').value = '';
+            document.getElementById('campanhaDataInicio').value = '';
+            document.getElementById('campanhaDataFim').value = '';
+            document.getElementById('campanhaNotasInput').value = '';
+
+            renderizarCampanhasPromocoes();
+            atualizarCampainha();
+        }
+
+        function alternarConclusaoCampanha(id) {
+            const c = globalCampanhas.find(x => x.id === id);
+            if (!c) return;
+            c.concluida = !c.concluida;
+            // Se marcada como concluída, conclui também os lembretes associados
+            if (c.concluida) {
+                globalLembretes.forEach(l => {
+                    if (l.campanhaId === id) l.concluido = true;
+                });
+            }
+            try {
+                localStorage.setItem('storeDashCampanhasV58', JSON.stringify(globalCampanhas));
+                localStorage.setItem('storeDashLembretesV58', JSON.stringify(globalLembretes));
+            } catch (e) {}
+            enviarDadosParaGitHub();
+            renderizarCampanhasPromocoes();
+            atualizarCampainha();
+        }
+
+        function apagarCampanhaPromocao(id) {
+            globalCampanhas = globalCampanhas.filter(c => c.id !== id);
+            globalLembretes = globalLembretes.filter(l => l.campanhaId !== id);
+            try {
+                localStorage.setItem('storeDashCampanhasV58', JSON.stringify(globalCampanhas));
+                localStorage.setItem('storeDashLembretesV58', JSON.stringify(globalLembretes));
+            } catch (e) {}
+            enviarDadosParaGitHub();
+            renderizarCampanhasPromocoes();
+            atualizarCampainha();
+        }
+
+        function filtrarCampanhas(filtro) {
+            filtroAtualCampanhas = filtro;
+            ['TODAS', 'ATIVAS', 'TERMINADAS'].forEach(f => {
+                const btn = document.getElementById('filtroCampanha-' + f);
+                if (!btn) return;
+                btn.className = (f === filtro)
+                    ? 'bg-rose-600 text-white font-bold px-4 py-2 rounded-lg text-sm transition'
+                    : 'bg-szgray text-gray-300 hover:text-white font-bold px-4 py-2 rounded-lg text-sm transition';
+            });
+            renderizarCampanhasPromocoes();
+        }
+
+        function renderizarCampanhasPromocoes() {
+            const hoje = new Date();
+            hoje.setHours(0, 0, 0, 0);
+
+            const ativasCount = globalCampanhas.filter(c => !c.concluida).length;
+            const badge = document.getElementById('badgePromocoes');
+            if (badge) {
+                if (ativasCount > 0) {
+                    badge.innerText = ativasCount;
+                    badge.classList.remove('hidden');
+                } else {
+                    badge.classList.add('hidden');
+                }
+            }
+
+            let lista = globalCampanhas;
+            if (filtroAtualCampanhas === 'ATIVAS') lista = lista.filter(c => !c.concluida);
+            if (filtroAtualCampanhas === 'TERMINADAS') lista = lista.filter(c => c.concluida);
+
+            const container = document.getElementById('listaCampanhasPromocoes');
+            if (!container) return;
+
+            if (lista.length === 0) {
+                container.innerHTML = `
+                <div class="text-center py-12 bg-szgray rounded-xl border border-gray-800">
+                    <i class="fas fa-tags text-4xl text-gray-600 mb-3"></i>
+                    <p class="text-gray-400">Nenhuma promoção ou campanha registada para este filtro.</p>
+                </div>`;
+                return;
+            }
+
+            const isAdmin = (perfilAtual && perfilAtual.role === 'admin');
+
+            container.innerHTML = lista.map(c => {
+                const podeApagar = isAdmin || (perfilAtual && c.criadoPor === perfilAtual.nome);
+                const dataPlanear = c.dataInicio ? adicionarDiasISO(c.dataInicio, -2) : '';
+                const dataRetirar = c.dataFim ? adicionarDiasISO(c.dataFim, -1) : '';
+
+                // Calcular estado temporal
+                let estadoTag = '<span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[11px] font-bold px-2.5 py-0.5 rounded-full">Agendada / Ativa</span>';
+                if (c.concluida) {
+                    estadoTag = '<span class="bg-gray-700 text-gray-300 text-[11px] font-bold px-2.5 py-0.5 rounded-full">Concluída</span>';
+                } else if (c.dataFim) {
+                    const dtFim = parseDataFlexivel(c.dataFim);
+                    if (dtFim) {
+                        const diasParaFim = Math.floor((dtFim - hoje) / (1000 * 60 * 60 * 24));
+                        if (diasParaFim < 0) {
+                            estadoTag = '<span class="bg-red-500/20 text-red-300 border border-red-500/40 text-[11px] font-bold px-2.5 py-0.5 rounded-full">Prazo Terminado</span>';
+                        } else if (diasParaFim <= 1) {
+                            estadoTag = '<span class="bg-amber-500 text-black text-[11px] font-extrabold px-2.5 py-0.5 rounded-full animate-pulse">Retirar em breve!</span>';
+                        }
+                    }
+                }
+                if (!c.concluida && c.dataInicio) {
+                    const dtIni = parseDataFlexivel(c.dataInicio);
+                    if (dtIni) {
+                        const diasParaIni = Math.floor((dtIni - hoje) / (1000 * 60 * 60 * 24));
+                        if (diasParaIni >= 0 && diasParaIni <= 2) {
+                            estadoTag = '<span class="bg-sky-400 text-black text-[11px] font-extrabold px-2.5 py-0.5 rounded-full">Planear Montagem (48h)</span>';
+                        }
+                    }
+                }
+
+                return `
+                <div class="p-4 sm:p-5 rounded-xl border ${c.concluida ? 'bg-black/40 border-gray-800 opacity-60' : 'bg-szgray border-gray-700'} shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition">
+                    <div class="flex items-start gap-4 flex-1 cursor-pointer" onclick="alternarConclusaoCampanha(${c.id})">
+                        <div class="w-7 h-7 mt-0.5 rounded-lg border-2 flex items-center justify-center flex-shrink-0 ${c.concluida ? 'bg-emerald-500 border-emerald-500 text-black' : 'border-rose-400 hover:bg-rose-500/20'}">
+                            ${c.concluida ? '<i class="fas fa-check font-bold"></i>' : ''}
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex flex-wrap items-center gap-2 mb-1">
+                                ${estadoTag}
+                                <span class="text-xs text-gray-400">Por <strong class="text-white">${c.criadoPor}</strong></span>
+                            </div>
+                            <h4 class="text-lg font-extrabold ${c.concluida ? 'line-through text-gray-400' : 'text-white'}">${c.nome}</h4>
+                            ${c.notas ? `<p class="text-xs text-gray-300 mt-0.5">${c.notas}</p>` : ''}
+
+                            <div class="flex flex-wrap gap-2 mt-2.5 text-xs">
+                                ${c.dataInicio ? `
+                                    <span class="bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 px-2.5 py-1 rounded-lg font-semibold">
+                                        <i class="fas fa-play mr-1"></i> Início: <strong>${formatarDataPT(c.dataInicio)}</strong>
+                                        <span class="text-[10px] text-emerald-200/80 ml-1">(Aviso planear: ${formatarDataPT(dataPlanear)})</span>
+                                    </span>` : ''}
+                                ${c.dataFim ? `
+                                    <span class="bg-amber-500/15 border border-amber-500/40 text-amber-300 px-2.5 py-1 rounded-lg font-semibold">
+                                        <i class="fas fa-stop mr-1"></i> Fim: <strong>${formatarDataPT(c.dataFim)}</strong>
+                                        <span class="text-[10px] text-amber-200/80 ml-1">(Aviso retirar: ${formatarDataPT(dataRetirar)})</span>
+                                    </span>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                    ${podeApagar ? `<button onclick="apagarCampanhaPromocao(${c.id})" class="text-gray-500 hover:text-red-400 p-2 self-end sm:self-center transition" title="Eliminar campanha"><i class="fas fa-trash-alt"></i></button>` : ''}
+                </div>`;
+            }).join('');
+        }
+
+        // ============================
         // SUGESTÕES DE MELHORIA DA EQUIPA
         // ============================
         let globalSugestoes = [];
@@ -3315,7 +3726,7 @@
                 estado: 'Nova' // 'Nova' | 'Aprovada' | 'Implementada'
             });
 
-            try { localStorage.setItem('storeDashSugestoesV53', JSON.stringify(globalSugestoes)); } catch (e) {}
+            try { localStorage.setItem('storeDashSugestoesV58', JSON.stringify(globalSugestoes)); } catch (e) {}
             enviarDadosParaGitHub();
             registarNotificacao(`Enviou sugestão (${cat}): "${txt}"`, 'sugestoes');
             document.getElementById('sugestaoTexto').value = '';
@@ -3326,7 +3737,7 @@
             const s = globalSugestoes.find(x => x.id === id);
             if (!s) return;
             s.votos = (s.votos || 0) + 1;
-            try { localStorage.setItem('storeDashSugestoesV53', JSON.stringify(globalSugestoes)); } catch (e) {}
+            try { localStorage.setItem('storeDashSugestoesV58', JSON.stringify(globalSugestoes)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarSugestoesMelhoria();
         }
@@ -3335,14 +3746,14 @@
             const s = globalSugestoes.find(x => x.id === id);
             if (!s) return;
             s.estado = novoEstado;
-            try { localStorage.setItem('storeDashSugestoesV53', JSON.stringify(globalSugestoes)); } catch (e) {}
+            try { localStorage.setItem('storeDashSugestoesV58', JSON.stringify(globalSugestoes)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarSugestoesMelhoria();
         }
 
         function apagarSugestao(id) {
             globalSugestoes = globalSugestoes.filter(x => x.id !== id);
-            try { localStorage.setItem('storeDashSugestoesV53', JSON.stringify(globalSugestoes)); } catch (e) {}
+            try { localStorage.setItem('storeDashSugestoesV58', JSON.stringify(globalSugestoes)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarSugestoesMelhoria();
         }
@@ -3443,7 +3854,7 @@
                 dataFecho: dataFecho
             };
 
-            try { localStorage.setItem('storeDashPremioMesV53', JSON.stringify(globalPremioMes)); } catch (e) {}
+            try { localStorage.setItem('storeDashPremioMesV58', JSON.stringify(globalPremioMes)); } catch (e) {}
             enviarDadosParaGitHub();
             registarNotificacao(`Atualizou Prémio do Mês (Objetivo: €${obj.toLocaleString('pt-PT')} até ${dataFecho})`, 'dashboard');
             fecharModalPremioMes();
@@ -3493,11 +3904,12 @@
         }
 
         // ============================
-        // SINCRONIZAÇÃO EM TEMPO REAL ENTRE DISPOSITIVOS (GITHUB GIST)
+        // SINCRONIZAÇÃO EM TEMPO REAL ENTRE DISPOSITIVOS (GITHUB GIST - V58 MERGE & SERVER VERSION)
         // ============================
-        let globalCloudConfig = { ativo: false, token: '', gistId: '', lastUpdated: 0 };
+        let globalCloudConfig = { ativo: false, token: '', gistId: '', lastVersion: '' };
         let cloudSyncTimer = null;
         let isSyncingNow = false;
+        let pendingPushAfterSync = false;
 
         function atualizarIndicadorCloudUI(estadoTexto, cor) {
             const dot = document.getElementById('cloudSyncDot');
@@ -3510,11 +3922,11 @@
                 if (cor === 'verde') {
                     dot.className = 'w-2 h-2 rounded-full bg-emerald-400 animate-pulse';
                     lbl.innerText = estadoTexto || 'Nuvem Ativa';
-                    lbl.className = 'hidden sm:inline text-emerald-300';
+                    lbl.className = 'inline text-emerald-300';
                 } else if (cor === 'erro') {
                     dot.className = 'w-2 h-2 rounded-full bg-red-500';
                     lbl.innerText = estadoTexto || 'Erro Nuvem';
-                    lbl.className = 'hidden sm:inline text-red-400';
+                    lbl.className = 'inline text-red-400';
                 } else {
                     dot.className = 'w-2 h-2 rounded-full bg-gray-500';
                     lbl.innerText = 'Modo Local';
@@ -3524,7 +3936,7 @@
 
             if (badge) {
                 if (globalCloudConfig.ativo) {
-                    badge.innerText = 'Nuvem GitHub Ativa (Sincronizado)';
+                    badge.innerText = 'Nuvem Ativa (ID: ' + (globalCloudConfig.gistId || '').slice(0, 6) + '...)';
                     badge.className = 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-xs font-bold px-3 py-1 rounded-full';
                 } else {
                     badge.innerText = 'Desligado (Só neste dispositivo)';
@@ -3543,6 +3955,18 @@
             }
         }
 
+        function fundirListasPorId(localArr, remoteArr, maxItems) {
+            const mapa = new Map();
+            (Array.isArray(remoteArr) ? remoteArr : []).forEach(item => {
+                if (item && item.id !== undefined) mapa.set(String(item.id), item);
+            });
+            (Array.isArray(localArr) ? localArr : []).forEach(item => {
+                if (item && item.id !== undefined) mapa.set(String(item.id), item);
+            });
+            const res = Array.from(mapa.values());
+            return maxItems ? res.slice(0, maxItems) : res;
+        }
+
         function recolherEstadoPartilhado() {
             return {
                 updatedAt: Date.now(),
@@ -3552,6 +3976,7 @@
                 ferias2027: globalFerias2027 && globalFerias2027.tipo === 'embed' ? globalFerias2027 : null,
                 tarefas: globalTarefas,
                 lembretes: globalLembretes,
+                campanhas: globalCampanhas,
                 notificacoes: globalNotificacoes.slice(0, 30),
                 rotinasPorDia: globalRotinasPorDia,
                 rotinaChecksHoje: globalRotinaChecksHoje,
@@ -3562,25 +3987,25 @@
                 perfisFotos: globalPerfisFotos,
                 staffPins: globalStaffPins,
                 adminPinsMap: getAdminPinsMap(),
-                cloudConfig: globalCloudConfig,
                 fraseAtivaCiclo: globalFraseAtivaCiclo,
                 frasesExtra: globalFrasesExtra,
                 sugestoes: globalSugestoes,
+                campanhas: globalCampanhas,
                 chatMensagens: globalChatMensagens
             };
         }
 
         function aplicarEstadoPartilhado(data) {
             if (!data || typeof data !== 'object') return;
-            if (data.horarioSheet) { globalHorarioSheet = data.horarioSheet; localStorage.setItem('storeDashHorarioSheetV53', JSON.stringify(globalHorarioSheet)); renderizarHorario(); }
-            if (data.salesforce) { globalSalesforce = data.salesforce; localStorage.setItem('storeDashSalesforceV53', JSON.stringify(globalSalesforce)); renderizarSalesforce(); }
-            if (data.sprays) { globalSprays = data.sprays; localStorage.setItem('storeDashSpraysV53', JSON.stringify(globalSprays)); renderizarSprays(); }
-            if (data.ferias2027) { globalFerias2027 = data.ferias2027; localStorage.setItem('storeDashFeriasV53', JSON.stringify(globalFerias2027)); renderizarFerias2027(); }
-            if (Array.isArray(data.tarefas)) { globalTarefas = data.tarefas; localStorage.setItem('storeDashTarefasV53', JSON.stringify(globalTarefas)); renderizarTarefas(); }
-            if (Array.isArray(data.lembretes)) { globalLembretes = data.lembretes; localStorage.setItem('storeDashLembretesV53', JSON.stringify(globalLembretes)); }
-            if (Array.isArray(data.notificacoes)) { globalNotificacoes = data.notificacoes; localStorage.setItem('storeDashNotificacoesV53', JSON.stringify(globalNotificacoes)); }
-            if (data.rotinasPorDia) { globalRotinasPorDia = data.rotinasPorDia; localStorage.setItem('storeDashRotinasPorDiaV53', JSON.stringify(globalRotinasPorDia)); }
-            if (data.rotinaChecksHoje) { globalRotinaChecksHoje = data.rotinaChecksHoje; localStorage.setItem('storeDashRotinaChecksV53', JSON.stringify(globalRotinaChecksHoje)); }
+            if (data.horarioSheet) { globalHorarioSheet = data.horarioSheet; localStorage.setItem('storeDashHorarioSheetV58', JSON.stringify(globalHorarioSheet)); renderizarHorario(); }
+            if (data.salesforce) { globalSalesforce = data.salesforce; localStorage.setItem('storeDashSalesforceV58', JSON.stringify(globalSalesforce)); renderizarSalesforce(); }
+            if (data.sprays) { globalSprays = data.sprays; localStorage.setItem('storeDashSpraysV58', JSON.stringify(globalSprays)); renderizarSprays(); }
+            if (data.ferias2027) { globalFerias2027 = data.ferias2027; localStorage.setItem('storeDashFeriasV58', JSON.stringify(globalFerias2027)); renderizarFerias2027(); }
+            if (Array.isArray(data.tarefas)) { globalTarefas = data.tarefas; localStorage.setItem('storeDashTarefasV58', JSON.stringify(globalTarefas)); renderizarTarefas(); }
+            if (Array.isArray(data.lembretes)) { globalLembretes = data.lembretes; localStorage.setItem('storeDashLembretesV58', JSON.stringify(globalLembretes)); }
+            if (Array.isArray(data.notificacoes)) { globalNotificacoes = data.notificacoes; localStorage.setItem('storeDashNotificacoesV58', JSON.stringify(globalNotificacoes)); }
+            if (data.rotinasPorDia) { globalRotinasPorDia = data.rotinasPorDia; localStorage.setItem('storeDashRotinasPorDiaV58', JSON.stringify(globalRotinasPorDia)); }
+            if (data.rotinaChecksHoje) { globalRotinaChecksHoje = data.rotinaChecksHoje; localStorage.setItem('storeDashRotinaChecksV58', JSON.stringify(globalRotinaChecksHoje)); }
             if (data.vendasDia) {
                 const hojeStr = new Date().toISOString().split('T')[0];
                 if (data.vendasDia.data === hojeStr) {
@@ -3588,44 +4013,87 @@
                 } else {
                     globalVendasDia.objetivo = data.vendasDia.objetivo || globalVendasDia.objetivo;
                 }
-                localStorage.setItem('storeDashVendasDiaV53', JSON.stringify(globalVendasDia));
+                localStorage.setItem('storeDashVendasDiaV58', JSON.stringify(globalVendasDia));
                 renderizarVendasDia();
             }
-            if (data.premioMes) { globalPremioMes = data.premioMes; localStorage.setItem('storeDashPremioMesV53', JSON.stringify(globalPremioMes)); renderizarPremioMes(); }
-            if (Array.isArray(data.kudos)) { globalKudos = data.kudos; localStorage.setItem('storeDashKudosV53', JSON.stringify(globalKudos)); renderizarKudos(); }
-            if (Array.isArray(data.kudosBadgesExtra)) { globalKudosBadgesExtra = data.kudosBadgesExtra; localStorage.setItem('storeDashKudosBadgesExtraV53', JSON.stringify(globalKudosBadgesExtra)); }
-            if (data.fraseAtivaCiclo && data.fraseAtivaCiclo.texto) { globalFraseAtivaCiclo = data.fraseAtivaCiclo; localStorage.setItem('storeDashFraseAtivaV53', JSON.stringify(globalFraseAtivaCiclo)); renderizarFraseDoDia(); }
-            if (Array.isArray(data.frasesExtra)) { globalFrasesExtra = data.frasesExtra; localStorage.setItem('storeDashFrasesExtraV53', JSON.stringify(globalFrasesExtra)); }
-            if (Array.isArray(data.sugestoes)) { globalSugestoes = data.sugestoes; localStorage.setItem('storeDashSugestoesV53', JSON.stringify(globalSugestoes)); renderizarSugestoesMelhoria(); }
+            if (data.premioMes) { globalPremioMes = data.premioMes; localStorage.setItem('storeDashPremioMesV58', JSON.stringify(globalPremioMes)); renderizarPremioMes(); }
+            if (Array.isArray(data.kudos)) { globalKudos = data.kudos; localStorage.setItem('storeDashKudosV58', JSON.stringify(globalKudos)); renderizarKudos(); }
+            if (Array.isArray(data.kudosBadgesExtra)) { globalKudosBadgesExtra = data.kudosBadgesExtra; localStorage.setItem('storeDashKudosBadgesExtraV58', JSON.stringify(globalKudosBadgesExtra)); }
+            if (data.fraseAtivaCiclo && data.fraseAtivaCiclo.texto) { globalFraseAtivaCiclo = data.fraseAtivaCiclo; localStorage.setItem('storeDashFraseAtivaV58', JSON.stringify(globalFraseAtivaCiclo)); renderizarFraseDoDia(); }
+            if (Array.isArray(data.frasesExtra)) { globalFrasesExtra = data.frasesExtra; localStorage.setItem('storeDashFrasesExtraV58', JSON.stringify(globalFrasesExtra)); }
+            if (Array.isArray(data.sugestoes)) { globalSugestoes = data.sugestoes; localStorage.setItem('storeDashSugestoesV58', JSON.stringify(globalSugestoes)); renderizarSugestoesMelhoria(); }
+            if (Array.isArray(data.campanhas)) { globalCampanhas = data.campanhas; localStorage.setItem('storeDashCampanhasV58', JSON.stringify(globalCampanhas)); renderizarCampanhasPromocoes(); }
             if (Array.isArray(data.chatMensagens)) {
                 const prevCount = globalChatMensagens.length;
                 globalChatMensagens = data.chatMensagens;
-                localStorage.setItem('storeDashChatMensagensV53', JSON.stringify(globalChatMensagens));
+                localStorage.setItem('storeDashChatMensagensV58', JSON.stringify(globalChatMensagens));
                 renderizarChatEquipa();
                 if (globalChatMensagens.length > prevCount && !floatingChatAberto) { tocarSomNotificacao(); }
             }
 
-            if (data.perfisFotos && typeof data.perfisFotos === 'object') { globalPerfisFotos = data.perfisFotos; localStorage.setItem('storeDashPerfisFotosV53', JSON.stringify(globalPerfisFotos)); atualizarAvatarSidebar(); renderizarEcraLogin(); }
-            if (data.staffPins && typeof data.staffPins === 'object') { globalStaffPins = data.staffPins; localStorage.setItem('storeDashStaffPinsV53', JSON.stringify(globalStaffPins)); renderizarEcraLogin(); }
-            if (data.adminPinsMap && typeof data.adminPinsMap === 'object') { localStorage.setItem('storeDashAdminPinsMapV53', JSON.stringify(data.adminPinsMap)); }
+            if (data.perfisFotos && typeof data.perfisFotos === 'object') { globalPerfisFotos = data.perfisFotos; localStorage.setItem('storeDashPerfisFotosV58', JSON.stringify(globalPerfisFotos)); atualizarAvatarSidebar(); renderizarEcraLogin(); }
+            if (data.staffPins && typeof data.staffPins === 'object') { globalStaffPins = data.staffPins; localStorage.setItem('storeDashStaffPinsV58', JSON.stringify(globalStaffPins)); renderizarEcraLogin(); }
+            if (data.adminPinsMap && typeof data.adminPinsMap === 'object') { localStorage.setItem('storeDashAdminPinsMapV58', JSON.stringify(data.adminPinsMap)); }
 
             renderizarChecklistRotina();
             atualizarCampainha();
             atualizarDashboardInicial();
         }
 
-        async function enviarDadosParaGitHub() {
+        async function lerRawGistSemCache(gistId, token) {
+            const res = await fetch(`https://api.github.com/gists/${gistId}?nocache=${Date.now()}_${Math.random().toString(36).slice(2)}`, {
+                cache: 'no-store',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Accept': 'application/vnd.github+json'
+                }
+            });
+            if (!res.ok) return { ok: false, status: res.status };
+            const gistData = await res.json();
+            const fileObj = gistData.files && gistData.files['storedash_db.json'];
+            let rawContent = fileObj && fileObj.content;
+            if (fileObj && fileObj.truncated && fileObj.raw_url) {
+                const rawRes = await fetch(fileObj.raw_url + '?t=' + Date.now(), { cache: 'no-store' });
+                if (rawRes.ok) rawContent = await rawRes.text();
+            }
+            const versionTag = (gistData.updated_at || '') + '_' + (rawContent ? rawContent.length : 0);
+            return { ok: true, rawContent, versionTag };
+        }
+
+        async function enviarDadosParaGitHub(skipMerge) {
             if (!globalCloudConfig.ativo || !globalCloudConfig.token || !globalCloudConfig.gistId) return;
+            if (isSyncingNow) {
+                pendingPushAfterSync = true;
+                return;
+            }
             try {
                 isSyncingNow = true;
-                const estado = recolherEstadoPartilhado();
-                globalCloudConfig.lastUpdated = estado.updatedAt;
-                localStorage.setItem('storeDashCloudConfigV53', JSON.stringify(globalCloudConfig));
+                atualizarIndicadorCloudUI('A gravar...', 'verde');
 
+                // Antes de gravar, lê o estado remoto para fundir tarefas/chat/kudos sem apagar alterações de colegas!
+                if (!skipMerge) {
+                    const remoteCheck = await lerRawGistSemCache(globalCloudConfig.gistId, globalCloudConfig.token);
+                    if (remoteCheck.ok && remoteCheck.rawContent) {
+                        try {
+                            const remoteData = JSON.parse(remoteCheck.rawContent);
+                            // Fundir fotos, pins, tarefas, chat, kudos, lembretes e sugestões sem perder alterações dos colegas
+                            if (remoteData.perfisFotos) globalPerfisFotos = { ...remoteData.perfisFotos, ...globalPerfisFotos };
+                            if (remoteData.staffPins) globalStaffPins = { ...remoteData.staffPins, ...globalStaffPins };
+                            if (Array.isArray(remoteData.tarefas)) globalTarefas = fundirListasPorId(globalTarefas, remoteData.tarefas);
+                            if (Array.isArray(remoteData.chatMensagens)) globalChatMensagens = fundirListasPorId(globalChatMensagens, remoteData.chatMensagens, 80);
+                            if (Array.isArray(remoteData.kudos)) globalKudos = fundirListasPorId(globalKudos, remoteData.kudos, 20);
+                            if (Array.isArray(remoteData.lembretes)) globalLembretes = fundirListasPorId(globalLembretes, remoteData.lembretes);
+                            if (Array.isArray(remoteData.sugestoes)) globalSugestoes = fundirListasPorId(globalSugestoes, remoteData.sugestoes);
+                            if (Array.isArray(remoteData.campanhas)) globalCampanhas = fundirListasPorId(globalCampanhas, remoteData.campanhas);
+                        } catch (e) {}
+                    }
+                }
+
+                const estado = recolherEstadoPartilhado();
                 const res = await fetch(`https://api.github.com/gists/${globalCloudConfig.gistId}`, {
                     method: 'PATCH',
                     headers: {
-                        'Authorization': `token ${globalCloudConfig.token}`,
+                        'Authorization': `Bearer ${globalCloudConfig.token}`,
                         'Accept': 'application/vnd.github+json',
                         'Content-Type': 'application/json'
                     },
@@ -3638,14 +4106,23 @@
                     })
                 });
                 if (res.ok) {
-                    atualizarIndicadorCloudUI('Nuvem Ativa', 'verde');
+                    const updatedGist = await res.json().catch(() => ({}));
+                    const rawStr = JSON.stringify(estado);
+                    globalCloudConfig.lastVersion = (updatedGist.updated_at || '') + '_' + rawStr.length;
+                    localStorage.setItem('storeDashCloudConfigV58', JSON.stringify(globalCloudConfig));
+                    const hhmm = new Date().toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
+                    atualizarIndicadorCloudUI('Nuvem ' + hhmm, 'verde');
                 } else {
-                    atualizarIndicadorCloudUI('Erro Sync', 'erro');
+                    atualizarIndicadorCloudUI('Erro ' + res.status, 'erro');
                 }
             } catch (e) {
                 atualizarIndicadorCloudUI('Offline', 'erro');
             } finally {
                 isSyncingNow = false;
+                if (pendingPushAfterSync) {
+                    pendingPushAfterSync = false;
+                    enviarDadosParaGitHub(false);
+                }
             }
         }
 
@@ -3653,29 +4130,26 @@
             if (!globalCloudConfig.ativo || !globalCloudConfig.token || !globalCloudConfig.gistId) return;
             if (isSyncingNow && !forcar) return;
             try {
-                const res = await fetch(`https://api.github.com/gists/${globalCloudConfig.gistId}?t=${Date.now()}`, {
-                    headers: {
-                        'Authorization': `token ${globalCloudConfig.token}`,
-                        'Accept': 'application/vnd.github+json'
-                    }
-                });
-                if (!res.ok) {
-                    atualizarIndicadorCloudUI('Erro Token', 'erro');
+                isSyncingNow = true;
+                const check = await lerRawGistSemCache(globalCloudConfig.gistId, globalCloudConfig.token);
+                if (!check.ok) {
+                    atualizarIndicadorCloudUI('Erro ' + check.status, 'erro');
                     return;
                 }
-                const gistData = await res.json();
-                const fileObj = gistData.files && gistData.files['storedash_db.json'];
-                if (fileObj && fileObj.content) {
-                    const parsed = JSON.parse(fileObj.content);
-                    if (forcar || (parsed.updatedAt && parsed.updatedAt > (globalCloudConfig.lastUpdated || 0))) {
-                        globalCloudConfig.lastUpdated = parsed.updatedAt || Date.now();
-                        localStorage.setItem('storeDashCloudConfigV53', JSON.stringify(globalCloudConfig));
+                if (check.rawContent) {
+                    if (forcar || check.versionTag !== globalCloudConfig.lastVersion) {
+                        const parsed = JSON.parse(check.rawContent);
+                        globalCloudConfig.lastVersion = check.versionTag;
+                        localStorage.setItem('storeDashCloudConfigV58', JSON.stringify(globalCloudConfig));
                         aplicarEstadoPartilhado(parsed);
                     }
                 }
-                atualizarIndicadorCloudUI('Nuvem Ativa', 'verde');
+                const hhmm = new Date().toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
+                atualizarIndicadorCloudUI('Nuvem ' + hhmm, 'verde');
             } catch (e) {
                 atualizarIndicadorCloudUI('Offline', 'erro');
+            } finally {
+                isSyncingNow = false;
             }
         }
 
@@ -3693,7 +4167,7 @@
                     const createRes = await fetch('https://api.github.com/gists', {
                         method: 'POST',
                         headers: {
-                            'Authorization': `token ${token}`,
+                            'Authorization': `Bearer ${token}`,
                             'Accept': 'application/vnd.github+json',
                             'Content-Type': 'application/json'
                         },
@@ -3710,7 +4184,7 @@
 
                     if (!createRes.ok) {
                         const errJson = await createRes.json().catch(() => ({}));
-                        atualizarIndicadorCloudUI('Erro Token', 'erro');
+                        atualizarIndicadorCloudUI('Erro ' + createRes.status, 'erro');
                         return alert('Não foi possível criar a base de dados no GitHub. Verifica se o token tem a permissão "gist" marcada. Detalhe: ' + (errJson.message || createRes.status));
                     }
 
@@ -3719,12 +4193,19 @@
                     document.getElementById('ghGistIdInput').value = gistId;
                 }
 
-                globalCloudConfig = { ativo: true, token: token, gistId: gistId, lastUpdated: 0 };
-                localStorage.setItem('storeDashCloudConfigV53', JSON.stringify(globalCloudConfig));
+                // Testar leitura do Gist para garantir que o ID e Token funcionam neste dispositivo
+                const testCheck = await lerRawGistSemCache(gistId, token);
+                if (!testCheck.ok) {
+                    atualizarIndicadorCloudUI('Erro ' + testCheck.status, 'erro');
+                    return alert('Erro ao aceder à base de dados partilhada (Código ' + testCheck.status + '). Verifica o Token ou a Chave de Ligação.');
+                }
+
+                globalCloudConfig = { ativo: true, token: token, gistId: gistId, lastVersion: '' };
+                localStorage.setItem('storeDashCloudConfigV58', JSON.stringify(globalCloudConfig));
                 atualizarIndicadorCloudUI('Nuvem Ativa', 'verde');
                 iniciarLoopSincronizacaoCloud();
                 await puxarDadosDoGitHub(true);
-                alert('Sincronização em Tempo Real ligada com sucesso! Copia a Chave de Ligação ou faz Backup para os outros telemóveis.');
+                alert('Ligado à Base de Dados da Equipa com sucesso! ID: ' + gistId.slice(0, 8) + '... | Tarefas: ' + globalTarefas.length + ' | Chat: ' + globalChatMensagens.length);
             } catch (e) {
                 atualizarIndicadorCloudUI('Erro Rede', 'erro');
                 alert('Erro de ligação ao GitHub: ' + e.message);
@@ -3733,8 +4214,8 @@
 
         function desligarSincronizacaoGitHub() {
             if (!confirm('Desligar a sincronização na nuvem neste dispositivo?')) return;
-            globalCloudConfig = { ativo: false, token: '', gistId: '', lastUpdated: 0 };
-            localStorage.removeItem('storeDashCloudConfigV53');
+            globalCloudConfig = { ativo: false, token: '', gistId: '', lastVersion: '' };
+            localStorage.removeItem('storeDashCloudConfigV58');
             if (cloudSyncTimer) clearInterval(cloudSyncTimer);
             atualizarIndicadorCloudUI('Modo Local', 'local');
         }
@@ -3743,7 +4224,7 @@
             const inp = document.getElementById('codigoPartilhaOutput');
             if (!inp || !inp.value) return;
             const baseUrl = window.location.href.split('?')[0].split('#')[0];
-            const fullUrl = baseUrl + '?key=' + encodeURIComponent(inp.value);
+            const fullUrl = baseUrl + '#key=' + encodeURIComponent(inp.value);
             navigator.clipboard.writeText(fullUrl).then(() => {
                 alert('Link completo copiado! Basta colar e enviar no WhatsApp da equipa.');
             }).catch(() => {
@@ -3783,7 +4264,7 @@
             if (!globalCloudConfig.ativo) return;
             cloudSyncTimer = setInterval(() => {
                 puxarDadosDoGitHub(false);
-            }, 8000);
+            }, 5000);
         }
 
         const paletaCores = ['bg-szlightgray text-white', 'bg-green-500 text-black', 'bg-fuchsia-500 text-black', 'bg-orange-500 text-black', 'bg-gray-400 text-black', 'bg-red-200 text-red-800'];
@@ -3791,7 +4272,7 @@
         function getDiaSemana(diaMes) { return diasSemanaNomes[(diaMes - 1 + 2) % 7]; }
 
         window.onload = () => {
-            const guardadoHorarioSheet = localStorage.getItem('storeDashHorarioSheetV53');
+            const guardadoHorarioSheet = localStorage.getItem('storeDashHorarioSheetV58');
             if(guardadoHorarioSheet) {
                 try {
                     globalHorarioSheet = JSON.parse(guardadoHorarioSheet);
@@ -3801,19 +4282,19 @@
                     renderizarHorario();
                 } catch(e) {}
             }
-            const guardadoHorario = localStorage.getItem('storeDashHorarioV53');
+            const guardadoHorario = localStorage.getItem('storeDashHorarioV58');
             if(guardadoHorario && !globalHorarioSheet.ativo) { globalDataHorario = JSON.parse(guardadoHorario); renderizarHorario(); }
             
-            const guardadoBriefing = localStorage.getItem('storeDashBriefingV53');
+            const guardadoBriefing = localStorage.getItem('storeDashBriefingV58');
             if(guardadoBriefing) { try { globalPaginasBriefing = JSON.parse(guardadoBriefing); renderizarEspelhoPDF('briefing'); } catch(e) {} }
 
-            const guardadoTop20 = localStorage.getItem('storeDashTop20V53');
+            const guardadoTop20 = localStorage.getItem('storeDashTop20V58');
             if(guardadoTop20) { try { globalPaginasTop20 = JSON.parse(guardadoTop20); renderizarEspelhoPDF('top20'); } catch(e) {} }
 
-            const guardadoInfo = localStorage.getItem('storeDashInfoSemanalV53');
+            const guardadoInfo = localStorage.getItem('storeDashInfoSemanalV58');
             if(guardadoInfo) { try { globalPaginasInfoSemanal = JSON.parse(guardadoInfo); renderizarEspelhoPDF('infoSemanal'); } catch(e) {} }
 
-            const guardadoSf = localStorage.getItem('storeDashSalesforceV53');
+            const guardadoSf = localStorage.getItem('storeDashSalesforceV58');
             if(guardadoSf) { 
                 try { 
                     globalSalesforce = JSON.parse(guardadoSf); 
@@ -3828,7 +4309,7 @@
                 } catch(e) {} 
             }
 
-            const guardadoSprays = localStorage.getItem('storeDashSpraysV53');
+            const guardadoSprays = localStorage.getItem('storeDashSpraysV58');
             if(guardadoSprays) {
                 try {
                     globalSprays = JSON.parse(guardadoSprays);
@@ -3839,7 +4320,7 @@
                 } catch(e) {}
             }
 
-            const guardadoFerias = localStorage.getItem('storeDashFeriasV53');
+            const guardadoFerias = localStorage.getItem('storeDashFeriasV58');
             if(guardadoFerias) {
                 try {
                     globalFerias2027 = JSON.parse(guardadoFerias);
@@ -3855,22 +4336,53 @@
                 elTopDate.innerText = new Date().toLocaleDateString('pt-PT', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
             }
 
-            const guardadoNotifs = localStorage.getItem('storeDashNotificacoesV53');
+            const guardadoNotifs = localStorage.getItem('storeDashNotificacoesV58');
             if (guardadoNotifs) { try { globalNotificacoes = JSON.parse(guardadoNotifs); } catch (e) {} }
 
-            const guardadoLembretes = localStorage.getItem('storeDashLembretesV53');
+            const guardadoLembretes = localStorage.getItem('storeDashLembretesV58');
             if (guardadoLembretes) { try { globalLembretes = JSON.parse(guardadoLembretes); } catch (e) {} }
 
-            const guardadoTarefas = localStorage.getItem('storeDashTarefasV53');
+            const guardadoCampanhas = localStorage.getItem('storeDashCampanhasV58');
+            if (guardadoCampanhas) { try { globalCampanhas = JSON.parse(guardadoCampanhas); } catch (e) {} }
+
+            const guardadoTarefas = localStorage.getItem('storeDashTarefasV58');
             if(guardadoTarefas) { globalTarefas = JSON.parse(guardadoTarefas); }
 
-            const guardadoFotos = localStorage.getItem('storeDashPerfisFotosV53');
+            const guardadoFotos = localStorage.getItem('storeDashPerfisFotosV58');
             if (guardadoFotos) { try { globalPerfisFotos = JSON.parse(guardadoFotos); } catch (e) {} }
-            const guardadoStaffPins = localStorage.getItem('storeDashStaffPinsV53');
+            const guardadoStaffPins = localStorage.getItem('storeDashStaffPinsV58');
             if (guardadoStaffPins) { try { globalStaffPins = JSON.parse(guardadoStaffPins); } catch (e) {} }
 
+            // 1. Ler configuração da nuvem guardada localmente OU vinda no link (?key=... ou #key=...)
+            const guardadoCloud = localStorage.getItem('storeDashCloudConfigV58');
+            if (guardadoCloud) {
+                try { globalCloudConfig = JSON.parse(guardadoCloud); } catch (e) {}
+            }
+            const urlParams = new URLSearchParams(window.location.search);
+            const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ''));
+            const rawIncomingKey = urlParams.get('key') || hashParams.get('key') || '';
+            const incomingKey = decodeURIComponent(rawIncomingKey).trim();
+            if (incomingKey && incomingKey.startsWith('SD_KEY_')) {
+                try {
+                    const dec = JSON.parse(atob(incomingKey.replace('SD_KEY_', '')));
+                    if (dec.t && dec.g) {
+                        globalCloudConfig = { ativo: true, token: dec.t, gistId: dec.g, lastUpdated: 0 };
+                        localStorage.setItem('storeDashCloudConfigV58', JSON.stringify(globalCloudConfig));
+                    }
+                } catch (e) {}
+            }
+            if (globalCloudConfig && globalCloudConfig.ativo && globalCloudConfig.token && globalCloudConfig.gistId) {
+                const inpTok = document.getElementById('ghTokenInput');
+                const inpGist = document.getElementById('ghGistIdInput');
+                if (inpTok) inpTok.value = globalCloudConfig.token;
+                if (inpGist) inpGist.value = globalCloudConfig.gistId;
+                atualizarIndicadorCloudUI('Nuvem Ativa', 'verde');
+                iniciarLoopSincronizacaoCloud();
+                puxarDadosDoGitHub(true);
+            }
+
             renderizarEcraLogin();
-            const guardadoPerfil = localStorage.getItem('storeDashPerfilAtivoV53');
+            const guardadoPerfil = localStorage.getItem('storeDashPerfilAtivoV58');
             if (guardadoPerfil) {
                 try {
                     const p = JSON.parse(guardadoPerfil);
@@ -3880,7 +4392,7 @@
                     }
                 } catch(e) {}
             }
-            const guardadoVendasDia = localStorage.getItem('storeDashVendasDiaV53');
+            const guardadoVendasDia = localStorage.getItem('storeDashVendasDiaV58');
             if (guardadoVendasDia) {
                 try {
                     const vd = JSON.parse(guardadoVendasDia);
@@ -3893,22 +4405,23 @@
                 } catch (e) {}
             }
 
-            const guardadoRotinasDia = localStorage.getItem('storeDashRotinasPorDiaV53');
+            const guardadoRotinasDia = localStorage.getItem('storeDashRotinasPorDiaV58');
             if (guardadoRotinasDia) { try { globalRotinasPorDia = JSON.parse(guardadoRotinasDia); } catch (e) {} }
-            const guardadoRotinaChecks = localStorage.getItem('storeDashRotinaChecksV53');
+            const guardadoRotinaChecks = localStorage.getItem('storeDashRotinaChecksV58');
             if (guardadoRotinaChecks) { try { globalRotinaChecksHoje = JSON.parse(guardadoRotinaChecks); } catch (e) {} }
 
-            const guardadoKudosBadges = localStorage.getItem('storeDashKudosBadgesExtraV53');
+            const guardadoKudosBadges = localStorage.getItem('storeDashKudosBadgesExtraV58');
             if (guardadoKudosBadges) { try { globalKudosBadgesExtra = JSON.parse(guardadoKudosBadges); } catch (e) {} }
-            const guardadoKudos = localStorage.getItem('storeDashKudosV53');
+            const guardadoKudos = localStorage.getItem('storeDashKudosV58');
             if (guardadoKudos) { try { globalKudos = JSON.parse(guardadoKudos); } catch (e) {} }
 
-            const guardadoFrasesExtra = localStorage.getItem('storeDashFrasesExtraV53');
+            const guardadoFrasesExtra = localStorage.getItem('storeDashFrasesExtraV58');
             if (guardadoFrasesExtra) { try { globalFrasesExtra = JSON.parse(guardadoFrasesExtra); } catch (e) {} }
-            const guardadoFraseAtiva = localStorage.getItem('storeDashFraseAtivaV53');
+            const guardadoFraseAtiva = localStorage.getItem('storeDashFraseAtivaV58');
             if (guardadoFraseAtiva) { try { globalFraseAtivaCiclo = JSON.parse(guardadoFraseAtiva); } catch (e) {} }
 
             renderizarTarefas();
+            renderizarCampanhasPromocoes();
             atualizarCampainha();
             renderizarVendasDia();
             renderizarPremioMes();
@@ -3919,6 +4432,11 @@
 
             // Verificar a cada minuto se já passaram as 08:00 para lançar automaticamente a nova frase das 24h
             setInterval(inicializarFraseDoDia, 60000);
+            document.addEventListener('visibilitychange', () => {
+                if (!document.hidden && globalCloudConfig && globalCloudConfig.ativo) {
+                    puxarDadosDoGitHub(false);
+                }
+            });
         };
 
         function showTab(tabId) {
@@ -3967,10 +4485,10 @@
 
             // Limpar eventual grelha manual antiga para dar prioridade ao Google Sheets ao vivo
             globalDataHorario = [];
-            localStorage.removeItem('storeDashHorarioV53');
+            localStorage.removeItem('storeDashHorarioV58');
 
             try {
-                localStorage.setItem('storeDashHorarioSheetV53', JSON.stringify(globalHorarioSheet));
+                localStorage.setItem('storeDashHorarioSheetV58', JSON.stringify(globalHorarioSheet));
             enviarDadosParaGitHub();
             } catch (e) {}
 
@@ -3982,7 +4500,7 @@
         function alternarModoEmbedHorario() {
             if (!globalHorarioSheet.ativo) return;
             globalHorarioSheet.modoLimpo = !globalHorarioSheet.modoLimpo;
-            try { localStorage.setItem('storeDashHorarioSheetV53', JSON.stringify(globalHorarioSheet));
+            try { localStorage.setItem('storeDashHorarioSheetV58', JSON.stringify(globalHorarioSheet));
             enviarDadosParaGitHub(); } catch (e) {}
             renderizarHorario();
         }
@@ -4026,9 +4544,9 @@
             });
             if(parseados.length > 0) {
                 globalHorarioSheet = { ativo: false, sheetUrl: '', editUrl: '', cleanViewUrl: '', modoLimpo: false };
-                localStorage.removeItem('storeDashHorarioSheetV53');
+                localStorage.removeItem('storeDashHorarioSheetV58');
                 globalDataHorario = parseados;
-                localStorage.setItem('storeDashHorarioV53', JSON.stringify(globalDataHorario));
+                localStorage.setItem('storeDashHorarioV58', JSON.stringify(globalDataHorario));
                 document.getElementById('excelInputHorario').value = '';
                 registarNotificacao('Atualizou a grelha de Horários', 'horario');
                 alert('Horário gravado!');
@@ -4173,7 +4691,7 @@
                 concluidaPor: ''
             });
 
-            localStorage.setItem('storeDashTarefasV53', JSON.stringify(globalTarefas));
+            localStorage.setItem('storeDashTarefasV58', JSON.stringify(globalTarefas));
             enviarDadosParaGitHub();
             registarNotificacao(`Atribuiu nova tarefa a ${encarregue}: "${desc}"`, 'tarefas');
             document.getElementById('tarefaDescricao').value = '';
@@ -4191,14 +4709,14 @@
             } else {
                 tarefa.concluidaPor = '';
             }
-            localStorage.setItem('storeDashTarefasV53', JSON.stringify(globalTarefas));
+            localStorage.setItem('storeDashTarefasV58', JSON.stringify(globalTarefas));
             enviarDadosParaGitHub();
             renderizarTarefas();
         }
 
         function apagarTarefa(id) {
             globalTarefas = globalTarefas.filter(t => t.id !== id);
-            localStorage.setItem('storeDashTarefasV53', JSON.stringify(globalTarefas));
+            localStorage.setItem('storeDashTarefasV58', JSON.stringify(globalTarefas));
             enviarDadosParaGitHub();
             renderizarTarefas();
         }
@@ -4328,7 +4846,7 @@
             };
 
             try {
-                localStorage.setItem('storeDashSalesforceV53', JSON.stringify(globalSalesforce));
+                localStorage.setItem('storeDashSalesforceV58', JSON.stringify(globalSalesforce));
             enviarDadosParaGitHub();
             } catch (e) {}
 
@@ -4340,7 +4858,7 @@
         function alternarModoEmbedSf() {
             if (globalSalesforce.tipo !== 'embed') return;
             globalSalesforce.modoLimpo = !globalSalesforce.modoLimpo;
-            try { localStorage.setItem('storeDashSalesforceV53', JSON.stringify(globalSalesforce));
+            try { localStorage.setItem('storeDashSalesforceV58', JSON.stringify(globalSalesforce));
             enviarDadosParaGitHub(); } catch (e) {}
             renderizarSalesforce();
         }
@@ -4397,7 +4915,7 @@
                     globalSalesforce = { tipo: 'visual', headers: [], rows: [], paginas: paginas, sheetUrl: '', csvUrl: '' };
                 }
 
-                try { localStorage.setItem('storeDashSalesforceV53', JSON.stringify(globalSalesforce));
+                try { localStorage.setItem('storeDashSalesforceV58', JSON.stringify(globalSalesforce));
             enviarDadosParaGitHub(); } catch (e) {}
                 registarNotificacao('Importou novo ficheiro no Salesforce', 'salesforce');
                 renderizarSalesforce();
@@ -4607,21 +5125,21 @@
 
                 if (tipo === 'briefing') {
                     globalPaginasBriefing = paginasProcessadas;
-                    try { localStorage.setItem('storeDashBriefingV53', JSON.stringify(globalPaginasBriefing)); } catch(e) {}
+                    try { localStorage.setItem('storeDashBriefingV58', JSON.stringify(globalPaginasBriefing)); } catch(e) {}
                     document.getElementById('fileNameBriefing').innerHTML = "Briefing Carregado!";
                     registarNotificacao('Carregou novo ficheiro de Briefing Diário', 'briefing');
                     renderizarEspelhoPDF('briefing');
                     showTab('briefing');
                 } else if (tipo === 'top20') {
                     globalPaginasTop20 = paginasProcessadas;
-                    try { localStorage.setItem('storeDashTop20V53', JSON.stringify(globalPaginasTop20)); } catch(e) {}
+                    try { localStorage.setItem('storeDashTop20V58', JSON.stringify(globalPaginasTop20)); } catch(e) {}
                     document.getElementById('fileNameTop20').innerHTML = "Top 20 Carregado!";
                     registarNotificacao('Atualizou o ficheiro Top 20', 'top20');
                     renderizarEspelhoPDF('top20');
                     showTab('top20');
                 } else {
                     globalPaginasInfoSemanal = paginasProcessadas;
-                    try { localStorage.setItem('storeDashInfoSemanalV53', JSON.stringify(globalPaginasInfoSemanal)); } catch(e) {}
+                    try { localStorage.setItem('storeDashInfoSemanalV58', JSON.stringify(globalPaginasInfoSemanal)); } catch(e) {}
                     document.getElementById('fileNameInfoSemanal').innerHTML = "Info Semanal Carregada!";
                     registarNotificacao('Atualizou a Informação Semanal', 'infoSemanal');
                     renderizarEspelhoPDF('infoSemanal');
@@ -4702,14 +5220,14 @@
 
                 if (tipo === 'sprays') {
                     globalSprays = resultado;
-                    try { localStorage.setItem('storeDashSpraysV53', JSON.stringify(globalSprays)); } catch (e) {}
+                    try { localStorage.setItem('storeDashSpraysV58', JSON.stringify(globalSprays)); } catch (e) {}
             enviarDadosParaGitHub();
                     registarNotificacao('Carregou novo ficheiro de Sprays', 'sprays');
                     renderizarSprays();
                     showTab('sprays');
                 } else {
                     globalFerias2027 = resultado;
-                    try { localStorage.setItem('storeDashFeriasV53', JSON.stringify(globalFerias2027)); } catch (e) {}
+                    try { localStorage.setItem('storeDashFeriasV58', JSON.stringify(globalFerias2027)); } catch (e) {}
             enviarDadosParaGitHub();
                     registarNotificacao('Carregou novo ficheiro de Férias 2027', 'ferias2027');
                     renderizarFerias2027();
@@ -4740,7 +5258,7 @@
                 modoLimpo: false
             };
 
-            try { localStorage.setItem('storeDashSpraysV53', JSON.stringify(globalSprays)); } catch (e) {}
+            try { localStorage.setItem('storeDashSpraysV58', JSON.stringify(globalSprays)); } catch (e) {}
             enviarDadosParaGitHub();
             registarNotificacao('Ligou/atualizou o Google Sheets de Sprays', 'sprays');
             renderizarSprays();
@@ -4750,7 +5268,7 @@
         function alternarModoEmbedSprays() {
             if (globalSprays.tipo !== 'embed') return;
             globalSprays.modoLimpo = !globalSprays.modoLimpo;
-            try { localStorage.setItem('storeDashSpraysV53', JSON.stringify(globalSprays)); } catch (e) {}
+            try { localStorage.setItem('storeDashSpraysV58', JSON.stringify(globalSprays)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarSprays();
         }
@@ -4849,7 +5367,7 @@
                 modoLimpo: false
             };
 
-            try { localStorage.setItem('storeDashFeriasV53', JSON.stringify(globalFerias2027)); } catch (e) {}
+            try { localStorage.setItem('storeDashFeriasV58', JSON.stringify(globalFerias2027)); } catch (e) {}
             enviarDadosParaGitHub();
             registarNotificacao('Ligou/atualizou o Google Sheets de Férias 2027', 'ferias2027');
             renderizarFerias2027();
@@ -4859,7 +5377,7 @@
         function alternarModoEmbedFerias() {
             if (globalFerias2027.tipo !== 'embed') return;
             globalFerias2027.modoLimpo = !globalFerias2027.modoLimpo;
-            try { localStorage.setItem('storeDashFeriasV53', JSON.stringify(globalFerias2027)); } catch (e) {}
+            try { localStorage.setItem('storeDashFeriasV58', JSON.stringify(globalFerias2027)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarFerias2027();
         }
@@ -4990,8 +5508,8 @@
 
         function limparDados(tipo) {
             if(tipo === 'horario' && confirm('Desligar e apagar Horário?')) {
-                localStorage.removeItem('storeDashHorarioV53');
-                localStorage.removeItem('storeDashHorarioSheetV53');
+                localStorage.removeItem('storeDashHorarioV58');
+                localStorage.removeItem('storeDashHorarioSheetV58');
                 globalDataHorario = [];
                 globalHorarioSheet = { ativo: false, sheetUrl: '', editUrl: '', cleanViewUrl: '', modoLimpo: false };
                 document.getElementById('googleSheetsHorarioUrlInput').value = '';
@@ -5004,7 +5522,7 @@
                 document.getElementById('horario-views').classList.add('hidden');
             }
             if(tipo === 'briefing' && confirm('Apagar Briefing Diário?')) {
-                localStorage.removeItem('storeDashBriefingV53');
+                localStorage.removeItem('storeDashBriefingV58');
                 globalPaginasBriefing = [];
                 document.getElementById('briefing-empty').classList.remove('hidden');
                 document.getElementById('briefing-views').classList.add('hidden');
@@ -5012,7 +5530,7 @@
                 document.getElementById('btnProcessBriefingContainer').classList.add('hidden');
             }
             if(tipo === 'top20' && confirm('Apagar Top 20?')) {
-                localStorage.removeItem('storeDashTop20V53');
+                localStorage.removeItem('storeDashTop20V58');
                 globalPaginasTop20 = [];
                 document.getElementById('top20-empty').classList.remove('hidden');
                 document.getElementById('top20-views').classList.add('hidden');
@@ -5020,7 +5538,7 @@
                 document.getElementById('btnProcessTop20Container').classList.add('hidden');
             }
             if(tipo === 'infoSemanal' && confirm('Apagar Informação Semanal?')) {
-                localStorage.removeItem('storeDashInfoSemanalV53');
+                localStorage.removeItem('storeDashInfoSemanalV58');
                 globalPaginasInfoSemanal = [];
                 document.getElementById('infoSemanal-empty').classList.remove('hidden');
                 document.getElementById('infoSemanal-views').classList.add('hidden');
@@ -5029,7 +5547,7 @@
             }
             if(tipo === 'salesforce' && confirm('Desligar e apagar dados do Salesforce?')) {
                 if (sfAutoSyncInterval) clearInterval(sfAutoSyncInterval);
-                localStorage.removeItem('storeDashSalesforceV53');
+                localStorage.removeItem('storeDashSalesforceV58');
                 globalSalesforce = { tipo: '', headers: [], rows: [], paginas: [], sheetUrl: '', csvUrl: '' };
                 document.getElementById('googleSheetsUrlInput').value = '';
                 document.getElementById('badgeSfLive').classList.add('hidden');
@@ -5041,7 +5559,7 @@
                 document.getElementById('btnProcessSalesforceManual').classList.add('hidden');
             }
             if(tipo === 'sprays' && confirm('Desligar e apagar dados de Sprays?')) {
-                localStorage.removeItem('storeDashSpraysV53');
+                localStorage.removeItem('storeDashSpraysV58');
                 globalSprays = { tipo: '', headers: [], rows: [], paginas: [], sheetUrl: '', editUrl: '', cleanViewUrl: '', modoLimpo: false };
                 document.getElementById('googleSheetsSpraysUrlInput').value = '';
                 document.getElementById('badgeSpraysLive').classList.add('hidden');
@@ -5056,7 +5574,7 @@
                 document.getElementById('btnProcessSpraysManual').classList.add('hidden');
             }
             if(tipo === 'ferias2027' && confirm('Desligar e apagar dados de Férias 2027?')) {
-                localStorage.removeItem('storeDashFeriasV53');
+                localStorage.removeItem('storeDashFeriasV58');
                 globalFerias2027 = { tipo: '', headers: [], rows: [], paginas: [], sheetUrl: '', editUrl: '', cleanViewUrl: '', modoLimpo: false };
                 document.getElementById('googleSheetsFeriasUrlInput').value = '';
                 document.getElementById('badgeFeriasLive').classList.add('hidden');
