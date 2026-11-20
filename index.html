@@ -9,7 +9,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>StoreDash - Versão Final v99 (ISRG)</title>
+    <title>StoreDash - Versão Final v107 (ISRG)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -137,56 +137,65 @@
 </head>
 <body class="bg-szdark text-white font-sans flex h-screen overflow-hidden">
 
-    <!-- ECRÃ DE ACESSO POR PERFIL (LOGIN) -->
+    <!-- ECRÃ DE ACESSO PRIVADO (NOME + PASSWORD INDIVIDUAL PARA TODA A EQUIPA) -->
     <div id="loginOverlay" class="fixed inset-0 bg-szdark/95 backdrop-blur-xl z-[200] flex items-center justify-center p-4 overflow-y-auto" style="background-image: radial-gradient(circle at 50% 0%, rgba(255,102,0,0.22), transparent 55%);">
-        <div class="sd-card border border-white/10 rounded-3xl max-w-4xl w-full p-6 sm:p-10 shadow-2xl my-auto relative overflow-hidden">
+        <div class="sd-card border border-white/10 rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl my-auto relative overflow-hidden">
             <div class="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-szorange via-amber-400 to-emerald-400"></div>
-            <div class="text-center mb-8">
-                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-szorange/15 border border-szorange/40 text-szorange text-[11px] font-extrabold uppercase tracking-widest mb-3">
-                    <span class="w-2 h-2 rounded-full bg-szorange animate-pulse"></span> ISRG Store Operations
+
+            <div class="text-center mb-6">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-szorange/15 border border-szorange/40 text-szorange text-[10px] font-extrabold uppercase tracking-widest mb-2.5">
+                    <i class="fas fa-lock"></i> Acesso Privado Equipa
                 </div>
-                <h1 class="text-4xl sm:text-5xl font-extrabold text-white tracking-tight">Store<span class="text-transparent bg-clip-text bg-gradient-to-r from-szorange to-amber-400">Dash</span></h1>
-                <p class="text-gray-400 text-sm mt-2">Seleciona o teu perfil para aceder ao painel da loja</p>
+                <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">Store<span class="text-transparent bg-clip-text bg-gradient-to-r from-szorange to-amber-400">Dash</span></h1>
+                <p class="text-gray-400 text-xs mt-1.5">Introduz o teu nome e a tua password individual para entrar</p>
             </div>
 
-            <!-- Passo 1: Escolher Perfil -->
-            <div id="loginStepSelect">
-                <!-- Secção Administradores -->
-                <div class="mb-8">
-                    <h3 class="text-xs font-bold uppercase tracking-wider text-szorange mb-3 flex items-center">
-                        <i class="fas fa-shield-alt mr-2"></i> Administração / Gestão (Acesso Total + Gestor de Dados)
-                    </h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3" id="gridAdminsLogin"></div>
+            <!-- Caixa Geral de Login (Nome + Password) -->
+            <div id="loginStepGeral" class="space-y-4">
+                <!-- Preview do Perfil Selecionado -->
+                <div class="flex items-center gap-3.5 bg-black/50 border border-gray-800 rounded-2xl p-3">
+                    <div id="loginPreviewAvatar" class="w-12 h-12 rounded-full bg-szorange text-black font-extrabold flex items-center justify-center text-sm flex-shrink-0 overflow-hidden border border-szorange/60">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="min-w-0 flex-1">
+                        <p id="loginPreviewNome" class="text-sm font-extrabold text-white truncate">Escolhe o teu perfil</p>
+                        <p id="loginPreviewCargo" class="text-[11px] text-gray-400 truncate">Cada colaborador acede apenas à sua conta</p>
+                    </div>
                 </div>
 
-                <!-- Secção Equipa -->
                 <div>
-                    <h3 class="text-xs font-bold uppercase tracking-wider text-sky-400 mb-3 flex items-center">
-                        <i class="fas fa-users mr-2"></i> Equipa de Loja (Consulta & Tarefas)
-                    </h3>
-                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3" id="gridEquipaLogin"></div>
+                    <label class="block text-[11px] text-gray-400 uppercase font-bold mb-1.5"><i class="fas fa-user text-szorange mr-1"></i> Nome do Colaborador</label>
+                    <input type="text" id="loginNomeInput" list="listaNomesLoginDatalist" oninput="atualizarPreviewLoginGeral()" onkeypress="if(event.key==='Enter') document.getElementById('loginPassInput').focus()" placeholder="Escreve ou escolhe o teu nome..." autocomplete="username" class="w-full bg-black text-white font-bold text-sm border border-gray-700 focus:border-szorange rounded-xl px-4 py-3 focus:outline-none">
+                    <datalist id="listaNomesLoginDatalist"></datalist>
                 </div>
-            </div>
 
-            <!-- Passo 2: PIN Individual (Administradores ou Colaboradores com PIN definido) -->
-            <div id="loginStepPin" class="hidden max-w-sm mx-auto text-center py-4">
-                <div id="pinPerfilAvatarBox" class="w-20 h-20 rounded-full bg-szorange/20 border-2 border-szorange text-szorange flex items-center justify-center text-2xl font-extrabold mx-auto mb-3 overflow-hidden">
-                    <i class="fas fa-user-shield"></i>
+                <div class="flex items-center justify-between px-1">
+                    <label class="inline-flex items-center gap-2 cursor-pointer select-none text-xs text-gray-300 font-semibold">
+                        <input type="checkbox" id="loginLembrarNomeCheckbox" checked class="w-4 h-4 rounded accent-szorange bg-black border-gray-700">
+                        <span>Memorizar o meu nome neste telemóvel</span>
+                    </label>
+                    <button type="button" onclick="limparNomeMemorizadoLogin()" class="text-[11px] text-gray-500 hover:text-szorange font-bold">Trocar pessoa</button>
                 </div>
-                <h3 class="text-2xl font-bold text-white" id="pinAdminNome">Utilizador</h3>
-                <p class="text-xs text-szorange font-bold uppercase tracking-wider mb-6" id="pinPerfilCargoLabel">Perfil Protegido por PIN</p>
 
-                <label class="block text-xs text-gray-400 uppercase font-bold mb-2">Introduz o teu PIN</label>
-                <input type="password" id="adminPinInput" maxlength="8" placeholder="••••" class="w-full bg-black text-white text-center text-2xl tracking-[0.5em] border border-szorange/60 rounded-xl px-4 py-3 mb-2 focus:border-szorange focus:outline-none" onkeypress="if(event.key==='Enter') confirmarPinAdmin()">
-                <p class="text-xs text-gray-500 mb-6" id="pinHintIndividual">Introduz o teu PIN individual.</p>
+                <div>
+                    <label class="block text-[11px] text-gray-400 uppercase font-bold mb-1.5"><i class="fas fa-key text-szorange mr-1"></i> Password / PIN Individual</label>
+                    <div class="relative">
+                        <input type="password" id="loginPassInput" maxlength="16" placeholder="••••" autocomplete="current-password" onkeypress="if(event.key==='Enter') confirmarLoginGeral()" class="w-full bg-black text-white text-center font-mono text-xl tracking-[0.35em] border border-gray-700 focus:border-szorange rounded-xl px-4 py-3 pr-11 focus:outline-none">
+                        <button type="button" onclick="alternarVisibilidadePassLogin()" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white p-1.5" title="Mostrar/Ocultar password">
+                            <i id="iconTogglePassLogin" class="fas fa-eye text-sm"></i>
+                        </button>
+                    </div>
+                    <p id="loginErroMsg" class="hidden text-xs text-red-400 font-bold mt-2 text-center"></p>
+                </div>
 
-                <div class="flex gap-3">
-                    <button onclick="voltarSelecaoPerfil()" class="flex-1 bg-szlightgray hover:bg-gray-600 text-white font-bold py-3 rounded-xl transition">
-                        <i class="fas fa-arrow-left mr-1"></i> Voltar
-                    </button>
-                    <button onclick="confirmarPinAdmin()" class="flex-1 bg-szorange hover:bg-white text-black font-bold py-3 rounded-xl transition shadow-lg">
-                        Entrar <i class="fas fa-sign-in-alt ml-1"></i>
-                    </button>
+                <button onclick="confirmarLoginGeral()" class="w-full bg-gradient-to-r from-szorange to-amber-500 hover:from-white hover:to-white text-black font-extrabold py-3.5 rounded-xl transition shadow-lg shadow-szorange/20 text-sm flex items-center justify-center gap-2">
+                    <i class="fas fa-sign-in-alt"></i> Entrar na Minha Conta
+                </button>
+
+                <div class="pt-3 border-t border-gray-800/80 text-center">
+                    <p class="text-[11px] text-gray-500">
+                        <i class="fas fa-shield-alt text-emerald-400 mr-1"></i> Jorge Carvalho & Filipe Moreira gerem os acessos e passwords de toda a equipa.
+                    </p>
                 </div>
             </div>
         </div>
@@ -220,7 +229,7 @@
         <div class="p-5 text-center border-b border-gray-800 flex items-center justify-between md:justify-center">
             <div>
                 <h1 class="text-2xl md:text-3xl font-bold text-white tracking-wider">Store<span class="text-szorange">Dash</span></h1>
-                <p class="text-[11px] text-gray-500 mt-0.5">ISRG Store Operations • <span class="text-emerald-400 font-bold">v99</span></p>
+                <p class="text-[11px] text-gray-500 mt-0.5">ISRG Store Operations • <span class="text-emerald-400 font-bold">v107</span></p>
             </div>
             <button onclick="fecharMenuMobile()" class="md:hidden text-gray-400 hover:text-white text-2xl p-1">
                 <i class="fas fa-times"></i>
@@ -373,7 +382,7 @@
                 <div class="grid grid-cols-2 gap-3">
                     <div>
                         <label class="block text-xs text-gray-400 font-bold uppercase mb-1">Objetivo do Dia (€)</label>
-                        <input type="number" step="0.01" id="inputVendasObjetivo" placeholder="2500" class="w-full bg-black text-szorange font-extrabold text-lg border border-gray-600 rounded-lg px-3 py-2.5 focus:border-szorange focus:outline-none">
+                        <input type="number" step="0.01" id="inputVendasObjetivo" placeholder="Ex: 2500" class="w-full bg-black text-szorange font-extrabold text-lg border border-gray-600 rounded-lg px-3 py-2.5 focus:border-szorange focus:outline-none">
                     </div>
                     <div>
                         <label class="block text-xs text-gray-400 font-bold uppercase mb-1">Hora do Registo</label>
@@ -463,7 +472,7 @@
                 <div class="grid grid-cols-2 gap-3">
                     <div>
                         <label class="block text-xs text-gray-400 font-bold uppercase mb-1">Objetivo Prémio (€)</label>
-                        <input type="number" step="0.01" id="inputPremioObjetivo" placeholder="Ex: 120000" class="w-full bg-black text-emerald-400 font-extrabold text-lg border border-gray-600 rounded-lg px-3 py-2.5 focus:border-emerald-400 focus:outline-none">
+                        <input type="number" step="0.01" id="inputPremioObjetivo" placeholder="Ex: 116500" class="w-full bg-black text-emerald-400 font-extrabold text-lg border border-gray-600 rounded-lg px-3 py-2.5 focus:border-emerald-400 focus:outline-none">
                     </div>
                     <div>
                         <label class="block text-xs text-gray-400 font-bold uppercase mb-1">Fecho do Mês</label>
@@ -574,14 +583,14 @@
                         </div>
                         <div class="text-right">
                             <span class="text-xs text-gray-400 uppercase font-bold block">Meta do Dia</span>
-                            <span id="kioskVendasObj" class="text-3xl sm:text-5xl font-black text-szorange">€2.500</span>
+                            <span id="kioskVendasObj" class="text-3xl sm:text-5xl font-black text-szorange">€0</span>
                         </div>
                     </div>
                     <div class="w-full h-7 bg-black rounded-full overflow-hidden border border-gray-700 p-1 my-4">
                         <div id="kioskVendasBar" class="h-full rounded-full bg-gradient-to-r from-szorange to-amber-400 transition-all duration-500" style="width: 0%;"></div>
                     </div>
                     <div class="flex justify-between text-sm sm:text-base font-extrabold">
-                        <span id="kioskVendasFalta" class="text-amber-300">Falta: €2.500</span>
+                        <span id="kioskVendasFalta" class="text-amber-300">Falta: €0</span>
                         <span id="kioskVendasPct" class="text-emerald-400 font-mono">0.0%</span>
                     </div>
                 </div>
@@ -607,7 +616,7 @@
             <div class="lg:col-span-5 flex flex-col gap-6">
                 <div class="bg-szgray/95 border-2 border-emerald-500/50 rounded-3xl p-6 shadow-2xl">
                     <div class="flex items-center justify-between mb-3">
-                        <span class="text-xs font-black uppercase tracking-widest text-emerald-400"><i class="fas fa-trophy mr-1.5"></i> Prémio do Mês</span>
+                        <span class="text-xs font-black uppercase tracking-widest text-emerald-400"><i class="fas fa-trophy mr-1.5"></i> Prémio do Mês • <span id="kioskPremioObjTotal" class="text-white">€116.500</span></span>
                         <span id="kioskPremioPct" class="text-sm font-mono font-black text-emerald-300">0%</span>
                     </div>
                     <div class="grid grid-cols-2 gap-3 mb-4">
@@ -731,7 +740,7 @@
                 <!-- Botão Limpar Cache / Atualizar Versão (Desktop) -->
                 <button onclick="forcarAtualizacaoApp()" class="hidden sm:flex bg-szgray hover:bg-gray-700 border border-gray-700 text-gray-300 hover:text-white px-2.5 py-2 rounded-xl text-[11px] font-bold transition items-center gap-1" title="Atualizar versão">
                     <i class="fas fa-redo-alt text-szorange"></i>
-                    <span class="hidden md:inline">v99</span>
+                    <span class="hidden md:inline">v107</span>
                 </button>
 
                 <!-- Indicador Estado Nuvem GitHub -->
@@ -788,7 +797,7 @@
         <!-- Área de Conteúdo das Abas -->
         <div class="p-4 sm:p-6 md:p-8 pb-24 md:pb-10 flex-1">
         
-        <!-- Tab Dashboard Operacional (Início - Layout Executivo Limpo v99) -->
+        <!-- Tab Dashboard Operacional (Início - Layout Executivo Limpo v107) -->
         <div id="dashboard" class="tab-content max-w-6xl mx-auto space-y-5">
 
             <!-- 1. FAIXA DE ALERTA URGENTE (+20 DIAS SALESFORCE / LEMBRETES ATIVOS) -->
@@ -821,12 +830,14 @@
                 <!-- Formulário Exclusivo Jorge Carvalho & Filipe Moreira -->
                 <div id="boxNovoComunicadoGestao" class="hidden mb-3 bg-black/50 p-3 rounded-xl border border-gray-800">
                     <div class="flex flex-col sm:flex-row gap-2">
-                        <select id="comunicadoTagSelect" class="bg-szdark text-white text-xs font-bold border border-gray-700 rounded-lg px-3 py-2 focus:border-szorange focus:outline-none">
+                        <select id="comunicadoTagSelect" onchange="alternarCampoOutroComunicado()" class="bg-szdark text-white text-xs font-bold border border-gray-700 rounded-lg px-3 py-2 focus:border-szorange focus:outline-none">
                             <option value="Aviso Importante">🚨 Aviso Importante</option>
                             <option value="Horários / Turnos">📅 Horários / Turnos</option>
                             <option value="Campanha / Loja">🏷️ Campanha / Loja</option>
                             <option value="Inventário / Operação">📦 Inventário / Operação</option>
+                            <option value="OUTRO">✏️ Outro...</option>
                         </select>
+                        <input type="text" id="comunicadoOutroTagInput" placeholder="Título da etiqueta..." class="hidden sm:w-44 bg-szdark text-szorange text-xs font-bold border border-szorange/60 rounded-lg px-3 py-2 focus:border-szorange focus:outline-none">
                         <input type="text" id="comunicadoTextoInput" placeholder="Escreve aqui um aviso importante para toda a equipa..." class="flex-1 bg-szdark text-white text-xs sm:text-sm border border-gray-700 rounded-lg px-3.5 py-2 focus:border-szorange focus:outline-none" onkeypress="if(event.key==='Enter') publicarComunicadoGestao()">
                         <button onclick="publicarComunicadoGestao()" class="bg-szorange hover:bg-white text-black font-extrabold text-xs px-4 py-2 rounded-lg transition whitespace-nowrap">
                             <i class="fas fa-paper-plane mr-1"></i> Publicar
@@ -887,12 +898,12 @@
                             </div>
                             <div class="bg-black/50 border border-szorange/30 rounded-xl p-3.5">
                                 <span class="text-[10px] font-bold uppercase tracking-wider text-szorange block">Objetivo</span>
-                                <span class="text-xl sm:text-3xl font-black text-szorange block mt-0.5" id="vendasDiaObjetivoVal">€2.500</span>
+                                <span class="text-xl sm:text-3xl font-black text-szorange block mt-0.5" id="vendasDiaObjetivoVal">€0</span>
                                 <span class="inline-block text-[10px] font-extrabold text-emerald-400 mt-0.5" id="vendasDiaPctVal">0%</span>
                             </div>
                             <div class="bg-black/50 border border-gray-800 rounded-xl p-3.5">
                                 <span class="text-[10px] font-bold uppercase tracking-wider text-gray-400 block truncate" id="vendasDiaFaltaLabel">Falta</span>
-                                <span class="text-xl sm:text-3xl font-black text-amber-300 block mt-0.5" id="vendasDiaFaltaVal">€2.500</span>
+                                <span class="text-xl sm:text-3xl font-black text-amber-300 block mt-0.5" id="vendasDiaFaltaVal">€0</span>
                                 <span class="text-[10px] text-gray-400 block truncate mt-0.5" id="vendasDiaKpisExtra"></span>
                             </div>
                         </div>
@@ -950,11 +961,14 @@
                     <div>
                         <div class="flex items-center justify-between gap-2 mb-4">
                             <div>
-                                <div class="flex items-center gap-2">
+                                <div class="flex flex-wrap items-center gap-2">
                                     <span class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-400"><i class="fas fa-trophy mr-1"></i> Prémio do Mês</span>
                                     <span id="premioMesRitmoBadge" class="text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">Em curso</span>
                                 </div>
-                                <span class="text-xs text-gray-400 mt-0.5 block" id="premioMesDataFimLabel">Até 28 Nov</span>
+                                <div class="flex flex-wrap items-baseline gap-2 mt-1">
+                                    <span class="text-lg sm:text-xl font-black text-white" id="premioMesObjetivoTotalHeader">Objetivo: €116.500</span>
+                                    <span class="text-xs text-gray-400" id="premioMesDataFimLabel">• Até 28 Nov</span>
+                                </div>
                             </div>
                             <div class="flex items-center gap-1.5">
                                 <button onclick="abrirModalPremioMes(true)" class="admin-only-btn bg-emerald-500 hover:bg-white text-black text-xs font-extrabold px-3 py-2 rounded-xl transition flex items-center gap-1" title="Colar vendas ao dia">
@@ -1005,15 +1019,6 @@
                         <div id="boxDetalhesPremioDias" class="hidden mt-2.5 pt-2.5 border-t border-gray-800 flex flex-wrap gap-1.5 max-h-32 overflow-y-auto"></div>
                     </div>
                 </div>
-            </div>
-
-            <!-- 4. SEPARADORES / ACESSO RÁPIDO (ABAIXO DO ACOMPANHAMENTO DIÁRIO) -->
-            <div class="bg-szgray/80 border border-gray-800 rounded-2xl p-3.5 sm:p-4">
-                <div class="flex items-center justify-between mb-2.5 px-1">
-                    <span class="text-[11px] font-extrabold uppercase tracking-wider text-gray-400"><i class="fas fa-th-large text-szorange mr-1.5"></i> Separadores</span>
-                    <span class="text-[10px] text-gray-500 sm:hidden">Desliza &rarr;</span>
-                </div>
-                <div id="dashboardQuickAccessGrid" class="flex overflow-x-auto no-scrollbar sm:grid sm:grid-cols-5 gap-2 pb-1 sm:pb-0"></div>
             </div>
 
             <!-- 4B. QUEM ESTÁ DE TURNO HOJE (LIDO DA GRELHA DE HORÁRIOS) -->
@@ -1081,6 +1086,15 @@
                     </div>
                 </div>
             </div>
+            <!-- 4. SEPARADORES / ACESSO RÁPIDO (ABAIXO DO ACOMPANHAMENTO DIÁRIO) -->
+            <div class="bg-szgray/80 border border-gray-800 rounded-2xl p-3.5 sm:p-4">
+                <div class="flex items-center justify-between mb-2.5 px-1">
+                    <span class="text-[11px] font-extrabold uppercase tracking-wider text-gray-400"><i class="fas fa-th-large text-szorange mr-1.5"></i> Separadores</span>
+                    <span class="text-[10px] text-gray-500 sm:hidden">Desliza &rarr;</span>
+                </div>
+                <div id="dashboardQuickAccessGrid" class="flex overflow-x-auto no-scrollbar sm:grid sm:grid-cols-5 gap-2 pb-1 sm:pb-0"></div>
+            </div>
+
         </div>
 
                 <!-- Tab Carregar (Central de Ficheiros - Apenas Administradores) -->
@@ -1094,8 +1108,8 @@
                     <button onclick="alternarTodosBlocosGestorDados()" id="btnToggleTodosBlocosDados" class="bg-szgray hover:bg-szlightgray text-gray-200 border border-gray-700 font-bold text-xs px-3.5 py-2.5 rounded-xl transition flex items-center gap-1.5" title="Minimizar ou expandir todos os painéis">
                         <i class="fas fa-compress-alt text-szorange"></i> <span>Minimizar Todos</span>
                     </button>
-                    <div class="bg-szgray px-4 py-2.5 rounded-xl border border-gray-700 flex flex-wrap items-center gap-2">
-                        <span class="text-xs text-gray-400 font-bold uppercase"><i class="fas fa-key text-szorange mr-1"></i> PIN:</span>
+                    <div id="boxAlterarPinOutrosAdmins" class="hidden bg-szgray px-4 py-2.5 rounded-xl border border-gray-700 flex flex-wrap items-center gap-2">
+                        <span class="text-xs text-gray-400 font-bold uppercase"><i class="fas fa-key text-szorange mr-1"></i> Pass Equipa:</span>
                         <select id="adminTargetPinSelect" class="bg-black text-white text-xs font-bold border border-gray-600 rounded px-2 py-1.5 focus:border-szorange focus:outline-none">
                             <option value="Jorge Carvalho">Jorge</option>
                             <option value="Filipe Moreira">Filipe</option>
@@ -1263,7 +1277,13 @@
                             </div>
                         </div>
                         <div class="gd-card-body">
-                            <p class="text-gray-300 mb-3 text-xs">Seleciona os nomes e os turnos do mês no teu Excel / Google Sheets, faz <strong>Copiar (Ctrl+C)</strong> e cola abaixo. Ao clicar em <strong>Gravar Grelha</strong>, fica visível na hora para toda a equipa!</p>
+                            <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                                <p class="text-gray-300 text-xs">Escolhe o <strong>Mês/Ano</strong>, seleciona os nomes e turnos no Excel / Sheets, faz <strong>Copiar (Ctrl+C)</strong> e cola abaixo:</p>
+                                <div class="flex items-center gap-2 bg-black/70 border border-szorange/40 rounded-lg px-2.5 py-1.5">
+                                    <label for="inputHorarioMesAno" class="text-[11px] font-extrabold uppercase text-szorange">Mês da Escala:</label>
+                                    <input type="month" id="inputHorarioMesAno" onchange="alterarMesAnoHorario(this.value)" class="bg-szdark text-white text-xs font-extrabold border border-gray-700 rounded px-2 py-1 focus:border-szorange focus:outline-none">
+                                </div>
+                            </div>
                             <div class="flex flex-col sm:flex-row gap-2">
                                 <textarea id="excelInputHorario" rows="3" class="flex-1 bg-black text-white p-3 rounded-lg border border-szorange/50 focus:border-szorange focus:outline-none font-mono text-xs" placeholder="CTRL+V (Colar) aqui os nomes e turnos copiados da folha..."></textarea>
                                 <div class="flex sm:flex-col gap-2">
@@ -1452,7 +1472,11 @@
                     </h2>
                     <p class="text-gray-400 text-sm mt-1" id="horarioSubtitulo">Consulta escalas, pede trocas de turno ou folgas e verifica o banco de horas disponível.</p>
                 </div>
-                <div class="flex flex-wrap gap-2">
+                <div class="flex flex-wrap items-center gap-2">
+                    <div class="bg-szgray border border-gray-700 rounded-lg px-2.5 py-1.5 flex items-center gap-1.5">
+                        <span class="text-[11px] font-bold text-gray-400 uppercase">Mês:</span>
+                        <input type="month" id="horarioTabMesAnoInput" onchange="alterarMesAnoHorario(this.value)" class="bg-black text-szorange text-xs font-extrabold border border-gray-700 rounded px-2 py-1 focus:border-szorange focus:outline-none">
+                    </div>
                     <button id="btnRefreshHorarioNow" onclick="sincronizarHorarioGoogleSheetsAgora()" class="hidden bg-emerald-500 hover:bg-emerald-400 text-black font-bold px-4 py-2 rounded-lg text-sm transition shadow-lg flex items-center">
                         <i class="fas fa-sync-alt mr-2" id="iconRefreshHorario"></i> Atualizar Agora
                     </button>
@@ -2585,8 +2609,20 @@
             'Fábio Ferreira': '4004'
         };
 
+        const DEFAULT_STAFF_PINS = {
+            'Isabel Dias': '1101',
+            'Carina Nogueira': '1102',
+            'Lara Nogueira': '1103',
+            'Verónica Silva': '1104',
+            'Diogo Fernandes': '1105',
+            'Rita Rocha': '1106',
+            'Ana Varela': '1107',
+            'Mariana': '1108',
+            'Maria': '1109'
+        };
+
         let globalPerfisFotos = {}; // { 'Jorge Carvalho': 'data:image/jpeg;base64,...' }
-        let globalStaffPins = {};   // { 'Isabel Dias': '5555' }
+        let globalStaffPins = { ...DEFAULT_STAFF_PINS };   // Todos os colaboradores têm password individual obrigatória
 
         function isGestorEquipaAutorizado() {
             return Boolean(perfilAtual && (perfilAtual.nome === 'Jorge Carvalho' || perfilAtual.nome === 'Filipe Moreira'));
@@ -2600,7 +2636,7 @@
         }
 
         function guardarListaEquipaLocal() {
-            try { localStorage.setItem('storeDashEquipaPerfisV99', JSON.stringify(PERFIS_LOJA)); } catch (e) {}
+            try { localStorage.setItem('storeDashEquipaPerfisV107', JSON.stringify(PERFIS_LOJA)); } catch (e) {}
         }
 
         function atualizarDropdownsEquipa() {
@@ -2642,7 +2678,7 @@
             const selAdminPin = document.getElementById('adminTargetPinSelect');
             if (selAdminPin) {
                 const cur = selAdminPin.value;
-                selAdminPin.innerHTML = admins.map(a => `<option value="${a.nome}">${a.nome}</option>`).join('');
+                selAdminPin.innerHTML = PERFIS_LOJA.map(p => `<option value="${p.nome}">${p.nome}</option>`).join('');
                 if ([...selAdminPin.options].some(o => o.value === cur)) selAdminPin.value = cur;
             }
 
@@ -2685,6 +2721,8 @@
 
             const autorizado = isGestorEquipaAutorizado();
             card.classList.toggle('hidden', !autorizado);
+            const boxPinTop = document.getElementById('boxAlterarPinOutrosAdmins');
+            if (boxPinTop) boxPinTop.classList.toggle('hidden', !autorizado);
             if (!autorizado) return;
 
             listaEl.innerHTML = PERFIS_LOJA.map(p => {
@@ -2703,7 +2741,7 @@
                             <p class="font-bold text-sm text-white truncate">${p.nome}</p>
                             <div class="flex flex-wrap items-center gap-1.5 text-[10px]">
                                 <span class="px-1.5 py-0.5 rounded font-bold uppercase ${isAdmin ? 'bg-szorange/20 text-szorange' : 'bg-sky-500/20 text-sky-300'}">${p.cargo}</span>
-                                <span class="text-gray-400">${temPin ? '<i class="fas fa-key text-emerald-400 mr-0.5"></i> PIN ativo' : 'Sem PIN'}</span>
+                                <span class="text-emerald-300 font-mono"><i class="fas fa-key text-emerald-400 mr-0.5"></i> Pass: <strong>${isAdmin ? getAdminPin(p.nome) : getStaffPin(p.nome)}</strong></span>
                                 ${temFoto ? '<span class="text-emerald-400">• Com foto</span>' : ''}
                             </div>
                         </div>
@@ -2753,10 +2791,10 @@
             if (role === 'admin') {
                 const pins = getAdminPinsMap();
                 pins[nome] = pinInicial || '1234';
-                localStorage.setItem('storeDashAdminPinsMapV99', JSON.stringify(pins));
+                localStorage.setItem('storeDashAdminPinsMapV107', JSON.stringify(pins));
             } else if (pinInicial) {
                 globalStaffPins[nome] = pinInicial;
-                localStorage.setItem('storeDashStaffPinsV99', JSON.stringify(globalStaffPins));
+                localStorage.setItem('storeDashStaffPinsV107', JSON.stringify(globalStaffPins));
             }
 
             document.getElementById('novoColabNomeInput').value = '';
@@ -2785,9 +2823,9 @@
 
             guardarListaEquipaLocal();
             try {
-                localStorage.setItem('storeDashPerfisFotosV99', JSON.stringify(globalPerfisFotos));
-                localStorage.setItem('storeDashStaffPinsV99', JSON.stringify(globalStaffPins));
-                localStorage.setItem('storeDashAdminPinsMapV99', JSON.stringify(pins));
+                localStorage.setItem('storeDashPerfisFotosV107', JSON.stringify(globalPerfisFotos));
+                localStorage.setItem('storeDashStaffPinsV107', JSON.stringify(globalStaffPins));
+                localStorage.setItem('storeDashAdminPinsMapV107', JSON.stringify(pins));
             } catch (e) {}
 
             atualizarDropdownsEquipa();
@@ -2803,23 +2841,18 @@
             if (!isGestorEquipaAutorizado()) return;
             const perfil = PERFIS_LOJA.find(p => p.nome === nome);
             if (!perfil) return;
-            const novoPin = prompt(`Define o novo PIN para ${nome} (4 a 8 dígitos, ou deixa vazio para remover PIN de colaborador):`);
+            const atualPass = (perfil.role === 'admin') ? getAdminPin(nome) : getStaffPin(nome);
+            const novoPin = prompt(`Define a nova password/PIN para ${nome} (mínimo 4 caracteres):`, atualPass);
             if (novoPin === null) return;
             const limpo = novoPin.trim();
+            if (limpo.length < 4) return alert('A password/PIN deve ter pelo menos 4 caracteres.');
             if (perfil.role === 'admin') {
-                if (limpo.length < 4) return alert('O PIN de Administrador tem de ter pelo menos 4 dígitos.');
                 const pins = getAdminPinsMap();
                 pins[nome] = limpo;
-                localStorage.setItem('storeDashAdminPinsMapV99', JSON.stringify(pins));
+                localStorage.setItem('storeDashAdminPinsMapV107', JSON.stringify(pins));
             } else {
-                if (limpo === '') {
-                    delete globalStaffPins[nome];
-                } else if (limpo.length < 4) {
-                    return alert('O PIN deve ter pelo menos 4 dígitos.');
-                } else {
-                    globalStaffPins[nome] = limpo;
-                }
-                localStorage.setItem('storeDashStaffPinsV99', JSON.stringify(globalStaffPins));
+                globalStaffPins[nome] = limpo;
+                localStorage.setItem('storeDashStaffPinsV107', JSON.stringify(globalStaffPins));
             }
             renderizarGestaoEquipaAdmin();
             renderizarNavegacaoSeparadores();
@@ -2831,7 +2864,7 @@
 
         function getAdminPinsMap() {
             try {
-                const saved = JSON.parse(localStorage.getItem('storeDashAdminPinsMapV99') || '{}');
+                const saved = JSON.parse(localStorage.getItem('storeDashAdminPinsMapV107') || '{}');
                 return { ...DEFAULT_ADMIN_PINS, ...saved };
             } catch (e) {
                 return { ...DEFAULT_ADMIN_PINS };
@@ -2844,7 +2877,15 @@
         }
 
         function getStaffPin(nomeStaff) {
-            return globalStaffPins[nomeStaff] || '';
+            if (globalStaffPins && globalStaffPins[nomeStaff]) return String(globalStaffPins[nomeStaff]);
+            if (DEFAULT_STAFF_PINS[nomeStaff]) return DEFAULT_STAFF_PINS[nomeStaff];
+            // Gera PIN inicial determinístico de 4 dígitos para novos colaboradores se ainda não definido
+            let hash = 0;
+            for (let i = 0; i < String(nomeStaff).length; i++) {
+                hash = ((hash << 5) - hash) + String(nomeStaff).charCodeAt(i);
+                hash |= 0;
+            }
+            return String(1000 + (Math.abs(hash) % 8999));
         }
 
         function getAvatarHtml(perfil, sizeClasses) {
@@ -2856,106 +2897,161 @@
         }
 
         function alterarPinAdmin() {
-            if (!perfilAtual || perfilAtual.role !== 'admin') return;
+            if (!isGestorEquipaAutorizado()) return alert('Apenas o Jorge Carvalho ou o Filipe Moreira podem alterar passwords de outros perfis.');
             const alvo = document.getElementById('adminTargetPinSelect').value;
             const novoPin = document.getElementById('novoPinAdminInput').value.trim();
-            if (novoPin.length < 4) return alert('O PIN deve ter pelo menos 4 dígitos.');
+            if (novoPin.length < 4) return alert('A password/PIN deve ter pelo menos 4 caracteres.');
 
-            const pins = getAdminPinsMap();
-            pins[alvo] = novoPin;
-            localStorage.setItem('storeDashAdminPinsMapV99', JSON.stringify(pins));
+            const perfilAlvo = PERFIS_LOJA.find(p => p.nome === alvo);
+            if (perfilAlvo && perfilAlvo.role === 'admin') {
+                const pins = getAdminPinsMap();
+                pins[alvo] = novoPin;
+                localStorage.setItem('storeDashAdminPinsMapV107', JSON.stringify(pins));
+            } else {
+                globalStaffPins[alvo] = novoPin;
+                localStorage.setItem('storeDashStaffPinsV107', JSON.stringify(globalStaffPins));
+            }
             enviarDadosParaGitHub();
             document.getElementById('novoPinAdminInput').value = '';
-            registarNotificacao(`Alterou o PIN individual de ${alvo}`, 'carregar');
-            alert(`PIN individual de ${alvo} atualizado com sucesso!`);
+            renderizarGestaoEquipaAdmin();
+            registarNotificacao(`Alterou a password individual de ${alvo}`, 'carregar');
+            alert(`Password individual de ${alvo} atualizada com sucesso!`);
+        }
+
+        function encontrarPerfilPorNomeDigitado(texto) {
+            const norm = s => String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').trim();
+            const q = norm(texto);
+            if (!q) return null;
+            // 1. Correspondência exata do nome completo
+            let exact = PERFIS_LOJA.find(p => norm(p.nome) === q);
+            if (exact) return exact;
+            // 2. Correspondência exata pelo primeiro nome (se for único)
+            const porPrimeiro = PERFIS_LOJA.filter(p => norm(p.nome).split(' ')[0] === q);
+            if (porPrimeiro.length === 1) return porPrimeiro[0];
+            return null;
+        }
+
+        function atualizarPreviewLoginGeral() {
+            const inpNome = document.getElementById('loginNomeInput');
+            const avatarEl = document.getElementById('loginPreviewAvatar');
+            const nomeEl = document.getElementById('loginPreviewNome');
+            const cargoEl = document.getElementById('loginPreviewCargo');
+            const erroEl = document.getElementById('loginErroMsg');
+            if (erroEl) erroEl.classList.add('hidden');
+            if (!inpNome || !avatarEl || !nomeEl || !cargoEl) return;
+
+            const perfil = encontrarPerfilPorNomeDigitado(inpNome.value);
+            if (perfil) {
+                avatarEl.innerHTML = getAvatarHtml(perfil);
+                nomeEl.innerText = perfil.nome;
+                cargoEl.innerText = perfil.cargo;
+            } else {
+                avatarEl.innerHTML = '<i class="fas fa-user"></i>';
+                nomeEl.innerText = inpNome.value.trim() ? 'A procurar colaborador...' : 'Escolhe o teu perfil';
+                cargoEl.innerText = 'Cada colaborador acede apenas à sua conta';
+            }
+        }
+
+        function alternarVisibilidadePassLogin() {
+            const inp = document.getElementById('loginPassInput');
+            const icon = document.getElementById('iconTogglePassLogin');
+            if (!inp || !icon) return;
+            if (inp.type === 'password') {
+                inp.type = 'text';
+                icon.className = 'fas fa-eye-slash text-sm';
+            } else {
+                inp.type = 'password';
+                icon.className = 'fas fa-eye text-sm';
+            }
+        }
+
+        function limparNomeMemorizadoLogin() {
+            try { localStorage.removeItem('storeDashUltimoNomeLoginV107'); } catch (e) {}
+            const inpNome = document.getElementById('loginNomeInput');
+            const inpPass = document.getElementById('loginPassInput');
+            if (inpNome) inpNome.value = '';
+            if (inpPass) inpPass.value = '';
+            atualizarPreviewLoginGeral();
+            if (inpNome) inpNome.focus();
         }
 
         function renderizarEcraLogin() {
-            const gridAdmins = document.getElementById('gridAdminsLogin');
-            const gridEquipa = document.getElementById('gridEquipaLogin');
-
-            gridAdmins.innerHTML = PERFIS_LOJA.filter(p => p.role === 'admin').map(p => `
-                <button onclick="selecionarPerfilLogin('${p.nome}')" class="bg-black/80 hover:bg-szorange/20 border border-szorange/50 hover:border-szorange rounded-xl p-4 text-left transition group flex flex-col justify-between">
-                    <div class="flex items-center justify-between mb-3">
-                        <span class="w-11 h-11 rounded-full bg-szorange text-black font-extrabold flex items-center justify-center text-sm overflow-hidden border border-szorange">${getAvatarHtml(p)}</span>
-                        <i class="fas fa-lock text-szorange text-xs group-hover:scale-110 transition"></i>
-                    </div>
-                    <div>
-                        <p class="font-bold text-white text-base">${p.nome}</p>
-                        <p class="text-[11px] text-szorange font-semibold uppercase">${p.cargo}</p>
-                    </div>
-                </button>
-            `).join('');
-
-            gridEquipa.innerHTML = PERFIS_LOJA.filter(p => p.role === 'staff').map(p => {
-                const temPin = Boolean(getStaffPin(p.nome));
-                return `
-                <button onclick="selecionarPerfilLogin('${p.nome}')" class="bg-black/60 hover:bg-sky-500/20 border border-gray-700 hover:border-sky-400 rounded-xl p-3.5 text-left transition flex flex-col justify-between">
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="w-10 h-10 rounded-full bg-szlightgray text-white font-bold flex items-center justify-center text-xs overflow-hidden border border-gray-600">${getAvatarHtml(p)}</span>
-                        ${temPin ? '<i class="fas fa-lock text-sky-400 text-xs" title="Protegido por PIN"></i>' : '<i class="fas fa-arrow-right text-gray-600 text-xs"></i>'}
-                    </div>
-                    <div>
-                        <p class="font-bold text-white text-sm">${p.nome}</p>
-                        <p class="text-[10px] text-gray-400 uppercase">Colaborador</p>
-                    </div>
-                </button>`;
-            }).join('');
-        }
-
-        function selecionarPerfilLogin(nome) {
-            const perfil = PERFIS_LOJA.find(p => p.nome === nome);
-            if (!perfil) return;
-
-            const isAdmin = (perfil.role === 'admin');
-            const staffPin = !isAdmin ? getStaffPin(perfil.nome) : '';
-
-            if (isAdmin || staffPin) {
-                adminPendentePin = perfil;
-                document.getElementById('pinAdminNome').innerText = perfil.nome;
-                document.getElementById('pinPerfilCargoLabel').innerText = isAdmin ? 'Perfil Administrador' : 'Perfil Colaborador (Com PIN)';
-                const avatarBox = document.getElementById('pinPerfilAvatarBox');
-                avatarBox.innerHTML = getAvatarHtml(perfil);
-
-                if (isAdmin) {
-                    const defaultHint = DEFAULT_ADMIN_PINS[perfil.nome] || '1234';
-                    const hasCustomPin = Boolean(JSON.parse(localStorage.getItem('storeDashAdminPinsMapV99') || '{}')[perfil.nome]);
-                    document.getElementById('pinHintIndividual').innerHTML = hasCustomPin
-                        ? 'PIN individual personalizado ativo.'
-                        : `PIN inicial de ${perfil.nome.split(' ')[0]}: <span class="text-gray-300 font-mono font-bold">${defaultHint}</span> (podes mudar em Meu Perfil)`;
-                } else {
-                    document.getElementById('pinHintIndividual').innerText = 'Introduz o teu PIN pessoal definido no teu perfil.';
-                }
-
-                document.getElementById('adminPinInput').value = '';
-                document.getElementById('loginStepSelect').classList.add('hidden');
-                document.getElementById('loginStepPin').classList.remove('hidden');
-                setTimeout(() => document.getElementById('adminPinInput').focus(), 100);
-            } else {
-                aplicarSessaoPerfil(perfil);
+            const dl = document.getElementById('listaNomesLoginDatalist');
+            if (dl) {
+                dl.innerHTML = PERFIS_LOJA.map(p => `<option value="${p.nome}">`).join('');
             }
+            const inpNome = document.getElementById('loginNomeInput');
+            try {
+                const nomeSalvo = localStorage.getItem('storeDashUltimoNomeLoginV107');
+                if (nomeSalvo && inpNome && !inpNome.value.trim()) {
+                    inpNome.value = nomeSalvo;
+                }
+            } catch (e) {}
+            atualizarPreviewLoginGeral();
         }
 
         function voltarSelecaoPerfil() {
             adminPendentePin = null;
-            document.getElementById('loginStepPin').classList.add('hidden');
-            document.getElementById('loginStepSelect').classList.remove('hidden');
+            const inpPass = document.getElementById('loginPassInput');
+            const erroEl = document.getElementById('loginErroMsg');
+            if (inpPass) inpPass.value = '';
+            if (erroEl) erroEl.classList.add('hidden');
+            atualizarPreviewLoginGeral();
         }
 
-        function confirmarPinAdmin() {
-            if (!adminPendentePin) return;
-            const pinDigitado = document.getElementById('adminPinInput').value.trim();
-            const pinCorreto = (adminPendentePin.role === 'admin')
-                ? getAdminPin(adminPendentePin.nome)
-                : getStaffPin(adminPendentePin.nome);
+        function confirmarLoginGeral() {
+            const nomeDigitado = (document.getElementById('loginNomeInput').value || '').trim();
+            const passDigitada = (document.getElementById('loginPassInput').value || '').trim();
+            const erroEl = document.getElementById('loginErroMsg');
 
-            if (pinDigitado === pinCorreto) {
-                aplicarSessaoPerfil(adminPendentePin);
-                voltarSelecaoPerfil();
+            const mostrarErro = (msg) => {
+                if (erroEl) {
+                    erroEl.innerText = msg;
+                    erroEl.classList.remove('hidden');
+                } else {
+                    alert(msg);
+                }
+            };
+
+            if (!nomeDigitado) {
+                mostrarErro('Escreve ou seleciona o teu nome.');
+                document.getElementById('loginNomeInput').focus();
+                return;
+            }
+
+            const perfil = encontrarPerfilPorNomeDigitado(nomeDigitado);
+            if (!perfil) {
+                mostrarErro('Nome não encontrado. Escreve o teu nome completo conforme registado na loja.');
+                document.getElementById('loginNomeInput').focus();
+                return;
+            }
+
+            if (!passDigitada) {
+                mostrarErro('Introduz a tua password / PIN individual.');
+                document.getElementById('loginPassInput').focus();
+                return;
+            }
+
+            const passCorreta = (perfil.role === 'admin')
+                ? getAdminPin(perfil.nome)
+                : getStaffPin(perfil.nome);
+
+            if (passDigitada === passCorreta) {
+                const chkLembrar = document.getElementById('loginLembrarNomeCheckbox');
+                try {
+                    if (chkLembrar && chkLembrar.checked) {
+                        localStorage.setItem('storeDashUltimoNomeLoginV107', perfil.nome);
+                    } else {
+                        localStorage.removeItem('storeDashUltimoNomeLoginV107');
+                    }
+                } catch (e) {}
+                document.getElementById('loginPassInput').value = '';
+                if (erroEl) erroEl.classList.add('hidden');
+                aplicarSessaoPerfil(perfil);
             } else {
-                alert('PIN incorreto! Tenta novamente.');
-                document.getElementById('adminPinInput').value = '';
-                document.getElementById('adminPinInput').focus();
+                mostrarErro('Password incorreta para ' + perfil.nome + '. Tenta novamente.');
+                document.getElementById('loginPassInput').value = '';
+                document.getElementById('loginPassInput').focus();
             }
         }
 
@@ -2985,8 +3081,8 @@
             const isAdmin = (perfilAtual.role === 'admin');
             document.getElementById('meuPerfilPinDesc').innerText = isAdmin
                 ? 'Altera o teu PIN individual de Administrador (4 a 8 dígitos).'
-                : 'Opcional: define um PIN pessoal se quiseres proteger a tua entrada (ou deixa vazio para entrar em 1 toque).';
-            document.getElementById('boxRemoverPinStaff').classList.toggle('hidden', isAdmin || !getStaffPin(perfilAtual.nome));
+                : 'Altera aqui a tua password/PIN pessoal de acesso à StoreDash (mínimo 4 caracteres).';
+            document.getElementById('boxRemoverPinStaff').classList.add('hidden');
 
             document.getElementById('modalMeuPerfil').classList.remove('hidden');
         }
@@ -3014,7 +3110,7 @@
 
                     const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
                     globalPerfisFotos[perfilAtual.nome] = dataUrl;
-                    try { localStorage.setItem('storeDashPerfisFotosV99', JSON.stringify(globalPerfisFotos)); } catch (err) {}
+                    try { localStorage.setItem('storeDashPerfisFotosV107', JSON.stringify(globalPerfisFotos)); } catch (err) {}
                     atualizarAvatarSidebar();
                     renderizarEcraLogin();
                     renderizarGestaoEquipaAdmin();
@@ -3032,7 +3128,7 @@
         function removerFotoPerfilAtual() {
             if (!perfilAtual) return;
             delete globalPerfisFotos[perfilAtual.nome];
-            try { localStorage.setItem('storeDashPerfisFotosV99', JSON.stringify(globalPerfisFotos)); } catch (e) {}
+            try { localStorage.setItem('storeDashPerfisFotosV107', JSON.stringify(globalPerfisFotos)); } catch (e) {}
             atualizarAvatarSidebar();
             renderizarEcraLogin();
             renderizarGestaoEquipaAdmin();
@@ -3050,10 +3146,10 @@
             if (perfilAtual.role === 'admin') {
                 const pins = getAdminPinsMap();
                 pins[perfilAtual.nome] = novoPin;
-                localStorage.setItem('storeDashAdminPinsMapV99', JSON.stringify(pins));
+                localStorage.setItem('storeDashAdminPinsMapV107', JSON.stringify(pins));
             } else {
                 globalStaffPins[perfilAtual.nome] = novoPin;
-                localStorage.setItem('storeDashStaffPinsV99', JSON.stringify(globalStaffPins));
+                localStorage.setItem('storeDashStaffPinsV107', JSON.stringify(globalStaffPins));
             }
 
             document.getElementById('meuPerfilNovoPinInput').value = '';
@@ -3069,7 +3165,7 @@
         function removerMeuPinStaff() {
             if (!perfilAtual || perfilAtual.role === 'admin') return;
             delete globalStaffPins[perfilAtual.nome];
-            localStorage.setItem('storeDashStaffPinsV99', JSON.stringify(globalStaffPins));
+            localStorage.setItem('storeDashStaffPinsV107', JSON.stringify(globalStaffPins));
             renderizarEcraLogin();
             renderizarGestaoEquipaAdmin();
             renderizarNavegacaoSeparadores();
@@ -3081,7 +3177,7 @@
 
         function aplicarSessaoPerfil(perfil) {
             perfilAtual = perfil;
-            localStorage.setItem('storeDashPerfilAtivoV99', JSON.stringify(perfil));
+            localStorage.setItem('storeDashPerfilAtivoV107', JSON.stringify(perfil));
 
             document.getElementById('loginOverlay').classList.add('hidden');
             document.getElementById('sidebarUserCard').classList.remove('hidden');
@@ -3147,7 +3243,7 @@
 
         function terminarSessaoPerfil() {
             perfilAtual = null;
-            localStorage.removeItem('storeDashPerfilAtivoV99');
+            localStorage.removeItem('storeDashPerfilAtivoV107');
             voltarSelecaoPerfil();
             document.getElementById('loginOverlay').classList.remove('hidden');
         }
@@ -3182,7 +3278,7 @@
 
             if (globalNotificacoes.length > 50) globalNotificacoes = globalNotificacoes.slice(0, 50);
             tocarSomNotificacao();
-            try { localStorage.setItem('storeDashNotificacoesV99', JSON.stringify(globalNotificacoes)); } catch (e) {}
+            try { localStorage.setItem('storeDashNotificacoesV107', JSON.stringify(globalNotificacoes)); } catch (e) {}
             atualizarCampainha();
         }
 
@@ -3232,7 +3328,7 @@
                 concluido: false
             });
 
-            try { localStorage.setItem('storeDashLembretesV99', JSON.stringify(globalLembretes)); } catch (e) {}
+            try { localStorage.setItem('storeDashLembretesV107', JSON.stringify(globalLembretes)); } catch (e) {}
             enviarDadosParaGitHub();
             registarNotificacao(`Criou um lembrete (${separador.toUpperCase()}): "${titulo}"`, separador);
             fecharModalLembrete();
@@ -3243,14 +3339,14 @@
             const item = globalLembretes.find(l => l.id === id);
             if (!item) return;
             item.concluido = true;
-            try { localStorage.setItem('storeDashLembretesV99', JSON.stringify(globalLembretes)); } catch (e) {}
+            try { localStorage.setItem('storeDashLembretesV107', JSON.stringify(globalLembretes)); } catch (e) {}
             enviarDadosParaGitHub();
             atualizarCampainha();
         }
 
         function apagarLembrete(id) {
             globalLembretes = globalLembretes.filter(l => l.id !== id);
-            try { localStorage.setItem('storeDashLembretesV99', JSON.stringify(globalLembretes)); } catch (e) {}
+            try { localStorage.setItem('storeDashLembretesV107', JSON.stringify(globalLembretes)); } catch (e) {}
             enviarDadosParaGitHub();
             atualizarCampainha();
         }
@@ -3469,19 +3565,19 @@
         function marcarNotificacaoLida(id) {
             const n = globalNotificacoes.find(x => x.id === id);
             if (n) n.lida = true;
-            try { localStorage.setItem('storeDashNotificacoesV99', JSON.stringify(globalNotificacoes)); } catch (e) {}
+            try { localStorage.setItem('storeDashNotificacoesV107', JSON.stringify(globalNotificacoes)); } catch (e) {}
             atualizarCampainha();
         }
 
         function marcarTodasNotificacoesLidas() {
             globalNotificacoes.forEach(n => n.lida = true);
-            try { localStorage.setItem('storeDashNotificacoesV99', JSON.stringify(globalNotificacoes)); } catch (e) {}
+            try { localStorage.setItem('storeDashNotificacoesV107', JSON.stringify(globalNotificacoes)); } catch (e) {}
             atualizarCampainha();
         }
 
         function limparNotificacoes() {
             globalNotificacoes = [];
-            try { localStorage.setItem('storeDashNotificacoesV99', JSON.stringify(globalNotificacoes)); } catch (e) {}
+            try { localStorage.setItem('storeDashNotificacoesV107', JSON.stringify(globalNotificacoes)); } catch (e) {}
             atualizarCampainha();
         }
 
@@ -3623,7 +3719,7 @@
                 hora: hora
             });
 
-            try { localStorage.setItem('storeDashFechosCaixaV99', JSON.stringify(globalFechosCaixa)); } catch (e) {}
+            try { localStorage.setItem('storeDashFechosCaixaV107', JSON.stringify(globalFechosCaixa)); } catch (e) {}
             enviarDadosParaGitHub();
             registarNotificacao(`Registou ${tipo} (${formatarDataPT(dataVal)})`, 'fechoCaixa');
 
@@ -3638,7 +3734,7 @@
         function apagarRegistoFechoCaixa(id) {
             if (!confirm('Eliminar este registo de fecho/ocorrência?')) return;
             globalFechosCaixa = globalFechosCaixa.filter(x => x.id !== id);
-            try { localStorage.setItem('storeDashFechosCaixaV99', JSON.stringify(globalFechosCaixa)); } catch (e) {}
+            try { localStorage.setItem('storeDashFechosCaixaV107', JSON.stringify(globalFechosCaixa)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarFechosCaixa();
         }
@@ -3719,7 +3815,7 @@
             document.getElementById('kioskDataExtenso').innerText = agora.toLocaleDateString('pt-PT', { weekday: 'long', day: 'numeric', month: 'long' });
 
             // Vendas Hoje
-            const obj = globalVendasDia.objetivo || 2500;
+            const obj = globalVendasDia.objetivo || 0;
             const atual = globalVendasDia.atual || 0;
             const falta = Math.max(0, obj - atual);
             const pct = obj > 0 ? (atual / obj) * 100 : 0;
@@ -3737,7 +3833,7 @@
             document.getElementById('kioskOnlineVal').innerText = '€' + (globalVendasDia.online || 0).toLocaleString('pt-PT', { maximumFractionDigits: 0 });
 
             // Prémio do Mês
-            const objM = globalPremioMes.objetivoMensal || 120000;
+            const objM = globalPremioMes.objetivoMensal || 116500;
             const jaFechadoHoje = Boolean(globalVendasDia && globalVendasDia.fechadoNoMes);
             const totalM = (globalPremioMes.acumuladoOntem || 0) + (!jaFechadoHoje ? atual : 0);
             const faltaM = Math.max(0, objM - totalM);
@@ -3749,6 +3845,7 @@
             const diffDias = Math.max(1, Math.floor((dtFecho - hoje) / (1000 * 60 * 60 * 24)) + 1);
             const mediaM = Math.ceil(faltaM / diffDias);
 
+            const elKObj = document.getElementById('kioskPremioObjTotal'); if (elKObj) elKObj.innerText = '€' + objM.toLocaleString('pt-PT', { maximumFractionDigits: 0 });
             document.getElementById('kioskPremioPct').innerText = `${pctM.toFixed(1)}%`;
             document.getElementById('kioskPremioEstamos').innerText = '€' + totalM.toLocaleString('pt-PT', { maximumFractionDigits: 0 });
             document.getElementById('kioskPremioFalta').innerText = '€' + faltaM.toLocaleString('pt-PT', { maximumFractionDigits: 0 });
@@ -4025,6 +4122,7 @@
             const backup = {
                 horarioSheet: globalHorarioSheet,
                 dataHorario: globalDataHorario,
+                horarioMesAno: globalHorarioMesAno,
                 briefingSheet: globalBriefingSheet,
                 salesforce: globalSalesforce.tipo === 'embed' ? globalSalesforce : null,
                 sprays: globalSprays.tipo === 'embed' ? globalSprays : null,
@@ -4067,26 +4165,26 @@
             reader.onload = function(e) {
                 try {
                     const data = JSON.parse(e.target.result);
-                    if (data.horarioSheet) { globalHorarioSheet = data.horarioSheet; localStorage.setItem('storeDashHorarioSheetV99', JSON.stringify(globalHorarioSheet));
+                    if (data.horarioSheet) { globalHorarioSheet = data.horarioSheet; localStorage.setItem('storeDashHorarioSheetV107', JSON.stringify(globalHorarioSheet));
             enviarDadosParaGitHub(); renderizarHorario(); }
-                    if (data.salesforce) { globalSalesforce = data.salesforce; localStorage.setItem('storeDashSalesforceV99', JSON.stringify(globalSalesforce));
+                    if (data.salesforce) { globalSalesforce = data.salesforce; localStorage.setItem('storeDashSalesforceV107', JSON.stringify(globalSalesforce));
             enviarDadosParaGitHub(); renderizarSalesforce(); }
-                    if (data.sprays) { globalSprays = data.sprays; localStorage.setItem('storeDashSpraysV99', JSON.stringify(globalSprays)); renderizarSprays(); }
-                    if (data.ferias2027) { globalFerias2027 = data.ferias2027; localStorage.setItem('storeDashFeriasV99', JSON.stringify(globalFerias2027)); renderizarFerias2027(); }
-                    if (data.tarefas) { globalTarefas = data.tarefas; localStorage.setItem('storeDashTarefasV99', JSON.stringify(globalTarefas));
+                    if (data.sprays) { globalSprays = data.sprays; localStorage.setItem('storeDashSpraysV107', JSON.stringify(globalSprays)); renderizarSprays(); }
+                    if (data.ferias2027) { globalFerias2027 = data.ferias2027; localStorage.setItem('storeDashFeriasV107', JSON.stringify(globalFerias2027)); renderizarFerias2027(); }
+                    if (data.tarefas) { globalTarefas = data.tarefas; localStorage.setItem('storeDashTarefasV107', JSON.stringify(globalTarefas));
             enviarDadosParaGitHub(); renderizarTarefas(); }
-                    if (data.lembretes) { globalLembretes = data.lembretes; localStorage.setItem('storeDashLembretesV99', JSON.stringify(globalLembretes)); }
-                    if (data.campanhas) { globalCampanhas = data.campanhas; localStorage.setItem('storeDashCampanhasV99', JSON.stringify(globalCampanhas)); renderizarCampanhasPromocoes(); }
-                    if (data.rotinasPorDia) { globalRotinasPorDia = data.rotinasPorDia; localStorage.setItem('storeDashRotinasPorDiaV99', JSON.stringify(globalRotinasPorDia)); renderizarChecklistRotina(); }
-                    if (data.vendasDia) { globalVendasDia = data.vendasDia; localStorage.setItem('storeDashVendasDiaV99', JSON.stringify(globalVendasDia)); renderizarVendasDia(); }
-                    if (data.premioMes) { globalPremioMes = data.premioMes; localStorage.setItem('storeDashPremioMesV99', JSON.stringify(globalPremioMes)); renderizarPremioMes(); }
-            if (data.vendasSheet) { globalVendasSheet = data.vendasSheet; localStorage.setItem('storeDashVendasSheetV99', JSON.stringify(globalVendasSheet)); atualizarUIVendasSheet(); if (globalVendasSheet.ativo) { iniciarLoopVendasSheet(); sincronizarVendasGoogleSheetsAgora(false); } }
-                    if (data.kudosBadgesExtra) { globalKudosBadgesExtra = data.kudosBadgesExtra; localStorage.setItem('storeDashKudosBadgesExtraV99', JSON.stringify(globalKudosBadgesExtra)); }
-                    if (data.perfisFotos) { globalPerfisFotos = data.perfisFotos; localStorage.setItem('storeDashPerfisFotosV99', JSON.stringify(globalPerfisFotos)); renderizarEcraLogin(); }
-                    if (data.staffPins) { globalStaffPins = data.staffPins; localStorage.setItem('storeDashStaffPinsV99', JSON.stringify(globalStaffPins)); renderizarEcraLogin(); }
-                    if (data.chatMensagens) { globalChatMensagens = data.chatMensagens; localStorage.setItem('storeDashChatMensagensV99', JSON.stringify(globalChatMensagens)); renderizarChatEquipa(); }
-                    if (data.cloudConfig && data.cloudConfig.ativo) { globalCloudConfig = data.cloudConfig; localStorage.setItem('storeDashCloudConfigV99', JSON.stringify(globalCloudConfig)); document.getElementById('ghTokenInput').value = globalCloudConfig.token; document.getElementById('ghGistIdInput').value = globalCloudConfig.gistId; atualizarIndicadorCloudUI('Nuvem Ativa', 'verde'); iniciarLoopSincronizacaoCloud(); puxarDadosDoGitHub(true); }
-                    if (data.pins) { localStorage.setItem('storeDashAdminPinsMapV99', JSON.stringify(data.pins)); }
+                    if (data.lembretes) { globalLembretes = data.lembretes; localStorage.setItem('storeDashLembretesV107', JSON.stringify(globalLembretes)); }
+                    if (data.campanhas) { globalCampanhas = data.campanhas; localStorage.setItem('storeDashCampanhasV107', JSON.stringify(globalCampanhas)); renderizarCampanhasPromocoes(); }
+                    if (data.rotinasPorDia) { globalRotinasPorDia = data.rotinasPorDia; localStorage.setItem('storeDashRotinasPorDiaV107', JSON.stringify(globalRotinasPorDia)); renderizarChecklistRotina(); }
+                    if (data.vendasDia) { globalVendasDia = data.vendasDia; localStorage.setItem('storeDashVendasDiaV107', JSON.stringify(globalVendasDia)); renderizarVendasDia(); }
+                    if (data.premioMes) { globalPremioMes = data.premioMes; localStorage.setItem('storeDashPremioMesV107', JSON.stringify(globalPremioMes)); renderizarPremioMes(); }
+            if (data.vendasSheet) { globalVendasSheet = data.vendasSheet; localStorage.setItem('storeDashVendasSheetV107', JSON.stringify(globalVendasSheet)); atualizarUIVendasSheet(); if (globalVendasSheet.ativo) { iniciarLoopVendasSheet(); sincronizarVendasGoogleSheetsAgora(false); } }
+                    if (data.kudosBadgesExtra) { globalKudosBadgesExtra = data.kudosBadgesExtra; localStorage.setItem('storeDashKudosBadgesExtraV107', JSON.stringify(globalKudosBadgesExtra)); }
+                    if (data.perfisFotos) { globalPerfisFotos = data.perfisFotos; localStorage.setItem('storeDashPerfisFotosV107', JSON.stringify(globalPerfisFotos)); renderizarEcraLogin(); }
+                    if (data.staffPins) { globalStaffPins = data.staffPins; localStorage.setItem('storeDashStaffPinsV107', JSON.stringify(globalStaffPins)); renderizarEcraLogin(); }
+                    if (data.chatMensagens) { globalChatMensagens = data.chatMensagens; localStorage.setItem('storeDashChatMensagensV107', JSON.stringify(globalChatMensagens)); renderizarChatEquipa(); }
+                    if (data.cloudConfig && data.cloudConfig.ativo) { globalCloudConfig = data.cloudConfig; localStorage.setItem('storeDashCloudConfigV107', JSON.stringify(globalCloudConfig)); document.getElementById('ghTokenInput').value = globalCloudConfig.token; document.getElementById('ghGistIdInput').value = globalCloudConfig.gistId; atualizarIndicadorCloudUI('Nuvem Ativa', 'verde'); iniciarLoopSincronizacaoCloud(); puxarDadosDoGitHub(true); }
+                    if (data.pins) { localStorage.setItem('storeDashAdminPinsMapV107', JSON.stringify(data.pins)); }
                     atualizarCampainha();
                     atualizarDashboardInicial();
                     alert('Configuração e links restaurados com sucesso!');
@@ -4102,7 +4200,7 @@
         // ============================
         let globalVendasDia = {
             data: new Date().toISOString().split('T')[0],
-            objetivo: 2500,
+            objetivo: 0,
             atual: 0,
             sprays: 0,
             socios: 0,
@@ -4306,8 +4404,8 @@
                 autor: perfilAtual ? perfilAtual.nome.split(' ')[0] : 'Folha'
             });
             try {
-                localStorage.setItem('storeDashVendasDiaV99', JSON.stringify(globalVendasDia));
-                localStorage.setItem('storeDashPremioMesV99', JSON.stringify(globalPremioMes));
+                localStorage.setItem('storeDashVendasDiaV107', JSON.stringify(globalVendasDia));
+                localStorage.setItem('storeDashPremioMesV107', JSON.stringify(globalPremioMes));
             } catch (e) {}
             enviarDadosParaGitHub();
             renderizarVendasDia();
@@ -4334,7 +4432,7 @@
             if (!csvUrl) return alert('Link inválido. Cola o endereço da tua folha Google Sheets.');
 
             globalVendasSheet = { ativo: true, sheetUrl: rawUrl, csvUrl: csvUrl, lastSync: '' };
-            try { localStorage.setItem('storeDashVendasSheetV99', JSON.stringify(globalVendasSheet)); } catch (e) {}
+            try { localStorage.setItem('storeDashVendasSheetV107', JSON.stringify(globalVendasSheet)); } catch (e) {}
             atualizarUIVendasSheet();
             iniciarLoopVendasSheet();
             const ok = await sincronizarVendasGoogleSheetsAgora(true);
@@ -4347,7 +4445,7 @@
         function desligarGoogleSheetsVendas() {
             if (!confirm('Desligar a sincronização automática com a folha de Vendas & Sprays?')) return;
             globalVendasSheet = { ativo: false, sheetUrl: '', csvUrl: '', lastSync: '' };
-            localStorage.removeItem('storeDashVendasSheetV99');
+            localStorage.removeItem('storeDashVendasSheetV107');
             if (vendasSheetTimer) clearInterval(vendasSheetTimer);
             const inpAdmin = document.getElementById('googleSheetsVendasUrlInput');
             if (inpAdmin) inpAdmin.value = '';
@@ -4563,9 +4661,9 @@
                     }
 
                     try {
-                        localStorage.setItem('storeDashVendasDiaV99', JSON.stringify(globalVendasDia));
-                        localStorage.setItem('storeDashPremioMesV99', JSON.stringify(globalPremioMes));
-                        localStorage.setItem('storeDashVendasSheetV99', JSON.stringify(globalVendasSheet));
+                        localStorage.setItem('storeDashVendasDiaV107', JSON.stringify(globalVendasDia));
+                        localStorage.setItem('storeDashPremioMesV107', JSON.stringify(globalPremioMes));
+                        localStorage.setItem('storeDashVendasSheetV107', JSON.stringify(globalVendasSheet));
                     } catch (e) {}
 
                     renderizarVendasDia();
@@ -4598,12 +4696,12 @@
         function descarregarModeloVendasCSV() {
             const linhas = [
                 'Indicador;Valor',
-                `Objetivo Dia;${globalVendasDia.objetivo || 2500}`,
+                `Objetivo Dia;${globalVendasDia.objetivo || 0}`,
                 `Vendas Hoje;${globalVendasDia.atual || 0}`,
                 `Sprays;${globalVendasDia.sprays || 0}`,
                 `Socios;${globalVendasDia.socios || 0}`,
                 `Online;${globalVendasDia.online || 0}`,
-                `Objetivo Mensal;${globalPremioMes.objetivoMensal || 120000}`,
+                `Objetivo Mensal;${globalPremioMes.objetivoMensal || 116500}`,
                 `Acumulado Ontem;${globalPremioMes.acumuladoOntem || 74000}`
             ].join('\n');
             const blob = new Blob(['\uFEFF' + linhas], { type: 'text/csv;charset=utf-8;' });
@@ -4616,7 +4714,7 @@
         }
 
         function abrirModalVendasDia() {
-            document.getElementById('inputVendasObjetivo').value = globalVendasDia.objetivo || 2500;
+            document.getElementById('inputVendasObjetivo').value = globalVendasDia.objetivo > 0 ? globalVendasDia.objetivo : '';
             document.getElementById('inputVendasAtual').value = globalVendasDia.atual > 0 ? globalVendasDia.atual : '';
             document.getElementById('inputVendasSprays').value = globalVendasDia.sprays > 0 ? globalVendasDia.sprays : '';
             document.getElementById('inputVendasSocios').value = globalVendasDia.socios > 0 ? globalVendasDia.socios : '';
@@ -4643,7 +4741,7 @@
             const upt = '';
             const conv = '';
 
-            if (obj <= 0) return alert('Define um objetivo diário válido (ex: 2500).');
+            if (obj < 0) return alert('Define um objetivo diário válido.');
 
             const pct = Math.round((atual / obj) * 100);
             const autor = perfilAtual ? perfilAtual.nome.split(' ')[0] : 'Equipa';
@@ -4658,9 +4756,10 @@
                 }
                 globalVendasDia.fechadoNoMes = false;
                 globalVendasDia.valorFechadoNoMes = 0;
-                try { localStorage.setItem('storeDashPremioMesV99', JSON.stringify(globalPremioMes)); } catch (e) {}
+                try { localStorage.setItem('storeDashPremioMesV107', JSON.stringify(globalPremioMes)); } catch (e) {}
             }
             globalVendasDia.data = hojeISO;
+            globalVendasDia.updatedAt = Date.now();
             globalVendasDia.objetivo = obj;
             globalVendasDia.atual = atual;
             globalVendasDia.sprays = sprays;
@@ -4670,7 +4769,7 @@
             globalVendasDia.conv = conv;
             globalVendasDia.registos.push({ hora, valor: atual, sprays, socios, online, pct, autor });
 
-            try { localStorage.setItem('storeDashVendasDiaV99', JSON.stringify(globalVendasDia)); } catch (e) {}
+            try { localStorage.setItem('storeDashVendasDiaV107', JSON.stringify(globalVendasDia)); } catch (e) {}
             enviarDadosParaGitHub();
             registarNotificacao(`Vendas às ${hora}: €${atual.toLocaleString('pt-PT')} (${pct}%) | ${sprays} Sprays | ${socios} Sócios | €${online} Online`, 'dashboard');
             fecharModalVendasDia();
@@ -4682,7 +4781,7 @@
             if (!confirm('Reiniciar os parciais de vendas para um novo dia?')) return;
             globalVendasDia = {
                 data: new Date().toISOString().split('T')[0],
-                objetivo: globalVendasDia.objetivo || 2500,
+                objetivo: globalVendasDia.objetivo || 0,
                 atual: 0,
                 sprays: 0,
                 socios: 0,
@@ -4691,14 +4790,14 @@
                 conv: '',
                 registos: []
             };
-            try { localStorage.setItem('storeDashVendasDiaV99', JSON.stringify(globalVendasDia)); } catch (e) {}
+            try { localStorage.setItem('storeDashVendasDiaV107', JSON.stringify(globalVendasDia)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarVendasDia();
             renderizarPremioMes();
         }
 
         function renderizarVendasDia() {
-            const obj = globalVendasDia.objetivo || 2500;
+            const obj = globalVendasDia.objetivo || 0;
             const atual = globalVendasDia.atual || 0;
             const sprays = globalVendasDia.sprays || 0;
             const socios = globalVendasDia.socios || 0;
@@ -4811,14 +4910,14 @@
             }
             const checkKey = `${diaKey}_${idx}`;
             globalRotinaChecksHoje.feitos[checkKey] = !globalRotinaChecksHoje.feitos[checkKey];
-            try { localStorage.setItem('storeDashRotinaChecksV99', JSON.stringify(globalRotinaChecksHoje)); } catch (e) {}
+            try { localStorage.setItem('storeDashRotinaChecksV107', JSON.stringify(globalRotinaChecksHoje)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarChecklistRotina();
         }
 
         function resetarChecklistDia() {
             globalRotinaChecksHoje = { data: new Date().toISOString().split('T')[0], feitos: {} };
-            try { localStorage.setItem('storeDashRotinaChecksV99', JSON.stringify(globalRotinaChecksHoje)); } catch (e) {}
+            try { localStorage.setItem('storeDashRotinaChecksV107', JSON.stringify(globalRotinaChecksHoje)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarChecklistRotina();
         }
@@ -4917,7 +5016,7 @@
             if (!val) return;
             if (!globalRotinasPorDia[diaRotinaConfigurando]) globalRotinasPorDia[diaRotinaConfigurando] = [];
             globalRotinasPorDia[diaRotinaConfigurando].push(val);
-            try { localStorage.setItem('storeDashRotinasPorDiaV99', JSON.stringify(globalRotinasPorDia)); } catch (e) {}
+            try { localStorage.setItem('storeDashRotinasPorDiaV107', JSON.stringify(globalRotinasPorDia)); } catch (e) {}
             enviarDadosParaGitHub();
             input.value = '';
             renderizarModalConfigRotinas();
@@ -4926,7 +5025,7 @@
         function removerItemRotinaDia(idx) {
             if (!globalRotinasPorDia[diaRotinaConfigurando]) return;
             globalRotinasPorDia[diaRotinaConfigurando].splice(idx, 1);
-            try { localStorage.setItem('storeDashRotinasPorDiaV99', JSON.stringify(globalRotinasPorDia)); } catch (e) {}
+            try { localStorage.setItem('storeDashRotinasPorDiaV107', JSON.stringify(globalRotinasPorDia)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarModalConfigRotinas();
         }
@@ -4934,7 +5033,7 @@
         function restaurarRotinasPadrao() {
             if (!confirm('Repor as rotinas predefinidas de Segunda a Domingo?')) return;
             globalRotinasPorDia = JSON.parse(JSON.stringify(ROTINAS_SEMANA_PADRAO));
-            try { localStorage.setItem('storeDashRotinasPorDiaV99', JSON.stringify(globalRotinasPorDia)); } catch (e) {}
+            try { localStorage.setItem('storeDashRotinasPorDiaV107', JSON.stringify(globalRotinasPorDia)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarModalConfigRotinas();
         }
@@ -4991,7 +5090,7 @@
                 badge = customVal;
                 if (!KUDOS_BADGES_PADRAO.includes(badge) && !globalKudosBadgesExtra.includes(badge)) {
                     globalKudosBadgesExtra.push(badge);
-                    try { localStorage.setItem('storeDashKudosBadgesExtraV99', JSON.stringify(globalKudosBadgesExtra)); } catch (e) {}
+                    try { localStorage.setItem('storeDashKudosBadgesExtraV107', JSON.stringify(globalKudosBadgesExtra)); } catch (e) {}
                 }
             }
 
@@ -5000,7 +5099,7 @@
             const de = perfilAtual ? perfilAtual.nome.split(' ')[0] : 'Equipa';
             globalKudos.unshift({ id: Date.now(), colega, badge, msg, de });
             if (globalKudos.length > 15) globalKudos = globalKudos.slice(0, 15);
-            try { localStorage.setItem('storeDashKudosV99', JSON.stringify(globalKudos)); } catch (e) {}
+            try { localStorage.setItem('storeDashKudosV107', JSON.stringify(globalKudos)); } catch (e) {}
             enviarDadosParaGitHub();
             registarNotificacao(`Destacou ${colega} (${badge}): "${msg}"`, 'dashboard');
             fecharModalKudos();
@@ -5073,7 +5172,7 @@
             if (!globalFraseAtivaCiclo || globalFraseAtivaCiclo.cicloId !== cicloId || !globalFraseAtivaCiclo.texto) {
                 const escolhida = todasFrases[Math.abs(diaIndex) % todasFrases.length];
                 globalFraseAtivaCiclo = { cicloId, texto: escolhida };
-                try { localStorage.setItem('storeDashFraseAtivaV99', JSON.stringify(globalFraseAtivaCiclo)); } catch (e) {}
+                try { localStorage.setItem('storeDashFraseAtivaV107', JSON.stringify(globalFraseAtivaCiclo)); } catch (e) {}
             enviarDadosParaGitHub();
 
                 // Registar notificação matinal na campainha para o novo ciclo das 08:00
@@ -5120,7 +5219,7 @@
                 tentativas++;
             }
             globalFraseAtivaCiclo = { cicloId, texto: nova };
-            try { localStorage.setItem('storeDashFraseAtivaV99', JSON.stringify(globalFraseAtivaCiclo)); } catch (e) {}
+            try { localStorage.setItem('storeDashFraseAtivaV107', JSON.stringify(globalFraseAtivaCiclo)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarFraseDoDia();
         }
@@ -5141,10 +5240,10 @@
             const { cicloId } = getCiclo24hDesde08h();
             if (!FRASES_COMICAS_PADRAO.includes(txt) && !globalFrasesExtra.includes(txt)) {
                 globalFrasesExtra.push(txt);
-                try { localStorage.setItem('storeDashFrasesExtraV99', JSON.stringify(globalFrasesExtra)); } catch (e) {}
+                try { localStorage.setItem('storeDashFrasesExtraV107', JSON.stringify(globalFrasesExtra)); } catch (e) {}
             }
             globalFraseAtivaCiclo = { cicloId, texto: txt };
-            try { localStorage.setItem('storeDashFraseAtivaV99', JSON.stringify(globalFraseAtivaCiclo)); } catch (e) {}
+            try { localStorage.setItem('storeDashFraseAtivaV107', JSON.stringify(globalFraseAtivaCiclo)); } catch (e) {}
             enviarDadosParaGitHub();
             registarNotificacao(`Atualizou a Frase do Dia: "${txt}"`, 'dashboard');
             fecharModalNovaFrase();
@@ -5180,7 +5279,7 @@
             } else {
                 chatUltimaLeituraTs = Date.now();
             }
-            try { localStorage.setItem('storeDashChatReadTsV99', String(chatUltimaLeituraTs)); } catch (e) {}
+            try { localStorage.setItem('storeDashChatReadTsV107', String(chatUltimaLeituraTs)); } catch (e) {}
             atualizarBadgesChat();
         }
 
@@ -5239,8 +5338,8 @@
 
             chatUltimaLeituraTs = ts;
             try {
-                localStorage.setItem('storeDashChatMensagensV99', JSON.stringify(globalChatMensagens));
-                localStorage.setItem('storeDashChatReadTsV99', String(chatUltimaLeituraTs));
+                localStorage.setItem('storeDashChatMensagensV107', JSON.stringify(globalChatMensagens));
+                localStorage.setItem('storeDashChatReadTsV107', String(chatUltimaLeituraTs));
             } catch (e) {}
 
             enviarDadosParaGitHub();
@@ -5251,7 +5350,7 @@
             if (!perfilAtual || perfilAtual.role !== 'admin') return;
             if (!confirm('Apagar todo o histórico de mensagens do chat da equipa?')) return;
             globalChatMensagens = [];
-            try { localStorage.setItem('storeDashChatMensagensV99', JSON.stringify(globalChatMensagens)); } catch (e) {}
+            try { localStorage.setItem('storeDashChatMensagensV107', JSON.stringify(globalChatMensagens)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarChatEquipa();
         }
@@ -5393,8 +5492,8 @@
             }
 
             try {
-                localStorage.setItem('storeDashCampanhasV99', JSON.stringify(globalCampanhas));
-                localStorage.setItem('storeDashLembretesV99', JSON.stringify(globalLembretes));
+                localStorage.setItem('storeDashCampanhasV107', JSON.stringify(globalCampanhas));
+                localStorage.setItem('storeDashLembretesV107', JSON.stringify(globalLembretes));
             } catch (e) {}
 
             enviarDadosParaGitHub();
@@ -5422,8 +5521,8 @@
                 });
             }
             try {
-                localStorage.setItem('storeDashCampanhasV99', JSON.stringify(globalCampanhas));
-                localStorage.setItem('storeDashLembretesV99', JSON.stringify(globalLembretes));
+                localStorage.setItem('storeDashCampanhasV107', JSON.stringify(globalCampanhas));
+                localStorage.setItem('storeDashLembretesV107', JSON.stringify(globalLembretes));
             } catch (e) {}
             enviarDadosParaGitHub();
             renderizarCampanhasPromocoes();
@@ -5436,8 +5535,8 @@
             globalCampanhas = globalCampanhas.filter(c => c.id !== id);
             globalLembretes = globalLembretes.filter(l => l.campanhaId !== id);
             try {
-                localStorage.setItem('storeDashCampanhasV99', JSON.stringify(globalCampanhas));
-                localStorage.setItem('storeDashLembretesV99', JSON.stringify(globalLembretes));
+                localStorage.setItem('storeDashCampanhasV107', JSON.stringify(globalCampanhas));
+                localStorage.setItem('storeDashLembretesV107', JSON.stringify(globalLembretes));
             } catch (e) {}
             enviarDadosParaGitHub();
             renderizarCampanhasPromocoes();
@@ -5579,7 +5678,7 @@
                 estado: 'Nova' // 'Nova' | 'Aprovada' | 'Implementada'
             });
 
-            try { localStorage.setItem('storeDashSugestoesV99', JSON.stringify(globalSugestoes)); } catch (e) {}
+            try { localStorage.setItem('storeDashSugestoesV107', JSON.stringify(globalSugestoes)); } catch (e) {}
             enviarDadosParaGitHub();
             registarNotificacao(`Enviou sugestão (${cat}): "${txt}"`, 'sugestoes');
             document.getElementById('sugestaoTexto').value = '';
@@ -5590,7 +5689,7 @@
             const s = globalSugestoes.find(x => x.id === id);
             if (!s) return;
             s.votos = (s.votos || 0) + 1;
-            try { localStorage.setItem('storeDashSugestoesV99', JSON.stringify(globalSugestoes)); } catch (e) {}
+            try { localStorage.setItem('storeDashSugestoesV107', JSON.stringify(globalSugestoes)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarSugestoesMelhoria();
         }
@@ -5599,14 +5698,14 @@
             const s = globalSugestoes.find(x => x.id === id);
             if (!s) return;
             s.estado = novoEstado;
-            try { localStorage.setItem('storeDashSugestoesV99', JSON.stringify(globalSugestoes)); } catch (e) {}
+            try { localStorage.setItem('storeDashSugestoesV107', JSON.stringify(globalSugestoes)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarSugestoesMelhoria();
         }
 
         function apagarSugestao(id) {
             globalSugestoes = globalSugestoes.filter(x => x.id !== id);
-            try { localStorage.setItem('storeDashSugestoesV99', JSON.stringify(globalSugestoes)); } catch (e) {}
+            try { localStorage.setItem('storeDashSugestoesV107', JSON.stringify(globalSugestoes)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarSugestoesMelhoria();
         }
@@ -5674,7 +5773,7 @@
         // PRÉMIO DO MÊS (OBJETIVO MENSAL FIXO & CONTAGEM ATÉ FECHO)
         // ============================
         let globalPremioMes = {
-            objetivoMensal: 120000,
+            objetivoMensal: 116500,
             acumuladoOntem: 74000,
             dataFecho: '2026-11-28',
             vendasDiariasColadas: [] // [{ label: 'Dia 1', valor: 3250 }, ...]
@@ -5765,8 +5864,8 @@
             alvo.valorFechadoNoMes = valorDia;
 
             try {
-                localStorage.setItem('storeDashPremioMesV99', JSON.stringify(globalPremioMes));
-                localStorage.setItem('storeDashVendasDiaV99', JSON.stringify(globalVendasDia));
+                localStorage.setItem('storeDashPremioMesV107', JSON.stringify(globalPremioMes));
+                localStorage.setItem('storeDashVendasDiaV107', JSON.stringify(globalVendasDia));
             } catch (e) {}
 
             renderizarPremioMes();
@@ -5789,7 +5888,7 @@
 
         function abrirModalPremioMes(focarColar) {
             if (!perfilAtual || perfilAtual.role !== 'admin') return;
-            document.getElementById('inputPremioObjetivo').value = globalPremioMes.objetivoMensal || 120000;
+            document.getElementById('inputPremioObjetivo').value = globalPremioMes.objetivoMensal || 116500;
             document.getElementById('inputPremioAcumuladoOntem').value = globalPremioMes.acumuladoOntem || 0;
             document.getElementById('inputPremioDataFim').value = globalPremioMes.dataFecho || '2026-11-28';
 
@@ -5832,7 +5931,7 @@
                 vendasDiariasColadas: listaColada
             };
 
-            try { localStorage.setItem('storeDashPremioMesV99', JSON.stringify(globalPremioMes)); } catch (e) {}
+            try { localStorage.setItem('storeDashPremioMesV107', JSON.stringify(globalPremioMes)); } catch (e) {}
             enviarDadosParaGitHub();
             registarNotificacao(`Atualizou Prémio do Mês: €${acumOntem.toLocaleString('pt-PT')} acumulados (Obj: €${obj.toLocaleString('pt-PT')})`, 'dashboard');
             fecharModalPremioMes();
@@ -5865,8 +5964,12 @@
             const dtFecho = parseDataFlexivel(globalPremioMes.dataFecho) || new Date(2026, 10, 28);
             const diffDias = Math.max(1, Math.floor((dtFecho - hoje) / (1000 * 60 * 60 * 24)) + 1);
 
+            const elObjHdr = document.getElementById('premioMesObjetivoTotalHeader');
+            if (elObjHdr) {
+                elObjHdr.innerText = `Objetivo: €${obj.toLocaleString('pt-PT', { maximumFractionDigits: 0 })}`;
+            }
             const dataFormatada = dtFecho.toLocaleDateString('pt-PT', { day: 'numeric', month: 'short' });
-            document.getElementById('premioMesDataFimLabel').innerText = `Fecho: ${dataFormatada} • Faltam ${diffDias} dia(s)`;
+            document.getElementById('premioMesDataFimLabel').innerText = `• Fecho: ${dataFormatada} (faltam ${diffDias} dia(s))`;
 
             // 1. Quanto Estamos
             const elEstamos = document.getElementById('premioMesEstamosVal');
@@ -5958,7 +6061,7 @@
         }
 
         // ============================
-        // SINCRONIZAÇÃO EM TEMPO REAL ENTRE DISPOSITIVOS (GITHUB GIST - V99 MERGE & SERVER VERSION)
+        // SINCRONIZAÇÃO EM TEMPO REAL ENTRE DISPOSITIVOS (GITHUB GIST - V107 MERGE & SERVER VERSION)
         // ============================
         let globalCloudConfig = { ativo: false, token: '', gistId: '', lastVersion: '' };
         let cloudSyncTimer = null;
@@ -6026,6 +6129,7 @@
                 updatedAt: Date.now(),
                 horarioSheet: globalHorarioSheet,
                 dataHorario: globalDataHorario,
+                horarioMesAno: globalHorarioMesAno,
                 briefingSheet: globalBriefingSheet,
                 salesforce: globalSalesforce && globalSalesforce.tipo === 'embed' ? globalSalesforce : null,
                 sprays: globalSprays && globalSprays.tipo === 'embed' ? globalSprays : null,
@@ -6067,27 +6171,28 @@
 
         function aplicarEstadoPartilhado(data) {
             if (!data || typeof data !== 'object') return;
-            if (data.horarioSheet) { globalHorarioSheet = data.horarioSheet; localStorage.setItem('storeDashHorarioSheetV99', JSON.stringify(globalHorarioSheet)); }
-            if (Array.isArray(data.dataHorario)) { globalDataHorario = data.dataHorario; localStorage.setItem('storeDashHorarioV99', JSON.stringify(globalDataHorario)); }
+            if (data.horarioSheet) { globalHorarioSheet = data.horarioSheet; localStorage.setItem('storeDashHorarioSheetV107', JSON.stringify(globalHorarioSheet)); }
+            if (data.horarioMesAno) { globalHorarioMesAno = data.horarioMesAno; localStorage.setItem('storeDashHorarioMesAnoV107', globalHorarioMesAno); sincronizarInputsMesAnoHorario(); }
+            if (Array.isArray(data.dataHorario)) { globalDataHorario = data.dataHorario; localStorage.setItem('storeDashHorarioV107', JSON.stringify(globalDataHorario)); }
             if (data.horarioSheet || Array.isArray(data.dataHorario)) { renderizarHorario(); }
-            if (data.briefingSheet) { globalBriefingSheet = data.briefingSheet; localStorage.setItem('storeDashBriefingSheetV99', JSON.stringify(globalBriefingSheet)); renderizarBriefingSheet(); }
-            if (data.salesforce) { globalSalesforce = data.salesforce; localStorage.setItem('storeDashSalesforceV99', JSON.stringify(globalSalesforce)); renderizarSalesforce(); }
-            if (data.sprays) { globalSprays = data.sprays; localStorage.setItem('storeDashSpraysV99', JSON.stringify(globalSprays)); renderizarSprays(); }
-            if (data.ferias2027) { globalFerias2027 = data.ferias2027; localStorage.setItem('storeDashFeriasV99', JSON.stringify(globalFerias2027)); renderizarFerias2027(); }
-            if (Array.isArray(data.tarefas)) { globalTarefas = data.tarefas; localStorage.setItem('storeDashTarefasV99', JSON.stringify(globalTarefas)); renderizarTarefas(); }
-            if (Array.isArray(data.kpiRegistos)) { globalKpiRegistos = data.kpiRegistos; localStorage.setItem('storeDashKpiRegistosV99', JSON.stringify(globalKpiRegistos)); sincronizarTotaisHojeComDashboard(); renderizarKpisSpraysSociosOnline(); }
-            if (Array.isArray(data.pedidosTroca)) { globalPedidosTroca = data.pedidosTroca; localStorage.setItem('storeDashPedidosTrocaV99', JSON.stringify(globalPedidosTroca)); renderizarPedidosTroca(); }
-            if (data.bancoHorasSaldos && typeof data.bancoHorasSaldos === 'object') { globalBancoHorasSaldos = data.bancoHorasSaldos; localStorage.setItem('storeDashBancoHorasSaldosV99', JSON.stringify(globalBancoHorasSaldos)); renderizarBancoHoras(); }
-            if (Array.isArray(data.bancoHorasHistorico)) { globalBancoHorasHistorico = data.bancoHorasHistorico; localStorage.setItem('storeDashBancoHorasHistV99', JSON.stringify(globalBancoHorasHistorico)); renderizarBancoHoras(); }
-            if (Array.isArray(data.ferias2027Pedidos)) { globalFerias2027Pedidos = data.ferias2027Pedidos; localStorage.setItem('storeDashFerias2027PedidosV99', JSON.stringify(globalFerias2027Pedidos)); renderizarFerias2027Gestao(); }
-            if (Array.isArray(data.lembretes)) { globalLembretes = data.lembretes; localStorage.setItem('storeDashLembretesV99', JSON.stringify(globalLembretes)); }
-            if (Array.isArray(data.notificacoes)) { globalNotificacoes = data.notificacoes; localStorage.setItem('storeDashNotificacoesV99', JSON.stringify(globalNotificacoes)); }
-            if (data.rotinasPorDia) { globalRotinasPorDia = data.rotinasPorDia; localStorage.setItem('storeDashRotinasPorDiaV99', JSON.stringify(globalRotinasPorDia)); }
-            if (data.rotinaChecksHoje) { globalRotinaChecksHoje = data.rotinaChecksHoje; localStorage.setItem('storeDashRotinaChecksV99', JSON.stringify(globalRotinaChecksHoje)); }
+            if (data.briefingSheet) { globalBriefingSheet = data.briefingSheet; localStorage.setItem('storeDashBriefingSheetV107', JSON.stringify(globalBriefingSheet)); renderizarBriefingSheet(); }
+            if (data.salesforce) { globalSalesforce = data.salesforce; localStorage.setItem('storeDashSalesforceV107', JSON.stringify(globalSalesforce)); renderizarSalesforce(); }
+            if (data.sprays) { globalSprays = data.sprays; localStorage.setItem('storeDashSpraysV107', JSON.stringify(globalSprays)); renderizarSprays(); }
+            if (data.ferias2027) { globalFerias2027 = data.ferias2027; localStorage.setItem('storeDashFeriasV107', JSON.stringify(globalFerias2027)); renderizarFerias2027(); }
+            if (Array.isArray(data.tarefas)) { globalTarefas = data.tarefas; localStorage.setItem('storeDashTarefasV107', JSON.stringify(globalTarefas)); renderizarTarefas(); }
+            if (Array.isArray(data.kpiRegistos)) { globalKpiRegistos = data.kpiRegistos; localStorage.setItem('storeDashKpiRegistosV107', JSON.stringify(globalKpiRegistos)); sincronizarTotaisHojeComDashboard(); renderizarKpisSpraysSociosOnline(); }
+            if (Array.isArray(data.pedidosTroca)) { globalPedidosTroca = data.pedidosTroca; localStorage.setItem('storeDashPedidosTrocaV107', JSON.stringify(globalPedidosTroca)); renderizarPedidosTroca(); }
+            if (data.bancoHorasSaldos && typeof data.bancoHorasSaldos === 'object') { globalBancoHorasSaldos = data.bancoHorasSaldos; localStorage.setItem('storeDashBancoHorasSaldosV107', JSON.stringify(globalBancoHorasSaldos)); renderizarBancoHoras(); }
+            if (Array.isArray(data.bancoHorasHistorico)) { globalBancoHorasHistorico = data.bancoHorasHistorico; localStorage.setItem('storeDashBancoHorasHistV107', JSON.stringify(globalBancoHorasHistorico)); renderizarBancoHoras(); }
+            if (Array.isArray(data.ferias2027Pedidos)) { globalFerias2027Pedidos = data.ferias2027Pedidos; localStorage.setItem('storeDashFerias2027PedidosV107', JSON.stringify(globalFerias2027Pedidos)); renderizarFerias2027Gestao(); }
+            if (Array.isArray(data.lembretes)) { globalLembretes = data.lembretes; localStorage.setItem('storeDashLembretesV107', JSON.stringify(globalLembretes)); }
+            if (Array.isArray(data.notificacoes)) { globalNotificacoes = data.notificacoes; localStorage.setItem('storeDashNotificacoesV107', JSON.stringify(globalNotificacoes)); }
+            if (data.rotinasPorDia) { globalRotinasPorDia = data.rotinasPorDia; localStorage.setItem('storeDashRotinasPorDiaV107', JSON.stringify(globalRotinasPorDia)); }
+            if (data.rotinaChecksHoje) { globalRotinaChecksHoje = data.rotinaChecksHoje; localStorage.setItem('storeDashRotinaChecksV107', JSON.stringify(globalRotinaChecksHoje)); }
             if (data.vendasDia) {
                 const hojeStr = new Date().toISOString().split('T')[0];
                 if (data.vendasDia.data === hojeStr) {
-                    globalVendasDia = data.vendasDia;
+                    globalVendasDia = { ...globalVendasDia, ...data.vendasDia };
                 } else {
                     if ((data.vendasDia.atual || 0) > 0 && !data.vendasDia.fechadoNoMes) {
                         fecharDiaParaPremioMes(data.vendasDia, true);
@@ -6097,47 +6202,48 @@
                     globalVendasDia.atual = 0;
                     globalVendasDia.registos = [];
                 }
-                localStorage.setItem('storeDashVendasDiaV99', JSON.stringify(globalVendasDia));
+                localStorage.setItem('storeDashVendasDiaV107', JSON.stringify(globalVendasDia));
                 renderizarVendasDia();
+                if (typeof atualizarModoKiosk === 'function') atualizarModoKiosk();
             }
-            if (data.premioMes) { globalPremioMes = data.premioMes; localStorage.setItem('storeDashPremioMesV99', JSON.stringify(globalPremioMes)); renderizarPremioMes(); }
-            if (data.vendasSheet) { globalVendasSheet = data.vendasSheet; localStorage.setItem('storeDashVendasSheetV99', JSON.stringify(globalVendasSheet)); atualizarUIVendasSheet(); if (globalVendasSheet.ativo) { iniciarLoopVendasSheet(); sincronizarVendasGoogleSheetsAgora(false); } }
-            if (Array.isArray(data.kudos)) { globalKudos = data.kudos; localStorage.setItem('storeDashKudosV99', JSON.stringify(globalKudos)); renderizarKudos(); }
-            if (Array.isArray(data.kudosBadgesExtra)) { globalKudosBadgesExtra = data.kudosBadgesExtra; localStorage.setItem('storeDashKudosBadgesExtraV99', JSON.stringify(globalKudosBadgesExtra)); }
-            if (data.fraseAtivaCiclo && data.fraseAtivaCiclo.texto) { globalFraseAtivaCiclo = data.fraseAtivaCiclo; localStorage.setItem('storeDashFraseAtivaV99', JSON.stringify(globalFraseAtivaCiclo)); renderizarFraseDoDia(); }
-            if (Array.isArray(data.frasesExtra)) { globalFrasesExtra = data.frasesExtra; localStorage.setItem('storeDashFrasesExtraV99', JSON.stringify(globalFrasesExtra)); }
-            if (Array.isArray(data.sugestoes)) { globalSugestoes = data.sugestoes; localStorage.setItem('storeDashSugestoesV99', JSON.stringify(globalSugestoes)); renderizarSugestoesMelhoria(); }
-            if (Array.isArray(data.campanhas)) { globalCampanhas = data.campanhas; localStorage.setItem('storeDashCampanhasV99', JSON.stringify(globalCampanhas)); renderizarCampanhasPromocoes(); }
-            if (Array.isArray(data.fechosCaixa)) { globalFechosCaixa = data.fechosCaixa; localStorage.setItem('storeDashFechosCaixaV99', JSON.stringify(globalFechosCaixa)); renderizarFechosCaixa(); }
+            if (data.premioMes) { globalPremioMes = data.premioMes; localStorage.setItem('storeDashPremioMesV107', JSON.stringify(globalPremioMes)); renderizarPremioMes(); }
+            if (data.vendasSheet) { globalVendasSheet = data.vendasSheet; localStorage.setItem('storeDashVendasSheetV107', JSON.stringify(globalVendasSheet)); atualizarUIVendasSheet(); if (globalVendasSheet.ativo) { iniciarLoopVendasSheet(); sincronizarVendasGoogleSheetsAgora(false); } }
+            if (Array.isArray(data.kudos)) { globalKudos = data.kudos; localStorage.setItem('storeDashKudosV107', JSON.stringify(globalKudos)); renderizarKudos(); }
+            if (Array.isArray(data.kudosBadgesExtra)) { globalKudosBadgesExtra = data.kudosBadgesExtra; localStorage.setItem('storeDashKudosBadgesExtraV107', JSON.stringify(globalKudosBadgesExtra)); }
+            if (data.fraseAtivaCiclo && data.fraseAtivaCiclo.texto) { globalFraseAtivaCiclo = data.fraseAtivaCiclo; localStorage.setItem('storeDashFraseAtivaV107', JSON.stringify(globalFraseAtivaCiclo)); renderizarFraseDoDia(); }
+            if (Array.isArray(data.frasesExtra)) { globalFrasesExtra = data.frasesExtra; localStorage.setItem('storeDashFrasesExtraV107', JSON.stringify(globalFrasesExtra)); }
+            if (Array.isArray(data.sugestoes)) { globalSugestoes = data.sugestoes; localStorage.setItem('storeDashSugestoesV107', JSON.stringify(globalSugestoes)); renderizarSugestoesMelhoria(); }
+            if (Array.isArray(data.campanhas)) { globalCampanhas = data.campanhas; localStorage.setItem('storeDashCampanhasV107', JSON.stringify(globalCampanhas)); renderizarCampanhasPromocoes(); }
+            if (Array.isArray(data.fechosCaixa)) { globalFechosCaixa = data.fechosCaixa; localStorage.setItem('storeDashFechosCaixaV107', JSON.stringify(globalFechosCaixa)); renderizarFechosCaixa(); }
             if (Array.isArray(data.paginasBriefing) && data.paginasBriefing.length > 0) {
                 globalPaginasBriefing = data.paginasBriefing;
-                try { localStorage.setItem('storeDashBriefingV99', JSON.stringify(globalPaginasBriefing)); } catch (e) {}
+                try { localStorage.setItem('storeDashBriefingV107', JSON.stringify(globalPaginasBriefing)); } catch (e) {}
                 renderizarEspelhoPDF('briefing');
             }
             if (Array.isArray(data.paginasTop20) && data.paginasTop20.length > 0) {
                 globalPaginasTop20 = data.paginasTop20;
-                try { localStorage.setItem('storeDashTop20V99', JSON.stringify(globalPaginasTop20)); } catch (e) {}
+                try { localStorage.setItem('storeDashTop20V107', JSON.stringify(globalPaginasTop20)); } catch (e) {}
                 renderizarEspelhoPDF('top20');
             }
             if (Array.isArray(data.paginasInfoSemanal) && data.paginasInfoSemanal.length > 0) {
                 globalPaginasInfoSemanal = data.paginasInfoSemanal;
-                try { localStorage.setItem('storeDashInfoSemanalV99', JSON.stringify(globalPaginasInfoSemanal)); } catch (e) {}
+                try { localStorage.setItem('storeDashInfoSemanalV107', JSON.stringify(globalPaginasInfoSemanal)); } catch (e) {}
                 renderizarEspelhoPDF('infoSemanal');
             }
             if (Array.isArray(data.chatMensagens)) {
                 const prevCount = globalChatMensagens.length;
                 globalChatMensagens = data.chatMensagens;
-                localStorage.setItem('storeDashChatMensagensV99', JSON.stringify(globalChatMensagens));
+                localStorage.setItem('storeDashChatMensagensV107', JSON.stringify(globalChatMensagens));
                 renderizarChatEquipa();
                 if (globalChatMensagens.length > prevCount && !floatingChatAberto) { tocarSomNotificacao(); }
             }
 
             if (Array.isArray(data.equipaPerfis) && data.equipaPerfis.length > 0) { PERFIS_LOJA = data.equipaPerfis; guardarListaEquipaLocal(); atualizarDropdownsEquipa(); renderizarGestaoEquipaAdmin(); renderizarEcraLogin(); }
-            if (Array.isArray(data.ordemSeparadores) && data.ordemSeparadores.length > 0) { globalOrdemSeparadores = normalizarOrdemSeparadores(data.ordemSeparadores); try { localStorage.setItem('storeDashOrdemSeparadoresV99', JSON.stringify(globalOrdemSeparadores)); } catch (e) {} renderizarNavegacaoSeparadores(); }
-            if (Array.isArray(data.comunicadosGestao)) { globalComunicadosGestao = data.comunicadosGestao; try { localStorage.setItem('storeDashComunicadosGestaoV99', JSON.stringify(globalComunicadosGestao)); } catch (e) {} renderizarComunicadosGestao(); }
-            if (data.perfisFotos && typeof data.perfisFotos === 'object') { globalPerfisFotos = { ...globalPerfisFotos, ...data.perfisFotos }; localStorage.setItem('storeDashPerfisFotosV99', JSON.stringify(globalPerfisFotos)); atualizarAvatarSidebar(); renderizarGestaoEquipaAdmin(); renderizarEcraLogin(); }
-            if (data.staffPins && typeof data.staffPins === 'object') { globalStaffPins = { ...globalStaffPins, ...data.staffPins }; localStorage.setItem('storeDashStaffPinsV99', JSON.stringify(globalStaffPins)); renderizarGestaoEquipaAdmin(); renderizarEcraLogin(); }
-            if (data.adminPinsMap && typeof data.adminPinsMap === 'object') { const mergedAdminPins = { ...getAdminPinsMap(), ...data.adminPinsMap }; localStorage.setItem('storeDashAdminPinsMapV99', JSON.stringify(mergedAdminPins)); renderizarGestaoEquipaAdmin(); }
+            if (Array.isArray(data.ordemSeparadores) && data.ordemSeparadores.length > 0) { globalOrdemSeparadores = normalizarOrdemSeparadores(data.ordemSeparadores); try { localStorage.setItem('storeDashOrdemSeparadoresV107', JSON.stringify(globalOrdemSeparadores)); } catch (e) {} renderizarNavegacaoSeparadores(); }
+            if (Array.isArray(data.comunicadosGestao)) { globalComunicadosGestao = data.comunicadosGestao; try { localStorage.setItem('storeDashComunicadosGestaoV107', JSON.stringify(globalComunicadosGestao)); } catch (e) {} renderizarComunicadosGestao(); }
+            if (data.perfisFotos && typeof data.perfisFotos === 'object') { globalPerfisFotos = { ...globalPerfisFotos, ...data.perfisFotos }; localStorage.setItem('storeDashPerfisFotosV107', JSON.stringify(globalPerfisFotos)); atualizarAvatarSidebar(); renderizarGestaoEquipaAdmin(); renderizarEcraLogin(); }
+            if (data.staffPins && typeof data.staffPins === 'object') { globalStaffPins = { ...DEFAULT_STAFF_PINS, ...globalStaffPins, ...data.staffPins }; localStorage.setItem('storeDashStaffPinsV107', JSON.stringify(globalStaffPins)); renderizarGestaoEquipaAdmin(); renderizarEcraLogin(); }
+            if (data.adminPinsMap && typeof data.adminPinsMap === 'object') { const mergedAdminPins = { ...getAdminPinsMap(), ...data.adminPinsMap }; localStorage.setItem('storeDashAdminPinsMapV107', JSON.stringify(mergedAdminPins)); renderizarGestaoEquipaAdmin(); }
 
             renderizarChecklistRotina();
             atualizarCampainha();
@@ -6183,7 +6289,7 @@
                             // Fundir fotos, pins, tarefas, chat, kudos, lembretes e sugestões sem perder alterações dos colegas
                             if (remoteData.perfisFotos) globalPerfisFotos = { ...remoteData.perfisFotos, ...globalPerfisFotos };
                             if (remoteData.staffPins) globalStaffPins = { ...remoteData.staffPins, ...globalStaffPins };
-                            if (remoteData.adminPinsMap) { const mergedPins = { ...remoteData.adminPinsMap, ...getAdminPinsMap() }; localStorage.setItem('storeDashAdminPinsMapV99', JSON.stringify(mergedPins)); }
+                            if (remoteData.adminPinsMap) { const mergedPins = { ...remoteData.adminPinsMap, ...getAdminPinsMap() }; localStorage.setItem('storeDashAdminPinsMapV107', JSON.stringify(mergedPins)); }
                             if (Array.isArray(remoteData.tarefas)) globalTarefas = fundirListasPorId(globalTarefas, remoteData.tarefas);
                             if (Array.isArray(remoteData.comunicadosGestao)) globalComunicadosGestao = fundirListasPorId(globalComunicadosGestao, remoteData.comunicadosGestao, 15);
                             if (Array.isArray(remoteData.kpiRegistos)) globalKpiRegistos = fundirListasPorId(globalKpiRegistos, remoteData.kpiRegistos);
@@ -6220,7 +6326,7 @@
                     const updatedGist = await res.json().catch(() => ({}));
                     const rawStr = JSON.stringify(estado);
                     globalCloudConfig.lastVersion = (updatedGist.updated_at || '') + '_' + rawStr.length;
-                    localStorage.setItem('storeDashCloudConfigV99', JSON.stringify(globalCloudConfig));
+                    localStorage.setItem('storeDashCloudConfigV107', JSON.stringify(globalCloudConfig));
                     const hhmm = new Date().toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
                     atualizarIndicadorCloudUI('Nuvem ' + hhmm, 'verde');
                 } else {
@@ -6274,7 +6380,7 @@
                     if (forcar || check.versionTag !== globalCloudConfig.lastVersion) {
                         const parsed = JSON.parse(check.rawContent);
                         globalCloudConfig.lastVersion = check.versionTag;
-                        localStorage.setItem('storeDashCloudConfigV99', JSON.stringify(globalCloudConfig));
+                        localStorage.setItem('storeDashCloudConfigV107', JSON.stringify(globalCloudConfig));
                         aplicarEstadoPartilhado(parsed);
                     }
                 }
@@ -6358,7 +6464,7 @@
                 }
 
                 globalCloudConfig = { ativo: true, token: token, gistId: gistId, lastVersion: '' };
-                localStorage.setItem('storeDashCloudConfigV99', JSON.stringify(globalCloudConfig));
+                localStorage.setItem('storeDashCloudConfigV107', JSON.stringify(globalCloudConfig));
                 atualizarIndicadorCloudUI('Nuvem Ativa', 'verde');
                 iniciarLoopSincronizacaoCloud();
                 await puxarDadosDoGitHub(true);
@@ -6378,7 +6484,7 @@
         function desligarSincronizacaoGitHub() {
             if (!confirm('Desligar a sincronização na nuvem neste dispositivo?')) return;
             globalCloudConfig = { ativo: false, token: '', gistId: '', lastVersion: '' };
-            localStorage.removeItem('storeDashCloudConfigV99');
+            localStorage.removeItem('storeDashCloudConfigV107');
             if (cloudSyncTimer) clearInterval(cloudSyncTimer);
             atualizarIndicadorCloudUI('Modo Local', 'local');
         }
@@ -6427,15 +6533,48 @@
             if (!globalCloudConfig.ativo) return;
             cloudSyncTimer = setInterval(() => {
                 puxarDadosDoGitHub(false);
-            }, 5000);
+            }, 4000);
         }
+
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible' && globalCloudConfig && globalCloudConfig.ativo) {
+                puxarDadosDoGitHub(true);
+            }
+        });
+        window.addEventListener('focus', () => {
+            if (globalCloudConfig && globalCloudConfig.ativo) {
+                puxarDadosDoGitHub(true);
+            }
+        });
 
         const paletaCores = ['bg-szlightgray text-white', 'bg-green-500 text-black', 'bg-fuchsia-500 text-black', 'bg-orange-500 text-black', 'bg-gray-400 text-black', 'bg-red-200 text-red-800'];
         const diasSemanaNomes = ['DOM', 'SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SÁB'];
-        function getDiaSemana(diaMes) { return diasSemanaNomes[(diaMes - 1 + 2) % 7]; }
+        let globalHorarioMesAno = (() => {
+            const hoje = new Date();
+            return `${hoje.getFullYear()}-${String(hoje.getMonth() + 1).padStart(2, '0')}`;
+        })();
+
+        function getAnoMesHorarioAtual() {
+            const val = (globalHorarioMesAno || '').trim();
+            const m = val.match(/^(\d{4})-(\d{2})$/);
+            if (m) return { ano: parseInt(m[1], 10), mesIdx: parseInt(m[2], 10) - 1 };
+            const hoje = new Date();
+            return { ano: hoje.getFullYear(), mesIdx: hoje.getMonth() };
+        }
+
+        function getDiaSemana(diaMes) {
+            const { ano, mesIdx } = getAnoMesHorarioAtual();
+            const dt = new Date(ano, mesIdx, diaMes);
+            return diasSemanaNomes[dt.getDay()];
+        }
+
+        function getDiasNoMesHorario() {
+            const { ano, mesIdx } = getAnoMesHorarioAtual();
+            return new Date(ano, mesIdx + 1, 0).getDate();
+        }
 
         window.onload = () => {
-            const guardadoHorarioSheet = localStorage.getItem('storeDashHorarioSheetV99');
+            const guardadoHorarioSheet = localStorage.getItem('storeDashHorarioSheetV107');
             if(guardadoHorarioSheet) {
                 try {
                     globalHorarioSheet = JSON.parse(guardadoHorarioSheet);
@@ -6450,22 +6589,25 @@
             renderizarFechosCaixa();
                 } catch(e) {}
             }
-            const guardadoHorario = localStorage.getItem('storeDashHorarioV99');
+            const guardadoMesAnoH = localStorage.getItem('storeDashHorarioMesAnoV107');
+            if (guardadoMesAnoH) globalHorarioMesAno = guardadoMesAnoH;
+            sincronizarInputsMesAnoHorario();
+            const guardadoHorario = localStorage.getItem('storeDashHorarioV107');
             if(guardadoHorario && !globalHorarioSheet.ativo) { globalDataHorario = JSON.parse(guardadoHorario); renderizarHorario(); }
             
-            const guardadoBriefingSheet = localStorage.getItem('storeDashBriefingSheetV99');
+            const guardadoBriefingSheet = localStorage.getItem('storeDashBriefingSheetV107');
             if (guardadoBriefingSheet) { try { globalBriefingSheet = JSON.parse(guardadoBriefingSheet); const inpBr = document.getElementById('googleSheetsBriefingUrlInput'); if (inpBr && globalBriefingSheet.sheetUrl) { inpBr.value = globalBriefingSheet.sheetUrl; } renderizarBriefingSheet(); } catch (e) {} }
 
-            const guardadoBriefing = localStorage.getItem('storeDashBriefingV99');
+            const guardadoBriefing = localStorage.getItem('storeDashBriefingV107');
             if(guardadoBriefing) { try { globalPaginasBriefing = JSON.parse(guardadoBriefing); renderizarEspelhoPDF('briefing'); } catch(e) {} }
 
-            const guardadoTop20 = localStorage.getItem('storeDashTop20V99');
+            const guardadoTop20 = localStorage.getItem('storeDashTop20V107');
             if(guardadoTop20) { try { globalPaginasTop20 = JSON.parse(guardadoTop20); renderizarEspelhoPDF('top20'); } catch(e) {} }
 
-            const guardadoInfo = localStorage.getItem('storeDashInfoSemanalV99');
+            const guardadoInfo = localStorage.getItem('storeDashInfoSemanalV107');
             if(guardadoInfo) { try { globalPaginasInfoSemanal = JSON.parse(guardadoInfo); renderizarEspelhoPDF('infoSemanal'); } catch(e) {} }
 
-            const guardadoSf = localStorage.getItem('storeDashSalesforceV99');
+            const guardadoSf = localStorage.getItem('storeDashSalesforceV107');
             if(guardadoSf) { 
                 try { 
                     globalSalesforce = JSON.parse(guardadoSf); 
@@ -6480,7 +6622,7 @@
                 } catch(e) {} 
             }
 
-            const guardadoSprays = localStorage.getItem('storeDashSpraysV99');
+            const guardadoSprays = localStorage.getItem('storeDashSpraysV107');
             if(guardadoSprays) {
                 try {
                     globalSprays = JSON.parse(guardadoSprays);
@@ -6490,7 +6632,7 @@
                 } catch(e) {}
             }
 
-            const guardadoFerias = localStorage.getItem('storeDashFeriasV99');
+            const guardadoFerias = localStorage.getItem('storeDashFeriasV107');
             if(guardadoFerias) {
                 try {
                     globalFerias2027 = JSON.parse(guardadoFerias);
@@ -6509,49 +6651,49 @@
                 elTopDate.innerText = new Date().toLocaleDateString('pt-PT', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
             }
 
-            const guardadoNotifs = localStorage.getItem('storeDashNotificacoesV99');
+            const guardadoNotifs = localStorage.getItem('storeDashNotificacoesV107');
             if (guardadoNotifs) { try { globalNotificacoes = JSON.parse(guardadoNotifs); } catch (e) {} }
 
-            const guardadoLembretes = localStorage.getItem('storeDashLembretesV99');
+            const guardadoLembretes = localStorage.getItem('storeDashLembretesV107');
             if (guardadoLembretes) { try { globalLembretes = JSON.parse(guardadoLembretes); } catch (e) {} }
 
-            const guardadoCampanhas = localStorage.getItem('storeDashCampanhasV99');
+            const guardadoCampanhas = localStorage.getItem('storeDashCampanhasV107');
             if (guardadoCampanhas) { try { globalCampanhas = JSON.parse(guardadoCampanhas); } catch (e) {} }
-            const guardadoFechos = localStorage.getItem('storeDashFechosCaixaV99');
+            const guardadoFechos = localStorage.getItem('storeDashFechosCaixaV107');
             if (guardadoFechos) { try { globalFechosCaixa = JSON.parse(guardadoFechos); } catch (e) {} }
 
-            const guardadoTarefas = localStorage.getItem('storeDashTarefasV99');
+            const guardadoTarefas = localStorage.getItem('storeDashTarefasV107');
             if(guardadoTarefas) { globalTarefas = JSON.parse(guardadoTarefas); }
-            const guardadoKpiRegs = localStorage.getItem('storeDashKpiRegistosV99');
+            const guardadoKpiRegs = localStorage.getItem('storeDashKpiRegistosV107');
             if (guardadoKpiRegs) { try { globalKpiRegistos = JSON.parse(guardadoKpiRegs); } catch (e) {} }
-            const guardadoTrocas = localStorage.getItem('storeDashPedidosTrocaV99');
+            const guardadoTrocas = localStorage.getItem('storeDashPedidosTrocaV107');
             if (guardadoTrocas) { try { globalPedidosTroca = JSON.parse(guardadoTrocas); } catch (e) {} }
-            const guardadoBhSaldos = localStorage.getItem('storeDashBancoHorasSaldosV99');
+            const guardadoBhSaldos = localStorage.getItem('storeDashBancoHorasSaldosV107');
             if (guardadoBhSaldos) { try { globalBancoHorasSaldos = JSON.parse(guardadoBhSaldos); } catch (e) {} }
-            const guardadoBhHist = localStorage.getItem('storeDashBancoHorasHistV99');
+            const guardadoBhHist = localStorage.getItem('storeDashBancoHorasHistV107');
             if (guardadoBhHist) { try { globalBancoHorasHistorico = JSON.parse(guardadoBhHist); } catch (e) {} }
-            const guardadoFeriasPed = localStorage.getItem('storeDashFerias2027PedidosV99');
+            const guardadoFeriasPed = localStorage.getItem('storeDashFerias2027PedidosV107');
             if (guardadoFeriasPed) { try { globalFerias2027Pedidos = JSON.parse(guardadoFeriasPed); } catch (e) {} }
 
-            const guardadoGdMin = localStorage.getItem('storeDashGdMinimizadosV99');
+            const guardadoGdMin = localStorage.getItem('storeDashGdMinimizadosV107');
             if (guardadoGdMin) { try { globalGdCardsMinimizados = JSON.parse(guardadoGdMin); } catch (e) {} }
             aplicarEstadoMinimizadosGestorDados();
-            const guardadoComunicados = localStorage.getItem('storeDashComunicadosGestaoV99');
+            const guardadoComunicados = localStorage.getItem('storeDashComunicadosGestaoV107');
             if (guardadoComunicados) { try { globalComunicadosGestao = JSON.parse(guardadoComunicados); } catch (e) {} }
-            const guardadoOrdem = localStorage.getItem('storeDashOrdemSeparadoresV99');
+            const guardadoOrdem = localStorage.getItem('storeDashOrdemSeparadoresV107');
             if (guardadoOrdem) { try { globalOrdemSeparadores = normalizarOrdemSeparadores(JSON.parse(guardadoOrdem)); } catch (e) {} }
             renderizarNavegacaoSeparadores();
             renderizarComunicadosGestao();
-            const guardadoEquipa = localStorage.getItem('storeDashEquipaPerfisV99');
+            const guardadoEquipa = localStorage.getItem('storeDashEquipaPerfisV107');
             if (guardadoEquipa) { try { const eq = JSON.parse(guardadoEquipa); if (Array.isArray(eq) && eq.length > 0) PERFIS_LOJA = eq; } catch (e) {} }
             atualizarDropdownsEquipa();
-            const guardadoFotos = localStorage.getItem('storeDashPerfisFotosV99');
+            const guardadoFotos = localStorage.getItem('storeDashPerfisFotosV107');
             if (guardadoFotos) { try { globalPerfisFotos = JSON.parse(guardadoFotos); } catch (e) {} }
-            const guardadoStaffPins = localStorage.getItem('storeDashStaffPinsV99');
-            if (guardadoStaffPins) { try { globalStaffPins = JSON.parse(guardadoStaffPins); } catch (e) {} }
+            const guardadoStaffPins = localStorage.getItem('storeDashStaffPinsV107');
+            if (guardadoStaffPins) { try { globalStaffPins = { ...DEFAULT_STAFF_PINS, ...JSON.parse(guardadoStaffPins) }; } catch (e) {} }
 
             // 1. Ler configuração da nuvem guardada localmente OU vinda no link (?key=... ou #key=...)
-            const guardadoCloud = localStorage.getItem('storeDashCloudConfigV99') || localStorage.getItem('storeDashCloudConfigV99') || localStorage.getItem('storeDashCloudConfigV57') || localStorage.getItem('storeDashCloudConfigV56');
+            const guardadoCloud = localStorage.getItem('storeDashCloudConfigV107') || localStorage.getItem('storeDashCloudConfigV107') || localStorage.getItem('storeDashCloudConfigV57') || localStorage.getItem('storeDashCloudConfigV56');
             if (guardadoCloud) {
                 try { globalCloudConfig = JSON.parse(guardadoCloud); } catch (e) {}
             }
@@ -6567,7 +6709,7 @@
                     const dec = JSON.parse(atob(incomingKey.replace('SD_KEY_', '')));
                     if (dec.t && dec.g) {
                         globalCloudConfig = { ativo: true, token: dec.t, gistId: dec.g, lastUpdated: 0 };
-                        localStorage.setItem('storeDashCloudConfigV99', JSON.stringify(globalCloudConfig));
+                        localStorage.setItem('storeDashCloudConfigV107', JSON.stringify(globalCloudConfig));
                     }
                 } catch (e) {}
             }
@@ -6582,7 +6724,7 @@
             }
 
             renderizarEcraLogin();
-            const guardadoPerfil = localStorage.getItem('storeDashPerfilAtivoV99');
+            const guardadoPerfil = localStorage.getItem('storeDashPerfilAtivoV107');
             if (guardadoPerfil) {
                 try {
                     const p = JSON.parse(guardadoPerfil);
@@ -6592,15 +6734,15 @@
                     }
                 } catch(e) {}
             }
-            const guardadoVendasSheet = localStorage.getItem('storeDashVendasSheetV99');
+            const guardadoVendasSheet = localStorage.getItem('storeDashVendasSheetV107');
             if (guardadoVendasSheet) { try { globalVendasSheet = JSON.parse(guardadoVendasSheet); atualizarUIVendasSheet(); if (globalVendasSheet.ativo) { iniciarLoopVendasSheet(); sincronizarVendasGoogleSheetsAgora(false); } } catch (e) {} }
 
-            const guardadoPremio = localStorage.getItem('storeDashPremioMesV99');
+            const guardadoPremio = localStorage.getItem('storeDashPremioMesV107');
             if (guardadoPremio) {
                 try { globalPremioMes = { ...globalPremioMes, ...JSON.parse(guardadoPremio) }; } catch (e) {}
             }
 
-            const guardadoVendasDia = localStorage.getItem('storeDashVendasDiaV99');
+            const guardadoVendasDia = localStorage.getItem('storeDashVendasDiaV107');
             if (guardadoVendasDia) {
                 try {
                     const vd = JSON.parse(guardadoVendasDia);
@@ -6615,24 +6757,24 @@
                         globalVendasDia.objetivo = vd.objetivo || 2500;
                         globalVendasDia.atual = 0;
                         globalVendasDia.registos = [];
-                        localStorage.setItem('storeDashVendasDiaV99', JSON.stringify(globalVendasDia));
+                        localStorage.setItem('storeDashVendasDiaV107', JSON.stringify(globalVendasDia));
                     }
                 } catch (e) {}
             }
 
-            const guardadoRotinasDia = localStorage.getItem('storeDashRotinasPorDiaV99');
+            const guardadoRotinasDia = localStorage.getItem('storeDashRotinasPorDiaV107');
             if (guardadoRotinasDia) { try { globalRotinasPorDia = JSON.parse(guardadoRotinasDia); } catch (e) {} }
-            const guardadoRotinaChecks = localStorage.getItem('storeDashRotinaChecksV99');
+            const guardadoRotinaChecks = localStorage.getItem('storeDashRotinaChecksV107');
             if (guardadoRotinaChecks) { try { globalRotinaChecksHoje = JSON.parse(guardadoRotinaChecks); } catch (e) {} }
 
-            const guardadoKudosBadges = localStorage.getItem('storeDashKudosBadgesExtraV99');
+            const guardadoKudosBadges = localStorage.getItem('storeDashKudosBadgesExtraV107');
             if (guardadoKudosBadges) { try { globalKudosBadgesExtra = JSON.parse(guardadoKudosBadges); } catch (e) {} }
-            const guardadoKudos = localStorage.getItem('storeDashKudosV99');
+            const guardadoKudos = localStorage.getItem('storeDashKudosV107');
             if (guardadoKudos) { try { globalKudos = JSON.parse(guardadoKudos); } catch (e) {} }
 
-            const guardadoFrasesExtra = localStorage.getItem('storeDashFrasesExtraV99');
+            const guardadoFrasesExtra = localStorage.getItem('storeDashFrasesExtraV107');
             if (guardadoFrasesExtra) { try { globalFrasesExtra = JSON.parse(guardadoFrasesExtra); } catch (e) {} }
-            const guardadoFraseAtiva = localStorage.getItem('storeDashFraseAtivaV99');
+            const guardadoFraseAtiva = localStorage.getItem('storeDashFraseAtivaV107');
             if (guardadoFraseAtiva) { try { globalFraseAtivaCiclo = JSON.parse(guardadoFraseAtiva); } catch (e) {} }
 
             renderizarKpisSpraysSociosOnline();
@@ -6742,10 +6884,10 @@
 
             // Limpar eventual grelha manual antiga para dar prioridade ao Google Sheets ao vivo
             globalDataHorario = [];
-            localStorage.removeItem('storeDashHorarioV99');
+            localStorage.removeItem('storeDashHorarioV107');
 
             try {
-                localStorage.setItem('storeDashHorarioSheetV99', JSON.stringify(globalHorarioSheet));
+                localStorage.setItem('storeDashHorarioSheetV107', JSON.stringify(globalHorarioSheet));
             enviarDadosParaGitHub();
             } catch (e) {}
 
@@ -6763,7 +6905,7 @@
         function alternarModoEmbedHorario() {
             if (!globalHorarioSheet.ativo) return;
             globalHorarioSheet.modoLimpo = !globalHorarioSheet.modoLimpo;
-            try { localStorage.setItem('storeDashHorarioSheetV99', JSON.stringify(globalHorarioSheet));
+            try { localStorage.setItem('storeDashHorarioSheetV107', JSON.stringify(globalHorarioSheet));
             enviarDadosParaGitHub(); } catch (e) {}
             atualizarDropdownsEquipa();
             renderizarGestaoEquipaAdmin();
@@ -6807,8 +6949,8 @@
                 }
                 if(nome && !ignorar.includes(nome.toUpperCase()) && !nome.match(/^(SEG|TER|QUA|QUI|SEX|SÁB|SAB|DOM|\d{1,2}\/\d{1,2})$/i)) {
                     let turnos = [];
-                    const totalCols = Math.max(31, cols.length - startIndex);
-                    for(let i = startIndex; i < startIndex + totalCols; i++) turnos.push((cols[i] || '').trim());
+                    const diasMesReal = getDiasNoMesHorario();
+                    for(let i = startIndex; i < startIndex + diasMesReal; i++) turnos.push((cols[i] || '').trim());
                     if (turnos.some(t => t !== '')) {
                         parseados.push({ nome: nome, turnos: turnos, cores: [] });
                     }
@@ -6816,9 +6958,12 @@
             });
             if(parseados.length > 0) {
                 globalHorarioSheet = { ativo: false, sheetUrl: '', editUrl: '', cleanViewUrl: '', modoLimpo: false };
-                localStorage.removeItem('storeDashHorarioSheetV99');
+                localStorage.removeItem('storeDashHorarioSheetV107');
+                const inpMesGd = document.getElementById('inputHorarioMesAno');
+                if (inpMesGd && inpMesGd.value) globalHorarioMesAno = inpMesGd.value;
+                localStorage.setItem('storeDashHorarioMesAnoV107', globalHorarioMesAno);
                 globalDataHorario = parseados;
-                localStorage.setItem('storeDashHorarioV99', JSON.stringify(globalDataHorario));
+                localStorage.setItem('storeDashHorarioV107', JSON.stringify(globalDataHorario));
                 document.getElementById('excelInputHorario').value = '';
                 enviarDadosParaGitHub();
                 registarNotificacao(`Atualizou a grelha de Horários (${parseados.length} colaboradores)`, 'horario');
@@ -6853,10 +6998,27 @@
             if (!Array.isArray(staff.cores)) staff.cores = [];
             const atual = staff.cores[diaIdx] || 0;
             staff.cores[diaIdx] = (atual + 1) % paletaCores.length;
-            try { localStorage.setItem('storeDashHorarioV99', JSON.stringify(globalDataHorario)); } catch (e) {}
+            try { localStorage.setItem('storeDashHorarioV107', JSON.stringify(globalDataHorario)); } catch (e) {}
             enviarDadosParaGitHub();
             renderDia(diaIdx + 1);
             renderMes();
+        }
+
+        function sincronizarInputsMesAnoHorario() {
+            const inp1 = document.getElementById('inputHorarioMesAno');
+            const inp2 = document.getElementById('horarioTabMesAnoInput');
+            if (inp1 && inp1.value !== globalHorarioMesAno) inp1.value = globalHorarioMesAno;
+            if (inp2 && inp2.value !== globalHorarioMesAno) inp2.value = globalHorarioMesAno;
+        }
+
+        function alterarMesAnoHorario(novoValor) {
+            if (!novoValor) return;
+            globalHorarioMesAno = novoValor;
+            try { localStorage.setItem('storeDashHorarioMesAnoV107', globalHorarioMesAno); } catch (e) {}
+            sincronizarInputsMesAnoHorario();
+            renderizarHorario();
+            renderizarEquipaTurnoHoje();
+            enviarDadosParaGitHub();
         }
 
         function renderizarHorario() {
@@ -6912,9 +7074,10 @@
             document.getElementById('horario-embed-view').classList.add('hidden');
             document.getElementById('horario-views').classList.remove('hidden');
 
+            sincronizarInputsMesAnoHorario();
             const navDias = document.getElementById('nav-dias');
             navDias.innerHTML = '';
-            const numDias = globalDataHorario[0].turnos.length;
+            const numDias = Math.min(globalDataHorario[0].turnos.length, getDiasNoMesHorario());
             for(let i=1; i<=numDias; i++) {
                 const ds = getDiaSemana(i);
                 navDias.innerHTML += `<button onclick="renderDia(${i})" id="btn-dia-${i}" class="btn-dia-indiv bg-szlightgray border border-gray-600 text-white font-bold py-2 px-3 rounded hover:bg-gray-600 flex-shrink-0 transition flex flex-col items-center leading-tight"><span>${i}</span><span class="text-xs text-szorange">${ds}</span></button>`;
@@ -6943,7 +7106,7 @@
         }
 
         function renderMes() {
-            const numDias = globalDataHorario[0].turnos.length;
+            const numDias = Math.min(globalDataHorario[0].turnos.length, getDiasNoMesHorario());
             const isAdminUser = Boolean(perfilAtual && perfilAtual.role === 'admin');
             let html = '<table class="horario-table bg-black rounded-lg border border-gray-800 shadow-xl"><thead><tr><th style="text-align: left; min-width:200px; position: sticky; left: 0; z-index: 10;">COLABORADOR</th>';
             for(let d=1; d<=numDias; d++) html += `<th>${d}<br><span class="text-szorange text-xs">${getDiaSemana(d)}</span></th>`;
@@ -6997,7 +7160,7 @@
 
         function toggleBlocoGestorDados(cardId) {
             globalGdCardsMinimizados[cardId] = !globalGdCardsMinimizados[cardId];
-            try { localStorage.setItem('storeDashGdMinimizadosV99', JSON.stringify(globalGdCardsMinimizados)); } catch (e) {}
+            try { localStorage.setItem('storeDashGdMinimizadosV107', JSON.stringify(globalGdCardsMinimizados)); } catch (e) {}
             aplicarEstadoMinimizadosGestorDados();
         }
 
@@ -7007,7 +7170,7 @@
             allCards.forEach(c => {
                 globalGdCardsMinimizados[c.getAttribute('data-gd-card')] = !todosMin;
             });
-            try { localStorage.setItem('storeDashGdMinimizadosV99', JSON.stringify(globalGdCardsMinimizados)); } catch (e) {}
+            try { localStorage.setItem('storeDashGdMinimizadosV107', JSON.stringify(globalGdCardsMinimizados)); } catch (e) {}
             aplicarEstadoMinimizadosGestorDados();
         }
 
@@ -7016,9 +7179,23 @@
         // ============================
         let globalComunicadosGestao = []; // { id, tag, texto, autor, dataHora }
 
+        function alternarCampoOutroComunicado() {
+            const sel = document.getElementById('comunicadoTagSelect');
+            const inpOutro = document.getElementById('comunicadoOutroTagInput');
+            if (!sel || !inpOutro) return;
+            const isOutro = (sel.value === 'OUTRO');
+            inpOutro.classList.toggle('hidden', !isOutro);
+            if (isOutro) setTimeout(() => inpOutro.focus(), 50);
+        }
+
         function publicarComunicadoGestao() {
             if (!isGestorEquipaAutorizado()) return alert('Apenas o Jorge Carvalho ou o Filipe Moreira podem publicar comunicados oficiais.');
-            const tag = document.getElementById('comunicadoTagSelect').value;
+            const selTag = document.getElementById('comunicadoTagSelect').value;
+            let tag = selTag;
+            if (selTag === 'OUTRO') {
+                const customTag = (document.getElementById('comunicadoOutroTagInput').value || '').trim();
+                tag = customTag || 'Outro';
+            }
             const texto = (document.getElementById('comunicadoTextoInput').value || '').trim();
             if (!texto) return alert('Escreve a mensagem do comunicado primeiro.');
 
@@ -7034,8 +7211,10 @@
             });
             if (globalComunicadosGestao.length > 15) globalComunicadosGestao = globalComunicadosGestao.slice(0, 15);
 
-            try { localStorage.setItem('storeDashComunicadosGestaoV99', JSON.stringify(globalComunicadosGestao)); } catch (e) {}
+            try { localStorage.setItem('storeDashComunicadosGestaoV107', JSON.stringify(globalComunicadosGestao)); } catch (e) {}
             document.getElementById('comunicadoTextoInput').value = '';
+            const inpOutroReset = document.getElementById('comunicadoOutroTagInput');
+            if (inpOutroReset) inpOutroReset.value = '';
             renderizarComunicadosGestao();
             enviarDadosParaGitHub();
             registarNotificacao(`Comunicado da Gestão (${tag}): "${texto}"`, 'dashboard');
@@ -7044,7 +7223,7 @@
         function apagarComunicadoGestao(id) {
             if (!isGestorEquipaAutorizado()) return;
             globalComunicadosGestao = globalComunicadosGestao.filter(c => c.id !== id);
-            try { localStorage.setItem('storeDashComunicadosGestaoV99', JSON.stringify(globalComunicadosGestao)); } catch (e) {}
+            try { localStorage.setItem('storeDashComunicadosGestaoV107', JSON.stringify(globalComunicadosGestao)); } catch (e) {}
             renderizarComunicadosGestao();
             enviarDadosParaGitHub();
         }
@@ -7146,7 +7325,7 @@
             globalOrdemSeparadores[idx] = globalOrdemSeparadores[novoIdx];
             globalOrdemSeparadores[novoIdx] = temp;
 
-            try { localStorage.setItem('storeDashOrdemSeparadoresV99', JSON.stringify(globalOrdemSeparadores)); } catch (e) {}
+            try { localStorage.setItem('storeDashOrdemSeparadoresV107', JSON.stringify(globalOrdemSeparadores)); } catch (e) {}
             renderizarNavegacaoSeparadores();
             renderizarComunicadosGestao();
             enviarDadosParaGitHub();
@@ -7155,7 +7334,7 @@
         function reporOrdemSeparadoresPadrao() {
             if (!isGestorEquipaAutorizado()) return;
             globalOrdemSeparadores = [...ORDEM_SEPARADORES_PADRAO];
-            try { localStorage.setItem('storeDashOrdemSeparadoresV99', JSON.stringify(globalOrdemSeparadores)); } catch (e) {}
+            try { localStorage.setItem('storeDashOrdemSeparadoresV107', JSON.stringify(globalOrdemSeparadores)); } catch (e) {}
             renderizarNavegacaoSeparadores();
             renderizarComunicadosGestao();
             enviarDadosParaGitHub();
@@ -7339,7 +7518,7 @@
             const inpMes = document.getElementById('kpiMesSelecionadoInput');
             if (inpMes) inpMes.value = mesHoje;
 
-            try { localStorage.setItem('storeDashKpiRegistosV99', JSON.stringify(globalKpiRegistos)); } catch (e) {}
+            try { localStorage.setItem('storeDashKpiRegistosV107', JSON.stringify(globalKpiRegistos)); } catch (e) {}
 
             // Sincronizar automaticamente os totais de HOJE com o painel principal (Início)
             sincronizarTotaisHojeComDashboard();
@@ -7380,7 +7559,7 @@
             const podeApagar = isGestorEquipaAutorizado() || (perfilAtual && item.autor === perfilAtual.nome);
             if (!podeApagar) return alert('Só podes anular os teus próprios registos (ou a gestão).');
             globalKpiRegistos = globalKpiRegistos.filter(x => String(x.id) !== String(id));
-            try { localStorage.setItem('storeDashKpiRegistosV99', JSON.stringify(globalKpiRegistos)); } catch (e) {}
+            try { localStorage.setItem('storeDashKpiRegistosV107', JSON.stringify(globalKpiRegistos)); } catch (e) {}
             sincronizarTotaisHojeComDashboard();
             renderizarKpisSpraysSociosOnline();
             enviarDadosParaGitHub();
@@ -7391,17 +7570,19 @@
             const deHoje = globalKpiRegistos.filter(r => r.data === hojeStr);
             const spraysHoje = deHoje.filter(r => r.tipo === 'spray').reduce((s, r) => s + (r.qtd || 1), 0);
             const sociosHoje = deHoje.filter(r => r.tipo === 'socio').reduce((s, r) => s + (r.qtd || 1), 0);
-            const onlineHojeEuro = deHoje.filter(r => r.tipo === 'online').reduce((s, r) => s + (r.valor || 0), 0);
+            const onlineHojeEuro = Math.round(deHoje.filter(r => r.tipo === 'online').reduce((s, r) => s + (r.valor || 0), 0) * 100) / 100;
 
             if (globalVendasDia.data !== hojeStr) {
                 globalVendasDia.data = hojeStr;
                 globalVendasDia.atual = 0;
                 globalVendasDia.registos = [];
             }
-            globalVendasDia.sprays = spraysHoje;
-            globalVendasDia.socios = sociosHoje;
-            globalVendasDia.online = Math.round(onlineHojeEuro * 100) / 100;
-            try { localStorage.setItem('storeDashVendasDiaV99', JSON.stringify(globalVendasDia)); } catch (e) {}
+            if (deHoje.length > 0) {
+                globalVendasDia.sprays = Math.max(globalVendasDia.sprays || 0, spraysHoje);
+                globalVendasDia.socios = Math.max(globalVendasDia.socios || 0, sociosHoje);
+                globalVendasDia.online = Math.max(globalVendasDia.online || 0, onlineHojeEuro);
+            }
+            try { localStorage.setItem('storeDashVendasDiaV107', JSON.stringify(globalVendasDia)); } catch (e) {}
             renderizarVendasDia();
         }
 
@@ -7603,7 +7784,7 @@
                 criadoEm: criadoEm
             });
 
-            try { localStorage.setItem('storeDashPedidosTrocaV99', JSON.stringify(globalPedidosTroca)); } catch (e) {}
+            try { localStorage.setItem('storeDashPedidosTrocaV107', JSON.stringify(globalPedidosTroca)); } catch (e) {}
             document.getElementById('trocaDetalhesInput').value = '';
             renderizarPedidosTroca();
             enviarDadosParaGitHub();
@@ -7616,7 +7797,7 @@
             if (!item) return;
             item.estado = novoEstado;
             item.decididoPor = perfilAtual.nome.split(' ')[0];
-            try { localStorage.setItem('storeDashPedidosTrocaV99', JSON.stringify(globalPedidosTroca)); } catch (e) {}
+            try { localStorage.setItem('storeDashPedidosTrocaV107', JSON.stringify(globalPedidosTroca)); } catch (e) {}
             renderizarPedidosTroca();
             enviarDadosParaGitHub();
             registarNotificacao(`${novoEstado} pedido de troca de ${item.autor} (${formatarDataPT(item.data)})`, 'horario');
@@ -7624,7 +7805,7 @@
 
         function apagarPedidoTroca(id) {
             globalPedidosTroca = globalPedidosTroca.filter(x => x.id !== id);
-            try { localStorage.setItem('storeDashPedidosTrocaV99', JSON.stringify(globalPedidosTroca)); } catch (e) {}
+            try { localStorage.setItem('storeDashPedidosTrocaV107', JSON.stringify(globalPedidosTroca)); } catch (e) {}
             renderizarPedidosTroca();
             enviarDadosParaGitHub();
         }
@@ -7721,8 +7902,8 @@
             if (globalBancoHorasHistorico.length > 40) globalBancoHorasHistorico = globalBancoHorasHistorico.slice(0, 40);
 
             try {
-                localStorage.setItem('storeDashBancoHorasSaldosV99', JSON.stringify(globalBancoHorasSaldos));
-                localStorage.setItem('storeDashBancoHorasHistV99', JSON.stringify(globalBancoHorasHistorico));
+                localStorage.setItem('storeDashBancoHorasSaldosV107', JSON.stringify(globalBancoHorasSaldos));
+                localStorage.setItem('storeDashBancoHorasHistV107', JSON.stringify(globalBancoHorasHistorico));
             } catch (e) {}
 
             document.getElementById('bhHorasInput').value = '';
@@ -7862,7 +8043,7 @@
                 criadoEm: criadoEm
             });
 
-            try { localStorage.setItem('storeDashFerias2027PedidosV99', JSON.stringify(globalFerias2027Pedidos)); } catch (e) {}
+            try { localStorage.setItem('storeDashFerias2027PedidosV107', JSON.stringify(globalFerias2027Pedidos)); } catch (e) {}
             document.getElementById('feriasNotasInput').value = '';
             renderizarFerias2027Gestao();
             enviarDadosParaGitHub();
@@ -7875,7 +8056,7 @@
             if (!item) return;
             item.estado = 'Aprovado';
             item.aprovadoPor = perfilAtual.nome.split(' ')[0];
-            try { localStorage.setItem('storeDashFerias2027PedidosV99', JSON.stringify(globalFerias2027Pedidos)); } catch (e) {}
+            try { localStorage.setItem('storeDashFerias2027PedidosV107', JSON.stringify(globalFerias2027Pedidos)); } catch (e) {}
             renderizarFerias2027Gestao();
             enviarDadosParaGitHub();
             registarNotificacao(`Aprovou férias 2027 de ${item.colaborador} (${formatarDataPT(item.dataInicio)} a ${formatarDataPT(item.dataFim)})`, 'ferias2027');
@@ -7887,7 +8068,7 @@
             if (!item) return;
             item.estado = 'Recusado';
             item.aprovadoPor = perfilAtual.nome.split(' ')[0];
-            try { localStorage.setItem('storeDashFerias2027PedidosV99', JSON.stringify(globalFerias2027Pedidos)); } catch (e) {}
+            try { localStorage.setItem('storeDashFerias2027PedidosV107', JSON.stringify(globalFerias2027Pedidos)); } catch (e) {}
             renderizarFerias2027Gestao();
             enviarDadosParaGitHub();
         }
@@ -7898,7 +8079,7 @@
             if (!item) return;
             item.estado = 'Pendente';
             item.aprovadoPor = '';
-            try { localStorage.setItem('storeDashFerias2027PedidosV99', JSON.stringify(globalFerias2027Pedidos)); } catch (e) {}
+            try { localStorage.setItem('storeDashFerias2027PedidosV107', JSON.stringify(globalFerias2027Pedidos)); } catch (e) {}
             renderizarFerias2027Gestao();
             enviarDadosParaGitHub();
         }
@@ -7910,7 +8091,7 @@
             if (!isGestor && (!perfilAtual || item.colaborador !== perfilAtual.nome || item.estado === 'Aprovado')) return;
             if (!confirm('Eliminar este registo de férias?')) return;
             globalFerias2027Pedidos = globalFerias2027Pedidos.filter(x => x.id !== id);
-            try { localStorage.setItem('storeDashFerias2027PedidosV99', JSON.stringify(globalFerias2027Pedidos)); } catch (e) {}
+            try { localStorage.setItem('storeDashFerias2027PedidosV107', JSON.stringify(globalFerias2027Pedidos)); } catch (e) {}
             renderizarFerias2027Gestao();
             enviarDadosParaGitHub();
         }
@@ -8051,7 +8232,7 @@
                 concluidaPor: ''
             });
 
-            localStorage.setItem('storeDashTarefasV99', JSON.stringify(globalTarefas));
+            localStorage.setItem('storeDashTarefasV107', JSON.stringify(globalTarefas));
             enviarDadosParaGitHub();
             registarNotificacao(`Atribuiu nova tarefa a ${encarregue}: "${desc}"`, 'tarefas');
             document.getElementById('tarefaDescricao').value = '';
@@ -8073,7 +8254,7 @@
             } else {
                 tarefa.concluidaPor = '';
             }
-            localStorage.setItem('storeDashTarefasV99', JSON.stringify(globalTarefas));
+            localStorage.setItem('storeDashTarefasV107', JSON.stringify(globalTarefas));
             enviarDadosParaGitHub();
             renderizarKpisSpraysSociosOnline();
             renderizarTarefas();
@@ -8084,7 +8265,7 @@
 
         function apagarTarefa(id) {
             globalTarefas = globalTarefas.filter(t => t.id !== id);
-            localStorage.setItem('storeDashTarefasV99', JSON.stringify(globalTarefas));
+            localStorage.setItem('storeDashTarefasV107', JSON.stringify(globalTarefas));
             enviarDadosParaGitHub();
             renderizarKpisSpraysSociosOnline();
             renderizarTarefas();
@@ -8231,7 +8412,7 @@
             };
 
             try {
-                localStorage.setItem('storeDashSalesforceV99', JSON.stringify(globalSalesforce));
+                localStorage.setItem('storeDashSalesforceV107', JSON.stringify(globalSalesforce));
             enviarDadosParaGitHub();
             } catch (e) {}
 
@@ -8243,7 +8424,7 @@
         function alternarModoEmbedSf() {
             if (globalSalesforce.tipo !== 'embed') return;
             globalSalesforce.modoLimpo = !globalSalesforce.modoLimpo;
-            try { localStorage.setItem('storeDashSalesforceV99', JSON.stringify(globalSalesforce));
+            try { localStorage.setItem('storeDashSalesforceV107', JSON.stringify(globalSalesforce));
             enviarDadosParaGitHub(); } catch (e) {}
             renderizarSalesforce();
         }
@@ -8300,7 +8481,7 @@
                     globalSalesforce = { tipo: 'visual', headers: [], rows: [], paginas: paginas, sheetUrl: '', csvUrl: '' };
                 }
 
-                try { localStorage.setItem('storeDashSalesforceV99', JSON.stringify(globalSalesforce));
+                try { localStorage.setItem('storeDashSalesforceV107', JSON.stringify(globalSalesforce));
             enviarDadosParaGitHub(); } catch (e) {}
                 registarNotificacao('Importou novo ficheiro no Salesforce', 'salesforce');
                 renderizarSalesforce();
@@ -8444,9 +8625,9 @@
             };
 
             globalPaginasBriefing = [];
-            localStorage.removeItem('storeDashBriefingV99');
+            localStorage.removeItem('storeDashBriefingV107');
 
-            try { localStorage.setItem('storeDashBriefingSheetV99', JSON.stringify(globalBriefingSheet)); } catch (e) {}
+            try { localStorage.setItem('storeDashBriefingSheetV107', JSON.stringify(globalBriefingSheet)); } catch (e) {}
             enviarDadosParaGitHub();
             registarNotificacao('Ligou/atualizou o link do Briefing Diário', 'briefing');
             renderizarBriefingSheet();
@@ -8456,7 +8637,7 @@
         function alternarModoEmbedBriefing() {
             if (!globalBriefingSheet.ativo) return;
             globalBriefingSheet.modoLimpo = !globalBriefingSheet.modoLimpo;
-            try { localStorage.setItem('storeDashBriefingSheetV99', JSON.stringify(globalBriefingSheet)); } catch (e) {}
+            try { localStorage.setItem('storeDashBriefingSheetV107', JSON.stringify(globalBriefingSheet)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarBriefingSheet();
         }
@@ -8662,9 +8843,9 @@
 
                 if (tipo === 'briefing') {
                     globalBriefingSheet = { ativo: false, sheetUrl: '', editUrl: '', cleanViewUrl: '', modoLimpo: false };
-                    try { localStorage.removeItem('storeDashBriefingSheetV99'); } catch(e) {}
+                    try { localStorage.removeItem('storeDashBriefingSheetV107'); } catch(e) {}
                     globalPaginasBriefing = paginasProcessadas;
-                    try { localStorage.setItem('storeDashBriefingV99', JSON.stringify(globalPaginasBriefing)); } catch(e) {}
+                    try { localStorage.setItem('storeDashBriefingV107', JSON.stringify(globalPaginasBriefing)); } catch(e) {}
                     document.getElementById('fileNameBriefing').innerHTML = `<i class="fas fa-check-circle text-emerald-400 mr-1"></i> Briefing Carregado (${paginasProcessadas.length} pág.)!`;
                     enviarDadosParaGitHub();
                     registarNotificacao('Carregou novo PDF de Briefing Diário', 'briefing');
@@ -8673,7 +8854,7 @@
                     showTab('briefing');
                 } else if (tipo === 'top20') {
                     globalPaginasTop20 = paginasProcessadas;
-                    try { localStorage.setItem('storeDashTop20V99', JSON.stringify(globalPaginasTop20)); } catch(e) {}
+                    try { localStorage.setItem('storeDashTop20V107', JSON.stringify(globalPaginasTop20)); } catch(e) {}
                     document.getElementById('fileNameTop20').innerHTML = "Top 20 Carregado!";
                     enviarDadosParaGitHub();
                     registarNotificacao('Atualizou o ficheiro Top 20', 'top20');
@@ -8681,7 +8862,7 @@
                     showTab('top20');
                 } else {
                     globalPaginasInfoSemanal = paginasProcessadas;
-                    try { localStorage.setItem('storeDashInfoSemanalV99', JSON.stringify(globalPaginasInfoSemanal)); } catch(e) {}
+                    try { localStorage.setItem('storeDashInfoSemanalV107', JSON.stringify(globalPaginasInfoSemanal)); } catch(e) {}
                     document.getElementById('fileNameInfoSemanal').innerHTML = "Info Semanal Carregada!";
                     enviarDadosParaGitHub();
                     registarNotificacao('Atualizou a Informação Semanal', 'infoSemanal');
@@ -8763,14 +8944,14 @@
 
                 if (tipo === 'sprays') {
                     globalSprays = resultado;
-                    try { localStorage.setItem('storeDashSpraysV99', JSON.stringify(globalSprays)); } catch (e) {}
+                    try { localStorage.setItem('storeDashSpraysV107', JSON.stringify(globalSprays)); } catch (e) {}
             enviarDadosParaGitHub();
                     registarNotificacao('Carregou novo ficheiro de Sprays', 'sprays');
                     renderizarSprays();
                     showTab('sprays');
                 } else {
                     globalFerias2027 = resultado;
-                    try { localStorage.setItem('storeDashFeriasV99', JSON.stringify(globalFerias2027)); } catch (e) {}
+                    try { localStorage.setItem('storeDashFeriasV107', JSON.stringify(globalFerias2027)); } catch (e) {}
             enviarDadosParaGitHub();
                     registarNotificacao('Carregou novo ficheiro de Férias 2027', 'ferias2027');
                     renderizarPedidosTroca();
@@ -8804,7 +8985,7 @@
                 modoLimpo: false
             };
 
-            try { localStorage.setItem('storeDashSpraysV99', JSON.stringify(globalSprays)); } catch (e) {}
+            try { localStorage.setItem('storeDashSpraysV107', JSON.stringify(globalSprays)); } catch (e) {}
             enviarDadosParaGitHub();
             registarNotificacao('Ligou/atualizou o Google Sheets de Sprays', 'sprays');
             renderizarSprays();
@@ -8814,7 +8995,7 @@
         function alternarModoEmbedSprays() {
             if (globalSprays.tipo !== 'embed') return;
             globalSprays.modoLimpo = !globalSprays.modoLimpo;
-            try { localStorage.setItem('storeDashSpraysV99', JSON.stringify(globalSprays)); } catch (e) {}
+            try { localStorage.setItem('storeDashSpraysV107', JSON.stringify(globalSprays)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarSprays();
         }
@@ -8914,7 +9095,7 @@
                 modoLimpo: false
             };
 
-            try { localStorage.setItem('storeDashFeriasV99', JSON.stringify(globalFerias2027)); } catch (e) {}
+            try { localStorage.setItem('storeDashFeriasV107', JSON.stringify(globalFerias2027)); } catch (e) {}
             enviarDadosParaGitHub();
             registarNotificacao('Ligou/atualizou o Google Sheets de Férias 2027', 'ferias2027');
             renderizarPedidosTroca();
@@ -8927,7 +9108,7 @@
         function alternarModoEmbedFerias() {
             if (globalFerias2027.tipo !== 'embed') return;
             globalFerias2027.modoLimpo = !globalFerias2027.modoLimpo;
-            try { localStorage.setItem('storeDashFeriasV99', JSON.stringify(globalFerias2027)); } catch (e) {}
+            try { localStorage.setItem('storeDashFeriasV107', JSON.stringify(globalFerias2027)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarPedidosTroca();
             renderizarBancoHoras();
@@ -9061,8 +9242,8 @@
 
         function limparDados(tipo) {
             if(tipo === 'horario' && confirm('Desligar e apagar Horário?')) {
-                localStorage.removeItem('storeDashHorarioV99');
-                localStorage.removeItem('storeDashHorarioSheetV99');
+                localStorage.removeItem('storeDashHorarioV107');
+                localStorage.removeItem('storeDashHorarioSheetV107');
                 globalDataHorario = [];
                 globalHorarioSheet = { ativo: false, sheetUrl: '', editUrl: '', cleanViewUrl: '', modoLimpo: false };
                 const inpH = document.getElementById('googleSheetsHorarioUrlInput'); if (inpH) inpH.value = '';
@@ -9076,8 +9257,8 @@
                 document.getElementById('horario-views').classList.add('hidden');
             }
             if(tipo === 'briefing' && confirm('Desligar e apagar Briefing Diário?')) {
-                localStorage.removeItem('storeDashBriefingV99');
-                localStorage.removeItem('storeDashBriefingSheetV99');
+                localStorage.removeItem('storeDashBriefingV107');
+                localStorage.removeItem('storeDashBriefingSheetV107');
                 globalPaginasBriefing = [];
                 globalBriefingSheet = { ativo: false, sheetUrl: '', editUrl: '', cleanViewUrl: '', modoLimpo: false };
                 const inpBr = document.getElementById('googleSheetsBriefingUrlInput'); if (inpBr) inpBr.value = '';
@@ -9093,7 +9274,7 @@
                 enviarDadosParaGitHub();
             }
             if(tipo === 'top20' && confirm('Apagar Top 20?')) {
-                localStorage.removeItem('storeDashTop20V99');
+                localStorage.removeItem('storeDashTop20V107');
                 globalPaginasTop20 = [];
                 document.getElementById('top20-empty').classList.remove('hidden');
                 document.getElementById('top20-views').classList.add('hidden');
@@ -9101,7 +9282,7 @@
                 document.getElementById('btnProcessTop20Container').classList.add('hidden');
             }
             if(tipo === 'infoSemanal' && confirm('Apagar Informação Semanal?')) {
-                localStorage.removeItem('storeDashInfoSemanalV99');
+                localStorage.removeItem('storeDashInfoSemanalV107');
                 globalPaginasInfoSemanal = [];
                 document.getElementById('infoSemanal-empty').classList.remove('hidden');
                 document.getElementById('infoSemanal-views').classList.add('hidden');
@@ -9110,7 +9291,7 @@
             }
             if(tipo === 'salesforce' && confirm('Desligar e apagar dados do Salesforce?')) {
                 if (sfAutoSyncInterval) clearInterval(sfAutoSyncInterval);
-                localStorage.removeItem('storeDashSalesforceV99');
+                localStorage.removeItem('storeDashSalesforceV107');
                 globalSalesforce = { tipo: '', headers: [], rows: [], paginas: [], sheetUrl: '', csvUrl: '' };
                 document.getElementById('googleSheetsUrlInput').value = '';
                 document.getElementById('badgeSfLive').classList.add('hidden');
@@ -9122,7 +9303,7 @@
                 document.getElementById('btnProcessSalesforceManual').classList.add('hidden');
             }
             if(tipo === 'sprays' && confirm('Desligar e apagar dados de Sprays?')) {
-                localStorage.removeItem('storeDashSpraysV99');
+                localStorage.removeItem('storeDashSpraysV107');
                 globalSprays = { tipo: '', headers: [], rows: [], paginas: [], sheetUrl: '', editUrl: '', cleanViewUrl: '', modoLimpo: false };
                 document.getElementById('googleSheetsSpraysUrlInput').value = '';
                 document.getElementById('badgeSpraysLive').classList.add('hidden');
@@ -9137,7 +9318,7 @@
                 document.getElementById('btnProcessSpraysManual').classList.add('hidden');
             }
             if(tipo === 'ferias2027' && confirm('Desligar e apagar dados de Férias 2027?')) {
-                localStorage.removeItem('storeDashFeriasV99');
+                localStorage.removeItem('storeDashFeriasV107');
                 globalFerias2027 = { tipo: '', headers: [], rows: [], paginas: [], sheetUrl: '', editUrl: '', cleanViewUrl: '', modoLimpo: false };
                 document.getElementById('googleSheetsFeriasUrlInput').value = '';
                 document.getElementById('badgeFeriasLive').classList.add('hidden');
@@ -9153,5 +9334,472 @@
             }
         }
     </script>
+
+<script>
+/* StoreDash — patch v107. Colar no fim do index.html. Para desfazer, apagar este bloco. */
+(function () {
+  'use strict';
+
+  function boot() {
+    const $ = id => document.getElementById(id);
+    const hojeISO = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
+    const num = v => { const n = parseNumeroFlexivel(v); return isNaN(n) ? 0 : n; };
+    const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    window.sdEsc = esc;
+
+    if (window.pdfjsLib && pdfjsLib.getDocument) {
+      const _gd = pdfjsLib.getDocument.bind(pdfjsLib);
+      pdfjsLib.getDocument = o =>
+        (o && typeof o === 'object' && !Array.isArray(o)) ? _gd({ isEvalSupported: false, ...o }) : _gd(o);
+    }
+
+    const inject = (anchor, pos, html) => { if (anchor) anchor.insertAdjacentHTML(pos, html); };
+
+    inject(document.querySelector('#carregar .grid'), 'afterbegin', `
+    <div class="md:col-span-2 lg:col-span-3 bg-szgray p-6 rounded-xl border-2 border-emerald-500/50 shadow-2xl">
+      <h3 class="text-xl font-bold text-emerald-400 mb-1"><i class="fas fa-link mr-2"></i> 0.1 Folhas Google (Ligações)</h3>
+      <p class="text-gray-400 text-xs mb-4">Sem estas ligações as vistas "Live" e o auto-sync de vendas não têm configuração possível.</p>
+      <div class="space-y-2.5">
+        <div class="flex flex-col sm:flex-row gap-2">
+          <input id="googleSheetsVendasUrlInput" placeholder="Link da folha de Vendas / Sprays / Sócios / Online" class="flex-1 bg-black text-white border border-emerald-500/40 rounded-lg px-3 py-2 text-xs focus:border-emerald-400 focus:outline-none">
+          <button onclick="ligarGoogleSheetsVendas()" class="bg-emerald-500 hover:bg-white text-black font-bold text-xs px-4 py-2 rounded-lg whitespace-nowrap">Ligar Vendas</button>
+          <button onclick="desligarGoogleSheetsVendas()" class="bg-red-600/70 hover:bg-red-600 text-white font-bold text-xs px-3 py-2 rounded-lg" title="Desligar"><i class="fas fa-unlink"></i></button>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-2">
+          <input id="googleSheetsSpraysUrlInput" placeholder="Link da folha de Sprays" class="flex-1 bg-black text-white border border-gray-700 rounded-lg px-3 py-2 text-xs focus:border-amber-400 focus:outline-none">
+          <button onclick="ligarGoogleSheetsSprays()" class="bg-amber-500 hover:bg-white text-black font-bold text-xs px-4 py-2 rounded-lg whitespace-nowrap">Ligar Sprays</button>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-2">
+          <input id="googleSheetsHorarioUrlInput" placeholder="Link da folha de Horários" class="flex-1 bg-black text-white border border-gray-700 rounded-lg px-3 py-2 text-xs focus:border-szorange focus:outline-none">
+          <button onclick="ligarGoogleSheetsHorario()" class="bg-szorange hover:bg-white text-black font-bold text-xs px-4 py-2 rounded-lg whitespace-nowrap">Ligar Horários</button>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-2">
+          <input id="googleSheetsBriefingUrlInput" placeholder="Link do Briefing (Sheets / Docs / Drive)" class="flex-1 bg-black text-white border border-gray-700 rounded-lg px-3 py-2 text-xs focus:border-cyan-400 focus:outline-none">
+          <button onclick="ligarGoogleSheetsBriefing()" class="bg-cyan-500 hover:bg-white text-black font-bold text-xs px-4 py-2 rounded-lg whitespace-nowrap">Ligar Briefing</button>
+        </div>
+      </div>
+      <div class="mt-3 pt-3 border-t border-gray-800 flex flex-wrap items-center gap-2">
+        <span id="badgeVendasSheetStatus" class="bg-gray-700 text-gray-300 text-xs font-bold px-3 py-1 rounded-full">Manual (Sem folha ligada)</span>
+        <button onclick="descarregarModeloVendasCSV()" class="bg-szlightgray hover:bg-gray-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg"><i class="fas fa-file-csv mr-1"></i> Modelo CSV</button>
+      </div>
+    </div>`);
+
+    inject(document.querySelector('#modalConfigFolhaVendas textarea'), 'beforebegin', `
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="modalGoogleSheetsVendasInput" placeholder="Ou cola o link da folha para auto-sync..." class="flex-1 bg-black text-white border border-emerald-500/40 rounded-lg px-3 py-2 text-xs focus:border-emerald-400 focus:outline-none">
+      <button onclick="guardarLinkGoogleSheetsVendasModal()" class="bg-emerald-500 hover:bg-white text-black font-bold text-xs px-4 py-2 rounded-lg whitespace-nowrap">Ligar</button>
+    </div>`);
+
+    inject($('dashBannerAlertaUrgente'), 'afterend', `
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+      <div class="bg-black/50 border border-pink-500/30 rounded-xl p-3"><span class="text-[10px] uppercase font-bold text-pink-400 block">Minhas tarefas</span><span id="dashKpiMinhasTarefas" class="text-2xl font-black text-white">0</span></div>
+      <div class="bg-black/50 border border-gray-800 rounded-xl p-3"><span class="text-[10px] uppercase font-bold text-gray-400 block">Tarefas abertas</span><span id="dashKpiTotalTarefas" class="text-2xl font-black text-white">0</span></div>
+      <div class="bg-black/50 border border-amber-500/30 rounded-xl p-3"><span class="text-[10px] uppercase font-bold text-amber-400 block">Alertas ativos</span><span id="dashKpiAlertas" class="text-2xl font-black text-white">0</span></div>
+      <div class="bg-black/50 border border-emerald-500/30 rounded-xl p-3"><span class="text-[10px] uppercase font-bold text-emerald-400 block">Folhas live</span><span id="dashKpiLiveCount" class="text-2xl font-black text-white">0/4</span></div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      <div class="bg-szgray/90 border border-amber-500/40 rounded-2xl p-5">
+        <div class="flex items-center justify-between mb-2">
+          <h3 class="text-sm font-extrabold text-amber-300"><i class="fas fa-face-laugh-beam mr-2"></i> Frase do Dia</h3>
+          <div class="flex gap-1.5">
+            <button onclick="sortearOutraFraseHoje()" class="bg-black/60 hover:bg-amber-400 text-amber-300 hover:text-black border border-amber-500/30 text-[11px] font-bold px-2.5 py-1 rounded-lg" title="Sortear outra"><i class="fas fa-shuffle"></i></button>
+            <button onclick="abrirModalNovaFrase()" class="bg-black/60 hover:bg-amber-400 text-amber-300 hover:text-black border border-amber-500/30 text-[11px] font-bold px-2.5 py-1 rounded-lg">+ Frase</button>
+          </div>
+        </div>
+        <p id="fraseDoDiaTexto" class="text-sm text-gray-100 italic leading-relaxed">...</p>
+        <p id="fraseDiaValidade" class="text-[10px] text-gray-500 mt-2"></p>
+      </div>
+      <div class="bg-szgray/90 border border-yellow-500/40 rounded-2xl p-5">
+        <div class="flex items-center justify-between mb-2">
+          <h3 class="text-sm font-extrabold text-yellow-300"><i class="fas fa-award mr-2"></i> Destaques da Equipa</h3>
+          <button onclick="abrirModalKudos()" class="bg-black/60 hover:bg-yellow-400 text-yellow-300 hover:text-black border border-yellow-500/30 text-[11px] font-bold px-2.5 py-1 rounded-lg">+ Elogiar</button>
+        </div>
+        <div id="listaKudosEquipa" class="space-y-2 max-h-52 overflow-y-auto"></div>
+      </div>
+    </div>`);
+
+    inject(document.body, 'beforeend', `
+    <button onclick="toggleFloatingChat()" class="fixed bottom-24 md:bottom-6 right-4 z-[180] w-14 h-14 rounded-full bg-szorange text-black text-xl flex items-center justify-center shadow-2xl active:scale-95 transition">
+      <i class="fas fa-comments"></i><span id="badgeChatFloat" class="hidden absolute -top-1 -right-1 bg-red-600 text-white text-[10px] font-extrabold min-w-[20px] h-5 px-1 rounded-full flex items-center justify-center border-2 border-black">0</span>
+    </button>
+    <div id="floatingChatBox" class="hidden fixed bottom-40 md:bottom-24 right-4 z-[180] w-[92vw] sm:w-96 h-[26rem] bg-szgray border-2 border-szorange rounded-2xl flex flex-col overflow-hidden shadow-2xl">
+      <div class="p-3 bg-black border-b border-gray-800 flex items-center justify-between">
+        <h4 class="text-sm font-bold text-white"><i class="fas fa-comments text-szorange mr-2"></i> Chat da Equipa</h4>
+        <div class="flex items-center gap-2">
+          <button onclick="limparChatEquipa()" class="text-[11px] text-gray-400 hover:text-red-400 font-bold">Limpar</button>
+          <button onclick="toggleFloatingChat()" class="text-gray-400 hover:text-white"><i class="fas fa-times"></i></button>
+        </div>
+      </div>
+      <div id="chatFloatMensagensLista" class="flex-1 overflow-y-auto p-3 space-y-2"></div>
+      <div class="p-2 border-t border-gray-800 flex gap-2">
+        <input id="chatFloatInput" placeholder="Mensagem rápida..." onkeypress="if(event.key==='Enter') enviarMensagemChat('float')" class="flex-1 bg-black text-white text-sm border border-gray-700 rounded-lg px-3 py-2 focus:border-szorange focus:outline-none">
+        <button onclick="enviarMensagemChat('float')" class="bg-szorange hover:bg-white text-black font-bold px-3 rounded-lg"><i class="fas fa-paper-plane"></i></button>
+      </div>
+    </div>
+    <div id="modalKudos" class="hidden fixed inset-0 bg-black/90 z-[120] items-center justify-center p-4" onclick="if(event.target===this) fecharModalKudos()">
+      <div class="bg-szgray border-2 border-yellow-500 rounded-2xl max-w-md w-full p-6">
+        <h3 class="text-xl font-bold text-white mb-4"><i class="fas fa-award text-yellow-400 mr-2"></i> Elogiar Colega</h3>
+        <label class="block text-xs text-gray-400 font-bold uppercase mb-1">Colega</label>
+        <select id="kudosColega" class="w-full bg-black text-white border border-gray-600 rounded-lg px-3 py-2.5 text-sm font-bold mb-3 focus:border-yellow-400 focus:outline-none"></select>
+        <label class="block text-xs text-gray-400 font-bold uppercase mb-1">Selo</label>
+        <select id="kudosBadge" onchange="verificarCustomKudosSelect()" class="w-full bg-black text-white border border-gray-600 rounded-lg px-3 py-2.5 text-sm font-bold mb-2 focus:border-yellow-400 focus:outline-none"></select>
+        <div id="boxCustomKudosAdmin" class="hidden mb-2"><input id="kudosCustomInput" placeholder="Nome do novo selo" class="w-full bg-black text-yellow-300 border border-yellow-500/50 rounded-lg px-3 py-2 text-sm focus:outline-none"></div>
+        <label class="block text-xs text-gray-400 font-bold uppercase mb-1">Mensagem</label>
+        <input id="kudosMensagem" onkeypress="if(event.key==='Enter') guardarKudos()" class="w-full bg-black text-white border border-gray-600 rounded-lg px-3 py-2.5 text-sm mb-4 focus:border-yellow-400 focus:outline-none">
+        <div class="flex gap-3">
+          <button onclick="fecharModalKudos()" class="flex-1 bg-szlightgray text-white font-bold py-2.5 rounded-xl">Cancelar</button>
+          <button onclick="guardarKudos()" class="flex-1 bg-yellow-500 text-black font-bold py-2.5 rounded-xl">Elogiar</button>
+        </div>
+      </div>
+    </div>
+    <div id="modalFraseDia" class="hidden fixed inset-0 bg-black/90 z-[120] items-center justify-center p-4" onclick="if(event.target===this) fecharModalNovaFrase()">
+      <div class="bg-szgray border-2 border-amber-500 rounded-2xl max-w-md w-full p-6">
+        <h3 class="text-xl font-bold text-white mb-4"><i class="fas fa-face-laugh-beam text-amber-400 mr-2"></i> Sugerir Frase do Dia</h3>
+        <input id="inputNovaFraseTexto" onkeypress="if(event.key==='Enter') guardarNovaFraseDoDia()" placeholder="A tua frase..." class="w-full bg-black text-white border border-gray-600 rounded-lg px-3 py-2.5 text-sm mb-4 focus:border-amber-400 focus:outline-none">
+        <div class="flex gap-3">
+          <button onclick="fecharModalNovaFrase()" class="flex-1 bg-szlightgray text-white font-bold py-2.5 rounded-xl">Cancelar</button>
+          <button onclick="guardarNovaFraseDoDia()" class="flex-1 bg-amber-500 text-black font-bold py-2.5 rounded-xl">Guardar</button>
+        </div>
+      </div>
+    </div>`);
+    ['modalKudos', 'modalFraseDia'].forEach(id => { const m = $(id); if (m) m.classList.add('flex'); });
+
+    const spraysSub = document.querySelector('#sprays p.text-gray-400');
+    if (spraysSub) spraysSub.id = 'spraysSubtitulo';
+    inject(document.querySelector('#sprays > div:first-child'), 'afterend', `
+    <div id="sdSpraysEmbed" class="hidden space-y-2">
+      <div class="bg-szgray px-4 py-2 rounded-xl border border-gray-700 flex items-center justify-between text-xs">
+        <span class="text-gray-300"><i class="fas fa-lock text-emerald-400 mr-1.5"></i> Folha de Sprays ligada em tempo real.</span>
+        <button onclick="sincronizarSpraysGoogleSheetsAgora()" class="bg-szlightgray text-white font-bold px-3 py-1.5 rounded"><i class="fas fa-sync-alt"></i></button>
+      </div>
+      <div class="w-full h-[70vh] bg-white rounded-xl overflow-hidden border-2 border-amber-500/40"><iframe id="spraysIframe" src="" class="w-full h-full border-0"></iframe></div>
+    </div>`);
+
+    window.__tombs = {};
+    try { window.__tombs = JSON.parse(localStorage.getItem('storeDashTombsV107') || '{}'); } catch (e) {}
+
+    const TOMB = {
+      apagarTarefa: () => globalTarefas,
+      apagarSugestao: () => globalSugestoes,
+      apagarCampanhaPromocao: () => globalCampanhas,
+      apagarLembrete: () => globalLembretes,
+      apagarRegistoFechoCaixa: () => globalFechosCaixa,
+      apagarRegistoKPI: () => globalKpiRegistos,
+      apagarPedidoTroca: () => globalPedidosTroca,
+      apagarPedidoFerias2027: () => globalFerias2027Pedidos,
+      apagarComunicadoGestao: () => globalComunicadosGestao
+    };
+
+    Object.keys(TOMB).forEach(fn => {
+      const orig = window[fn];
+      if (typeof orig !== 'function') return;
+      const get = TOMB[fn];
+      window[fn] = function (id, ...rest) {
+        const antes = (get() || []).length;
+        const r = orig.apply(this, [id, ...rest]);
+        if ((get() || []).length < antes) {
+          window.__tombs[String(id)] = Date.now();
+          const ks = Object.keys(window.__tombs);
+          if (ks.length > 800) {
+            ks.sort((a, b) => window.__tombs[a] - window.__tombs[b]).slice(0, ks.length - 800).forEach(k => delete window.__tombs[k]);
+          }
+          try { localStorage.setItem('storeDashTombsV107', JSON.stringify(window.__tombs)); } catch (e) {}
+        }
+        return r;
+      };
+    });
+
+    const _recolher = window.recolherEstadoPartilhado;
+    window.recolherEstadoPartilhado = function () { const s = _recolher(); s.tombstones = window.__tombs; return s; };
+
+    const _aplicar = window.aplicarEstadoPartilhado;
+    window.aplicarEstadoPartilhado = function (d) {
+      if (d && d.tombstones) {
+        window.__tombs = { ...d.tombstones, ...window.__tombs };
+        try { localStorage.setItem('storeDashTombsV107', JSON.stringify(window.__tombs)); } catch (e) {}
+      }
+      const r = _aplicar(d);
+      if (d && d.vendasDia && d.vendasDia.data !== hojeISO()) {
+        globalVendasDia.fechadoNoMes = false;
+        globalVendasDia.valorFechadoNoMes = 0;
+      }
+      return r;
+    };
+
+    window.fundirListasPorId = function (local, remoto, max) {
+      const t = window.__tombs || {};
+      const m = new Map();
+      [...(remoto || []), ...(local || [])].forEach(i => {
+        if (i && i.id != null) m.set(String(i.id), { ...(m.get(String(i.id)) || {}), ...i });
+      });
+      const arr = [...m.values()].filter(i => !t[String(i.id)]);
+      return max ? arr.slice(0, max) : arr;
+    };
+
+    window.puxarDadosDoGitHub = async function (forcar) {
+      if (!globalCloudConfig.ativo || !globalCloudConfig.token || !globalCloudConfig.gistId) return;
+      if (isSyncingNow && !forcar) return;
+      try {
+        isSyncingNow = true;
+        const check = await lerRawGistSemCache(globalCloudConfig.gistId, globalCloudConfig.token);
+        if (!check.ok) { atualizarIndicadorCloudUI('Erro ' + check.status, 'erro'); return; }
+        if (check.rawContent && (forcar || check.versionTag !== globalCloudConfig.lastVersion)) {
+          const parsed = JSON.parse(check.rawContent);
+          globalCloudConfig.lastVersion = check.versionTag;
+          localStorage.setItem('storeDashCloudConfigV107', JSON.stringify(globalCloudConfig));
+          aplicarEstadoPartilhado(parsed);
+        }
+        atualizarIndicadorCloudUI('Nuvem ' + new Date().toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' }), 'verde');
+      } catch (e) {
+        atualizarIndicadorCloudUI('Offline', 'erro');
+      } finally {
+        isSyncingNow = false;
+      }
+    };
+
+    window.iniciarLoopSincronizacaoCloud = function () {
+      if (cloudSyncTimer) clearInterval(cloudSyncTimer);
+      if (!globalCloudConfig.ativo) return;
+      cloudSyncTimer = setInterval(() => { if (!document.hidden) puxarDadosDoGitHub(false); }, 20000);
+    };
+
+    window.renderizarSprays = function () {
+      renderizarKpisSpraysSociosOnline();
+      const emb = $('sdSpraysEmbed');
+      const isEmb = !!(globalSprays && globalSprays.tipo === 'embed');
+      const lb = $('spraysLiveStatusBadge'); if (lb) lb.classList.toggle('hidden', !isEmb);
+      const sb = $('badgeSpraysLive'); if (sb) sb.classList.toggle('hidden', !isEmb);
+      if (!emb) return;
+      emb.classList.toggle('hidden', !isEmb);
+      if (isEmb) {
+        const url = globalSprays.modoLimpo ? globalSprays.cleanViewUrl : globalSprays.editUrl;
+        const f = $('spraysIframe');
+        if (f && f.dataset.loadedUrl !== url) { f.src = url; f.dataset.loadedUrl = url; }
+      }
+    };
+
+    window.renderizarVendasDia = function () {
+      const obj = globalVendasDia.objetivo || 0;
+      const atual = globalVendasDia.atual || 0;
+      const sprays = globalVendasDia.sprays || 0;
+      const socios = globalVendasDia.socios || 0;
+      const online = globalVendasDia.online || 0;
+      const elAtual = $('vendasDiaAtualVal');
+      if (!elAtual) return;
+
+      const falta = Math.max(0, obj - atual);
+      const superado = Math.max(0, atual - obj);
+      const pct = obj > 0 ? (atual / obj) * 100 : 0;
+
+      elAtual.innerText = '€' + atual.toLocaleString('pt-PT', { maximumFractionDigits: 2 });
+      $('vendasDiaObjetivoVal').innerText = '€' + obj.toLocaleString('pt-PT', { maximumFractionDigits: 2 });
+      $('vendasDiaPctVal').innerText = pct.toFixed(1) + '%';
+      $('vendasDiaBarraPct').innerText = pct.toFixed(1) + '%';
+      $('vendasDiaSpraysVal').innerText = sprays + ' un.';
+      $('vendasDiaSociosVal').innerText = socios + ' un.';
+      $('vendasDiaOnlineVal').innerText = '€' + online.toLocaleString('pt-PT', { maximumFractionDigits: 2 });
+
+      const lf = $('vendasDiaFaltaLabel');
+      const vf = $('vendasDiaFaltaVal');
+      if (atual >= obj && obj > 0) {
+        lf.innerText = 'Objetivo Superado!';
+        vf.innerText = '+€' + superado.toLocaleString('pt-PT', { maximumFractionDigits: 2 });
+        vf.className = 'text-xl sm:text-3xl font-black text-emerald-400';
+      } else {
+        lf.innerText = 'Falta para o Objetivo';
+        vf.innerText = '€' + falta.toLocaleString('pt-PT', { maximumFractionDigits: 2 });
+        vf.className = 'text-xl sm:text-3xl font-black text-amber-300';
+      }
+
+      const extras = [];
+      if (globalVendasDia.upt) extras.push('UPT: ' + globalVendasDia.upt);
+      if (globalVendasDia.conv) extras.push('Conv: ' + globalVendasDia.conv);
+      $('vendasDiaKpisExtra').innerText = extras.join(' • ');
+
+      const bar = $('vendasDiaProgressBar');
+      const msg = $('vendasDiaStatusMsg');
+      bar.style.width = Math.min(100, pct) + '%';
+      if (pct >= 100) {
+        bar.className = 'h-full rounded-full bg-gradient-to-r from-emerald-500 to-yellow-400 transition-all duration-500';
+        msg.innerHTML = '<span class="text-emerald-400"><i class="fas fa-trophy mr-1"></i> OBJETIVO DIÁRIO BATIDO!</span>';
+      } else if (pct >= 75) {
+        bar.className = 'h-full rounded-full bg-gradient-to-r from-szorange to-emerald-400 transition-all duration-500';
+        msg.innerText = 'Reta final! Estamos a ' + (100 - pct).toFixed(1) + '% de fechar.';
+      } else if (pct >= 40) {
+        bar.className = 'h-full rounded-full bg-gradient-to-r from-szorange to-amber-400 transition-all duration-500';
+        msg.innerText = 'Bom ritmo! Continuar a apostar em Sprays, Sócios e venda complementar.';
+      } else {
+        bar.className = 'h-full rounded-full bg-gradient-to-r from-szorange to-amber-400 transition-all duration-500';
+        msg.innerText = 'Arranque com foco em atendimento, Sprays e Sócios.';
+      }
+
+      const btn = $('btnFecharDiaPremio');
+      if (btn) {
+        btn.className = 'admin-only-btn ' + (globalVendasDia.fechadoNoMes
+          ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-xs font-extrabold px-3 py-2.5 rounded-xl flex items-center gap-1.5'
+          : 'bg-sky-500/20 hover:bg-sky-400 text-sky-300 hover:text-black border border-sky-500/40 text-xs font-extrabold px-3 py-2.5 rounded-xl transition flex items-center gap-1.5');
+        btn.innerHTML = globalVendasDia.fechadoNoMes
+          ? '<i class="fas fa-check-circle"></i> <span>Enviado p/ Mês</span>'
+          : '<i class="fas fa-moon"></i> <span>Fechar Dia (23h)</span>';
+        if (!(perfilAtual && perfilAtual.role === 'admin')) btn.classList.add('hidden');
+      }
+
+      const tl = $('vendasDiaTimeline');
+      const uh = $('vendasDiaUltimaHora');
+      if (globalVendasDia.registos.length === 0) {
+        uh.innerText = '(sem registos)';
+        tl.innerHTML = '<span class="text-gray-500 italic">Ainda sem vendas hoje.</span>';
+      } else {
+        const u = globalVendasDia.registos[globalVendasDia.registos.length - 1];
+        uh.innerText = 'às ' + u.hora + ' (' + esc(u.autor) + ')';
+        tl.innerHTML = globalVendasDia.registos.map((r, i) => {
+          const last = i === globalVendasDia.registos.length - 1;
+          return '<div class="px-3 py-1.5 rounded-lg border ' + (last ? 'bg-szorange/20 border-szorange text-white' : 'bg-black/60 border-gray-700 text-gray-300') + ' flex items-center gap-2">'
+            + '<span class="font-mono font-bold text-szorange">' + esc(r.hora) + '</span>'
+            + '<span class="font-extrabold">€' + r.valor.toLocaleString('pt-PT') + '</span>'
+            + '<span class="text-[10px] px-1.5 py-0.5 rounded bg-black/70 text-emerald-400 font-bold">' + r.pct + '%</span></div>';
+        }).join('');
+      }
+    };
+
+    window.guardarRegistoVendasDia = function () {
+      const obj = num($('inputVendasObjetivo').value);
+      const atual = num($('inputVendasAtual').value);
+      const sprays = Math.round(num($('inputVendasSprays').value));
+      const socios = Math.round(num($('inputVendasSocios').value));
+      const online = num($('inputVendasOnline').value);
+      const hora = $('inputVendasHora').value || '--:--';
+      if (obj < 0) return alert('Define um objetivo diário válido.');
+
+      const h = hojeISO();
+      if (globalVendasDia.fechadoNoMes && globalVendasDia.data === h) {
+        const ant = globalVendasDia.valorFechadoNoMes || 0;
+        globalPremioMes.acumuladoOntem = Math.max(0, Math.round(((globalPremioMes.acumuladoOntem || 0) - ant) * 100) / 100);
+        if (Array.isArray(globalPremioMes.vendasDiariasColadas)) {
+          globalPremioMes.vendasDiariasColadas = globalPremioMes.vendasDiariasColadas.filter(d => d.isoData !== h);
+        }
+        globalVendasDia.fechadoNoMes = false;
+        globalVendasDia.valorFechadoNoMes = 0;
+        try { localStorage.setItem('storeDashPremioMesV107', JSON.stringify(globalPremioMes)); } catch (e) {}
+      }
+
+      globalVendasDia.data = h;
+      globalVendasDia.updatedAt = Date.now();
+      Object.assign(globalVendasDia, { objetivo: obj, atual, sprays, socios, online });
+      globalVendasDia.registos.push({
+        hora, valor: atual, sprays, socios, online,
+        pct: obj > 0 ? Math.round(atual / obj * 100) : 0,
+        autor: perfilAtual ? perfilAtual.nome.split(' ')[0] : 'Equipa'
+      });
+
+      try { localStorage.setItem('storeDashVendasDiaV107', JSON.stringify(globalVendasDia)); } catch (e) {}
+      enviarDadosParaGitHub();
+      registarNotificacao('Vendas às ' + hora + ': €' + atual + ' (' + (obj > 0 ? Math.round(atual / obj * 100) : 0) + '%) | ' + sprays + ' Sprays | ' + socios + ' Sócios | €' + online + ' Online', 'dashboard');
+      fecharModalVendasDia();
+      renderizarVendasDia();
+      renderizarPremioMes();
+    };
+
+    window.resetarVendasDia = function () {
+      if (!confirm('Reiniciar os parciais de vendas para um novo dia?')) return;
+      globalVendasDia = {
+        data: hojeISO(),
+        objetivo: globalVendasDia.objetivo || 0,
+        atual: 0, sprays: 0, socios: 0, online: 0,
+        upt: '', conv: '', registos: [],
+        fechadoNoMes: false, valorFechadoNoMes: 0
+      };
+      try { localStorage.setItem('storeDashVendasDiaV107', JSON.stringify(globalVendasDia)); } catch (e) {}
+      enviarDadosParaGitHub();
+      renderizarVendasDia();
+      renderizarPremioMes();
+    };
+
+    window.verificarFechoAutomatico23h = function () {
+      const h = hojeISO();
+      if (new Date().getHours() >= 23 && globalVendasDia.data === h && (globalVendasDia.atual || 0) > 0 && !globalVendasDia.fechadoNoMes) {
+        fecharDiaParaPremioMes(globalVendasDia, false);
+      }
+    };
+    setInterval(window.verificarFechoAutomatico23h, 60000);
+
+    window.sincronizarTotaisHojeComDashboard = function () {
+      const h = hojeISO();
+      const deHoje = globalKpiRegistos.filter(r => r.data === h);
+      if (globalVendasDia.data !== h) {
+        globalVendasDia.data = h;
+        globalVendasDia.atual = 0;
+        globalVendasDia.registos = [];
+      }
+      globalVendasDia.sprays = deHoje.filter(r => r.tipo === 'spray').reduce((s, r) => s + (r.qtd || 1), 0);
+      globalVendasDia.socios = deHoje.filter(r => r.tipo === 'socio').reduce((s, r) => s + (r.qtd || 1), 0);
+      globalVendasDia.online = Math.round(deHoje.filter(r => r.tipo === 'online').reduce((s, r) => s + (r.valor || 0), 0) * 100) / 100;
+      try { localStorage.setItem('storeDashVendasDiaV107', JSON.stringify(globalVendasDia)); } catch (e) {}
+      renderizarVendasDia();
+    };
+
+    const _notif = window.registarNotificacao;
+    window.registarNotificacao = function (texto, tab) { return _notif(esc(texto), tab); };
+
+    window.renderizarChatEquipa = function () {
+      if (floatingChatAberto) marcarChatComoLido();
+      const lista = $('chatFloatMensagensLista');
+      if (lista) {
+        lista.innerHTML = globalChatMensagens.length === 0
+          ? '<p class="text-xs text-gray-500 text-center py-8">Sem mensagens. Diz algo à equipa.</p>'
+          : globalChatMensagens.map(m => {
+            const meu = perfilAtual && m.autor === perfilAtual.nome;
+            if (meu) {
+              return '<div class="flex justify-end"><div class="max-w-[80%] bg-szorange text-black rounded-2xl rounded-br-sm px-3 py-2">'
+                + '<p class="text-sm font-semibold break-words">' + esc(m.texto) + '</p>'
+                + '<span class="block text-[10px] text-black/70 text-right font-mono">' + esc(m.hora) + '</span></div></div>';
+            }
+            return '<div class="flex items-end gap-2"><div class="max-w-[80%] bg-black/70 border border-gray-800 rounded-2xl rounded-bl-sm px-3 py-2">'
+              + '<span class="text-[10px] font-extrabold text-szorange">' + esc(m.autor.split(' ')[0]) + '</span>'
+              + '<p class="text-sm text-gray-100 break-words">' + esc(m.texto) + '</p></div></div>';
+          }).join('');
+        lista.scrollTop = lista.scrollHeight;
+      }
+      const fl = $('badgeChatFloat');
+      if (fl) {
+        const n = globalChatMensagens.filter(m => (m.timestamp || 0) > chatUltimaLeituraTs && !(perfilAtual && m.autor === perfilAtual.nome)).length;
+        fl.innerText = n;
+        fl.classList.toggle('hidden', n === 0);
+      }
+    };
+
+    const _aplicarSessao = window.aplicarSessaoPerfil;
+    window.aplicarSessaoPerfil = function (p) { sessionStorage.setItem('sdSessao', '1'); return _aplicarSessao(p); };
+
+    const _terminar = window.terminarSessaoPerfil;
+    window.terminarSessaoPerfil = function () { sessionStorage.removeItem('sdSessao'); return _terminar(); };
+
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        if (perfilAtual && !sessionStorage.getItem('sdSessao')) {
+          const nome = perfilAtual.nome;
+          perfilAtual = null;
+          $('loginOverlay').classList.remove('hidden');
+          $('loginNomeInput').value = nome;
+          $('loginPassInput').value = '';
+          atualizarPreviewLoginGeral();
+          $('loginPassInput').focus();
+        }
+        const sel = $('kudosColega');
+        if (sel) sel.innerHTML = PERFIS_LOJA.map(p => '<option value="' + esc(p.nome) + '">' + esc(p.nome) + '</option>').join('');
+        inicializarFraseDoDia();
+        popularSelectKudosBadges();
+        renderizarKudos();
+        renderizarChatEquipa();
+        iniciarLoopSincronizacaoCloud();
+        atualizarDashboardInicial();
+      }, 120);
+    });
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
+})();
+</script>
 </body>
 </html>
