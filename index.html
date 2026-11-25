@@ -86,7 +86,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>StoreDash - Versão Final v195 (ISRG)</title>
+    <title>StoreDash - Versão Final v197 (ISRG)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -337,7 +337,7 @@
         <div class="p-5 text-center border-b border-gray-800 flex items-center justify-between md:justify-center">
             <div>
                 <h1 class="text-2xl md:text-3xl font-bold text-white tracking-wider">Store<span class="text-szorange">Dash</span></h1>
-                <p class="text-[11px] text-gray-500 mt-0.5">ISRG Store Operations • <span class="text-emerald-400 font-bold">v195</span></p>
+                <p class="text-[11px] text-gray-500 mt-0.5">ISRG Store Operations • <span class="text-emerald-400 font-bold">v197</span></p>
             </div>
             <button onclick="fecharMenuMobile()" class="md:hidden text-gray-400 hover:text-white text-2xl p-1">
                 <i class="fas fa-times"></i>
@@ -963,7 +963,7 @@
                 <!-- Botão Limpar Cache / Atualizar Versão (Desktop) -->
                 <button onclick="forcarAtualizacaoApp()" class="hidden sm:flex bg-szgray hover:bg-gray-700 border border-gray-700 text-gray-300 hover:text-white px-2.5 py-2 rounded-xl text-[11px] font-bold transition items-center gap-1" title="Atualizar versão">
                     <i class="fas fa-redo-alt text-szorange"></i>
-                    <span class="hidden md:inline">v195</span>
+                    <span class="hidden md:inline">v197</span>
                 </button>
 
                 <!-- Indicador Estado Nuvem GitHub -->
@@ -1026,7 +1026,7 @@
         <!-- Área de Conteúdo das Abas -->
         <div class="p-2.5 sm:p-4 md:p-5 pb-24 md:pb-8 flex-1">
         
-        <!-- Tab Dashboard Operacional (Início - Layout Executivo Limpo v195) -->
+        <!-- Tab Dashboard Operacional (Início - Layout Executivo Limpo v197) -->
         <div id="dashboard" class="tab-content max-w-[1600px] w-full mx-auto space-y-5">
 
             <!-- 1. FAIXA DE ALERTA URGENTE (+20 DIAS SALESFORCE / LEMBRETES ATIVOS) -->
@@ -3486,7 +3486,7 @@
         ativarCalendarioAutomaticoInputs();
 
         
-        // Migração automática de dados guardados de versões anteriores (V100..V110 -> V195)
+        // Migração automática de dados guardados de versões anteriores (V100..V110 -> V197)
         (function migrarLocalStorageVersoesAnteriores() {
             const bases = [
                 'storeDashCloudConfig', 'storeDashAdminPinsMap', 'storeDashStaffPins',
@@ -3500,20 +3500,20 @@
                 'storeDashSalesforce', 'storeDashSfOverrides', 'storeDashSfLocais',
                 'storeDashBriefing', 'storeDashBriefingSheet', 'storeDashTop20', 'storeDashInfoSemanal', 'storeDashDeletedIds'
             ];
-            const versoesAntigas = ['V195', 'V194', 'V193', 'V192', 'V191', 'V190', 'V189', 'V188', 'V187', 'V179', 'V178', 'V177', 'V176', 'V175', 'V174', 'V173', 'V172', 'V171', 'V170', 'V169', 'V168', 'V167', 'V166', 'V165', 'V164', 'V163', 'V162', 'V161', 'V160', 'V159', 'V158', 'V157', 'V156', 'V155', 'V154', 'V153', 'V152', 'V151', 'V150', 'V149', 'V148', 'V147', 'V146', 'V145', 'V144', 'V143', 'V142', 'V141', 'V140', 'V139', 'V138', 'V137', 'V136', 'V135', 'V134', 'V133', 'V132', 'V131', 'V130', 'V129', 'V128', 'V127', 'V126', 'V125', 'V124', 'V123', 'V122', 'V121', 'V120', 'V119', 'V118', 'V117', 'V116', 'V115', 'V114', 'V113', 'V112', 'V111', 'V110', 'V109', 'V108', 'V107', 'V106', 'V105', 'V104', 'V103', 'V102', 'V101', 'V100'];
+            const versoesAntigas = ['V197', 'V196', 'V195', 'V194', 'V193', 'V192', 'V191', 'V190', 'V189', 'V188', 'V187', 'V179', 'V178', 'V177', 'V176', 'V175', 'V174', 'V173', 'V172', 'V171', 'V170', 'V169', 'V168', 'V167', 'V166', 'V165', 'V164', 'V163', 'V162', 'V161', 'V160', 'V159', 'V158', 'V157', 'V156', 'V155', 'V154', 'V153', 'V152', 'V151', 'V150', 'V149', 'V148', 'V147', 'V146', 'V145', 'V144', 'V143', 'V142', 'V141', 'V140', 'V139', 'V138', 'V137', 'V136', 'V135', 'V134', 'V133', 'V132', 'V131', 'V130', 'V129', 'V128', 'V127', 'V126', 'V125', 'V124', 'V123', 'V122', 'V121', 'V120', 'V119', 'V118', 'V117', 'V116', 'V115', 'V114', 'V113', 'V112', 'V111', 'V110', 'V109', 'V108', 'V107', 'V106', 'V105', 'V104', 'V103', 'V102', 'V101', 'V100'];
             bases.forEach(base => {
                 try {
-                    if (!localStorage.getItem(base + 'V195')) {
+                    if (!localStorage.getItem(base + 'V197')) {
                         for (const v of versoesAntigas) {
                             const oldVal = localStorage.getItem(base + v);
                             if (oldVal) {
-                                localStorage.setItem(base + 'V195', oldVal);
+                                localStorage.setItem(base + 'V197', oldVal);
                                 break;
                             }
                         }
                     }
                     for (const v of versoesAntigas) {
-                        if (v !== 'V195') {
+                        if (v !== 'V197') {
                             try { localStorage.removeItem(base + v); } catch (e2) {}
                         }
                     }
@@ -3553,9 +3553,9 @@
                 delete globalHorariosPorMes[globalHorarioMesAno];
             }
             try {
-                localStorage.setItem('storeDashHorariosPorMesV195', JSON.stringify(globalHorariosPorMes));
-                localStorage.setItem('storeDashHorarioV195', JSON.stringify(globalDataHorario));
-                localStorage.setItem('storeDashHorarioMesAnoV195', globalHorarioMesAno);
+                localStorage.setItem('storeDashHorariosPorMesV197', JSON.stringify(globalHorariosPorMes));
+                localStorage.setItem('storeDashHorarioV197', JSON.stringify(globalDataHorario));
+                localStorage.setItem('storeDashHorarioMesAnoV197', globalHorarioMesAno);
             } catch (e) {}
         }
 
@@ -3690,7 +3690,7 @@
             }
             const atual = globalHorarioEstagiarioCores[globalHorarioMesAno][diaIdx] || 0;
             globalHorarioEstagiarioCores[globalHorarioMesAno][diaIdx] = (atual + 1) % paletaCores.length;
-            try { localStorage.setItem('storeDashHorarioEstagCoresV195', JSON.stringify(globalHorarioEstagiarioCores)); } catch (e) {}
+            try { localStorage.setItem('storeDashHorarioEstagCoresV197', JSON.stringify(globalHorarioEstagiarioCores)); } catch (e) {}
             enviarDadosParaGitHub();
             renderDia(diaIdx + 1);
             renderMes();
@@ -3768,7 +3768,7 @@
                 arr.push((inp.value || '').trim());
             });
             globalHorarioEstagiario[chave] = arr;
-            try { localStorage.setItem('storeDashHorarioEstagiarioV195', JSON.stringify(globalHorarioEstagiario)); } catch (e) {}
+            try { localStorage.setItem('storeDashHorarioEstagiarioV197', JSON.stringify(globalHorarioEstagiario)); } catch (e) {}
             popularDropdownMesesEstagiario(chave);
             enviarDadosParaGitHub();
             renderizarHorario();
@@ -3781,7 +3781,7 @@
             const chave = getMesAnoEstagiarioAtual();
             if (!confirm(`Limpar o horário do Miguel Souto para ${formatarMesAnoHorarioPT(chave)}?`)) return;
             delete globalHorarioEstagiario[chave];
-            try { localStorage.setItem('storeDashHorarioEstagiarioV195', JSON.stringify(globalHorarioEstagiario)); } catch (e) {}
+            try { localStorage.setItem('storeDashHorarioEstagiarioV197', JSON.stringify(globalHorarioEstagiario)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarEditorHorarioEstagiario();
             renderizarHorario();
@@ -3885,7 +3885,7 @@
         }
 
         function guardarListaEquipaLocal() {
-            try { localStorage.setItem('storeDashEquipaPerfisV195', JSON.stringify(PERFIS_LOJA)); } catch (e) {}
+            try { localStorage.setItem('storeDashEquipaPerfisV197', JSON.stringify(PERFIS_LOJA)); } catch (e) {}
         }
 
         function atualizarDropdownsEquipa() {
@@ -4044,10 +4044,10 @@
             if (role === 'admin') {
                 const pins = getAdminPinsMap();
                 pins[nome] = pinInicial || '1234';
-                localStorage.setItem('storeDashAdminPinsMapV195', JSON.stringify(pins));
+                localStorage.setItem('storeDashAdminPinsMapV197', JSON.stringify(pins));
             } else if (pinInicial) {
                 globalStaffPins[nome] = pinInicial;
-                localStorage.setItem('storeDashStaffPinsV195', JSON.stringify(globalStaffPins));
+                localStorage.setItem('storeDashStaffPinsV197', JSON.stringify(globalStaffPins));
             }
 
             document.getElementById('novoColabNomeInput').value = '';
@@ -4077,9 +4077,9 @@
 
             guardarListaEquipaLocal();
             try {
-                localStorage.setItem('storeDashPerfisFotosV195', JSON.stringify(globalPerfisFotos));
-                localStorage.setItem('storeDashStaffPinsV195', JSON.stringify(globalStaffPins));
-                localStorage.setItem('storeDashAdminPinsMapV195', JSON.stringify(pins));
+                localStorage.setItem('storeDashPerfisFotosV197', JSON.stringify(globalPerfisFotos));
+                localStorage.setItem('storeDashStaffPinsV197', JSON.stringify(globalStaffPins));
+                localStorage.setItem('storeDashAdminPinsMapV197', JSON.stringify(pins));
             } catch (e) {}
 
             atualizarDropdownsEquipa();
@@ -4104,10 +4104,10 @@
             if (perfil.role === 'admin') {
                 const pins = getAdminPinsMap();
                 pins[nome] = limpo;
-                localStorage.setItem('storeDashAdminPinsMapV195', JSON.stringify(pins));
+                localStorage.setItem('storeDashAdminPinsMapV197', JSON.stringify(pins));
             } else {
                 globalStaffPins[nome] = limpo;
-                localStorage.setItem('storeDashStaffPinsV195', JSON.stringify(globalStaffPins));
+                localStorage.setItem('storeDashStaffPinsV197', JSON.stringify(globalStaffPins));
             }
             renderizarGestaoEquipaAdmin();
             renderizarNavegacaoSeparadores();
@@ -4119,7 +4119,7 @@
 
         function getAdminPinsMap() {
             try {
-                const saved = JSON.parse(localStorage.getItem('storeDashAdminPinsMapV195') || '{}');
+                const saved = JSON.parse(localStorage.getItem('storeDashAdminPinsMapV197') || '{}');
                 return { ...DEFAULT_ADMIN_PINS, ...saved };
             } catch (e) {
                 return { ...DEFAULT_ADMIN_PINS };
@@ -4162,10 +4162,10 @@
             if (perfilAlvo && perfilAlvo.role === 'admin') {
                 const pins = getAdminPinsMap();
                 pins[alvo] = novoPin;
-                localStorage.setItem('storeDashAdminPinsMapV195', JSON.stringify(pins));
+                localStorage.setItem('storeDashAdminPinsMapV197', JSON.stringify(pins));
             } else {
                 globalStaffPins[alvo] = novoPin;
-                localStorage.setItem('storeDashStaffPinsV195', JSON.stringify(globalStaffPins));
+                localStorage.setItem('storeDashStaffPinsV197', JSON.stringify(globalStaffPins));
             }
             enviarDadosParaGitHub();
             document.getElementById('novoPinAdminInput').value = '';
@@ -4247,7 +4247,7 @@
         }
 
         function limparNomeMemorizadoLogin() {
-            try { localStorage.removeItem('storeDashUltimoNomeLoginV195'); } catch (e) {}
+            try { localStorage.removeItem('storeDashUltimoNomeLoginV197'); } catch (e) {}
             const inpNome = document.getElementById('loginNomeInput');
             const selNome = document.getElementById('loginNomeSelect');
             const inpPass = document.getElementById('loginPassInput');
@@ -4277,7 +4277,7 @@
             const inpNome = document.getElementById('loginNomeInput');
             const openedFromSharedLink = window.location.hash.includes('key=') || window.location.hash.includes('login=1') || window.location.search.includes('key=') || window.location.search.includes('login=1');
             try {
-                const nomeSalvo = !openedFromSharedLink ? localStorage.getItem('storeDashUltimoNomeLoginV195') : null;
+                const nomeSalvo = !openedFromSharedLink ? localStorage.getItem('storeDashUltimoNomeLoginV197') : null;
                 if (nomeSalvo && inpNome && !inpNome.value.trim()) {
                     inpNome.value = nomeSalvo;
                 }
@@ -4347,9 +4347,9 @@
                     const chkLembrar = document.getElementById('loginLembrarNomeCheckbox');
                     try {
                         if (chkLembrar && chkLembrar.checked) {
-                            localStorage.setItem('storeDashUltimoNomeLoginV195', perfil.nome);
+                            localStorage.setItem('storeDashUltimoNomeLoginV197', perfil.nome);
                         } else {
-                            localStorage.removeItem('storeDashUltimoNomeLoginV195');
+                            localStorage.removeItem('storeDashUltimoNomeLoginV197');
                         }
                     } catch (e) {}
                     document.getElementById('loginPassInput').value = '';
@@ -4427,7 +4427,7 @@
                     marcarAlteracaoSegurancaLocal();
                     const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
                     globalPerfisFotos[perfilAtual.nome] = dataUrl;
-                    try { localStorage.setItem('storeDashPerfisFotosV195', JSON.stringify(globalPerfisFotos)); } catch (err) {}
+                    try { localStorage.setItem('storeDashPerfisFotosV197', JSON.stringify(globalPerfisFotos)); } catch (err) {}
                     atualizarAvatarSidebar();
                     renderizarEcraLogin();
                     renderizarGestaoEquipaAdmin();
@@ -4446,7 +4446,7 @@
             if (!perfilAtual) return;
             marcarAlteracaoSegurancaLocal();
             delete globalPerfisFotos[perfilAtual.nome];
-            try { localStorage.setItem('storeDashPerfisFotosV195', JSON.stringify(globalPerfisFotos)); } catch (e) {}
+            try { localStorage.setItem('storeDashPerfisFotosV197', JSON.stringify(globalPerfisFotos)); } catch (e) {}
             atualizarAvatarSidebar();
             renderizarEcraLogin();
             renderizarGestaoEquipaAdmin();
@@ -4465,10 +4465,10 @@
             if (perfilAtual.role === 'admin') {
                 const pins = getAdminPinsMap();
                 pins[perfilAtual.nome] = novoPin;
-                localStorage.setItem('storeDashAdminPinsMapV195', JSON.stringify(pins));
+                localStorage.setItem('storeDashAdminPinsMapV197', JSON.stringify(pins));
             } else {
                 globalStaffPins[perfilAtual.nome] = novoPin;
-                localStorage.setItem('storeDashStaffPinsV195', JSON.stringify(globalStaffPins));
+                localStorage.setItem('storeDashStaffPinsV197', JSON.stringify(globalStaffPins));
             }
 
             document.getElementById('meuPerfilNovoPinInput').value = '';
@@ -4484,7 +4484,7 @@
         function removerMeuPinStaff() {
             if (!perfilAtual || perfilAtual.role === 'admin') return;
             delete globalStaffPins[perfilAtual.nome];
-            localStorage.setItem('storeDashStaffPinsV195', JSON.stringify(globalStaffPins));
+            localStorage.setItem('storeDashStaffPinsV197', JSON.stringify(globalStaffPins));
             renderizarEcraLogin();
             renderizarGestaoEquipaAdmin();
             renderizarNavegacaoSeparadores();
@@ -4497,8 +4497,8 @@
         function aplicarSessaoPerfil(perfil) {
             perfilAtual = perfil;
             try {
-                localStorage.setItem('storeDashPerfilAtivoV195', JSON.stringify(perfil));
-                sessionStorage.setItem('storeDashSessaoVerificadaV195', perfil.nome);
+                localStorage.setItem('storeDashPerfilAtivoV197', JSON.stringify(perfil));
+                sessionStorage.setItem('storeDashSessaoVerificadaV197', perfil.nome);
             } catch (e) {}
 
             document.getElementById('loginOverlay').classList.add('hidden');
@@ -4578,8 +4578,8 @@
         function terminarSessaoPerfil() {
             perfilAtual = null;
             try {
-                localStorage.removeItem('storeDashPerfilAtivoV195');
-                sessionStorage.removeItem('storeDashSessaoVerificadaV195');
+                localStorage.removeItem('storeDashPerfilAtivoV197');
+                sessionStorage.removeItem('storeDashSessaoVerificadaV197');
             } catch (e) {}
             voltarSelecaoPerfil();
             document.getElementById('loginOverlay').classList.remove('hidden');
@@ -4615,7 +4615,7 @@
 
             if (globalNotificacoes.length > 50) globalNotificacoes = globalNotificacoes.slice(0, 50);
             tocarSomNotificacao();
-            try { localStorage.setItem('storeDashNotificacoesV195', JSON.stringify(globalNotificacoes)); } catch (e) {}
+            try { localStorage.setItem('storeDashNotificacoesV197', JSON.stringify(globalNotificacoes)); } catch (e) {}
             atualizarCampainha();
         }
 
@@ -4665,7 +4665,7 @@
                 concluido: false
             });
 
-            try { localStorage.setItem('storeDashLembretesV195', JSON.stringify(globalLembretes)); } catch (e) {}
+            try { localStorage.setItem('storeDashLembretesV197', JSON.stringify(globalLembretes)); } catch (e) {}
             enviarDadosParaGitHub();
             registarNotificacao(`Criou um lembrete (${separador.toUpperCase()}): "${titulo}"`, separador);
             fecharModalLembrete();
@@ -4676,7 +4676,7 @@
             const item = globalLembretes.find(l => l.id === id);
             if (!item) return;
             item.concluido = true;
-            try { localStorage.setItem('storeDashLembretesV195', JSON.stringify(globalLembretes)); } catch (e) {}
+            try { localStorage.setItem('storeDashLembretesV197', JSON.stringify(globalLembretes)); } catch (e) {}
             enviarDadosParaGitHub();
             atualizarCampainha();
         }
@@ -4684,7 +4684,7 @@
         function apagarLembrete(id) {
             registarIdApagado(id);
             globalLembretes = globalLembretes.filter(l => l.id !== id);
-            try { localStorage.setItem('storeDashLembretesV195', JSON.stringify(globalLembretes)); } catch (e) {}
+            try { localStorage.setItem('storeDashLembretesV197', JSON.stringify(globalLembretes)); } catch (e) {}
             enviarDadosParaGitHub();
             atualizarCampainha();
         }
@@ -4892,22 +4892,48 @@
             document.getElementById('tabCampainha-atividade').className = (aba === 'atividade') ? 'py-2.5 text-szorange border-b-2 border-szorange' : 'py-2.5 text-gray-400 hover:text-white';
         }
 
+        function obterSetNotifLocal(chave) {
+            try { return new Set((JSON.parse(localStorage.getItem(chave) || '[]') || []).map(String)); } catch (e) { return new Set(); }
+        }
+        function guardarSetNotifLocal(chave, setObj) {
+            try { localStorage.setItem(chave, JSON.stringify(Array.from(setObj).slice(-400))); } catch (e) {}
+        }
+
         function marcarNotificacaoLida(id) {
-            const n = globalNotificacoes.find(x => x.id === id);
+            const lidas = obterSetNotifLocal('storeDashNotifLidasIdsV197');
+            lidas.add(String(id));
+            guardarSetNotifLocal('storeDashNotifLidasIdsV197', lidas);
+            const n = globalNotificacoes.find(x => String(x.id) === String(id));
             if (n) n.lida = true;
-            try { localStorage.setItem('storeDashNotificacoesV195', JSON.stringify(globalNotificacoes)); } catch (e) {}
+            try { localStorage.setItem('storeDashNotificacoesV197', JSON.stringify(globalNotificacoes)); } catch (e) {}
+            enviarDadosParaGitHub();
             atualizarCampainha();
         }
 
         function marcarTodasNotificacoesLidas() {
-            globalNotificacoes.forEach(n => n.lida = true);
-            try { localStorage.setItem('storeDashNotificacoesV195', JSON.stringify(globalNotificacoes)); } catch (e) {}
+            const lidas = obterSetNotifLocal('storeDashNotifLidasIdsV197');
+            globalNotificacoes.forEach(n => {
+                n.lida = true;
+                if (n && n.id !== undefined) lidas.add(String(n.id));
+            });
+            guardarSetNotifLocal('storeDashNotifLidasIdsV197', lidas);
+            try { localStorage.setItem('storeDashNotificacoesV197', JSON.stringify(globalNotificacoes)); } catch (e) {}
+            enviarDadosParaGitHub();
             atualizarCampainha();
         }
 
         function limparNotificacoes() {
+            const apagadas = obterSetNotifLocal('storeDashNotifApagadasIdsV197');
+            globalNotificacoes.forEach(n => {
+                if (n && n.id !== undefined) {
+                    apagadas.add(String(n.id));
+                    registarIdApagado(n.id);
+                }
+            });
+            guardarSetNotifLocal('storeDashNotifApagadasIdsV197', apagadas);
             globalNotificacoes = [];
-            try { localStorage.setItem('storeDashNotificacoesV195', JSON.stringify(globalNotificacoes)); } catch (e) {}
+            try { localStorage.setItem('storeDashNotificacoesV197', JSON.stringify(globalNotificacoes)); } catch (e) {}
+            enviarDadosParaGitHub();
             atualizarCampainha();
         }
 
@@ -5237,7 +5263,7 @@
                 hora: hora
             });
 
-            try { localStorage.setItem('storeDashFechosCaixaV195', JSON.stringify(globalFechosCaixa)); } catch (e) {}
+            try { localStorage.setItem('storeDashFechosCaixaV197', JSON.stringify(globalFechosCaixa)); } catch (e) {}
             enviarDadosParaGitHub();
             registarNotificacao(`Registou ${tipo} (${formatarDataPT(dataVal)})`, 'fechoCaixa');
 
@@ -5251,8 +5277,9 @@
 
         function apagarRegistoFechoCaixa(id) {
             if (!confirm('Eliminar este registo de fecho/ocorrência?')) return;
+            registarIdApagado(id);
             globalFechosCaixa = globalFechosCaixa.filter(x => x.id !== id);
-            try { localStorage.setItem('storeDashFechosCaixaV195', JSON.stringify(globalFechosCaixa)); } catch (e) {}
+            try { localStorage.setItem('storeDashFechosCaixaV197', JSON.stringify(globalFechosCaixa)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarFechosCaixa();
         }
@@ -5702,22 +5729,22 @@
             reader.onload = function(e) {
                 try {
                     const data = JSON.parse(e.target.result);
-                    if (data.horarioSheet) { globalHorarioSheet = data.horarioSheet; localStorage.setItem('storeDashHorarioSheetV195', JSON.stringify(globalHorarioSheet));
+                    if (data.horarioSheet) { globalHorarioSheet = data.horarioSheet; localStorage.setItem('storeDashHorarioSheetV197', JSON.stringify(globalHorarioSheet));
             enviarDadosParaGitHub(); renderizarHorario(); }
-                    if (data.salesforce) { globalSalesforce = data.salesforce; localStorage.setItem('storeDashSalesforceV195', JSON.stringify(globalSalesforce));
+                    if (data.salesforce) { globalSalesforce = data.salesforce; localStorage.setItem('storeDashSalesforceV197', JSON.stringify(globalSalesforce));
             enviarDadosParaGitHub(); renderizarSalesforce(); }
-                    if (data.sprays) { globalSprays = data.sprays; localStorage.setItem('storeDashSpraysV195', JSON.stringify(globalSprays)); renderizarSprays(); }
-                    if (data.ferias2027) { globalFerias2027 = data.ferias2027; localStorage.setItem('storeDashFeriasV195', JSON.stringify(globalFerias2027)); renderizarFerias2027(); }
-                    if (data.tarefas) { globalTarefas = data.tarefas; localStorage.setItem('storeDashTarefasV195', JSON.stringify(globalTarefas));
+                    if (data.sprays) { globalSprays = data.sprays; localStorage.setItem('storeDashSpraysV197', JSON.stringify(globalSprays)); renderizarSprays(); }
+                    if (data.ferias2027) { globalFerias2027 = data.ferias2027; localStorage.setItem('storeDashFeriasV197', JSON.stringify(globalFerias2027)); renderizarFerias2027(); }
+                    if (data.tarefas) { globalTarefas = data.tarefas; localStorage.setItem('storeDashTarefasV197', JSON.stringify(globalTarefas));
             enviarDadosParaGitHub(); renderizarTarefas(); }
-                    if (data.lembretes) { globalLembretes = data.lembretes; localStorage.setItem('storeDashLembretesV195', JSON.stringify(globalLembretes)); }
-                    if (data.campanhas) { globalCampanhas = data.campanhas; localStorage.setItem('storeDashCampanhasV195', JSON.stringify(globalCampanhas)); renderizarCampanhasPromocoes(); }
-                    if (data.rotinasPorDia) { globalRotinasPorDia = data.rotinasPorDia; localStorage.setItem('storeDashRotinasPorDiaV195', JSON.stringify(globalRotinasPorDia)); renderizarChecklistRotina(); }
-                    if (data.vendasDia) { globalVendasDia = data.vendasDia; localStorage.setItem('storeDashVendasDiaV195', JSON.stringify(globalVendasDia)); renderizarVendasDia(); }
-                    if (data.premioMes) { globalPremioMes = data.premioMes; globalPremioMes.updatedAt = Date.now(); localStorage.setItem('storeDashPremioMesV195', JSON.stringify(globalPremioMes)); renderizarPremioMes(); }
+                    if (data.lembretes) { globalLembretes = data.lembretes; localStorage.setItem('storeDashLembretesV197', JSON.stringify(globalLembretes)); }
+                    if (data.campanhas) { globalCampanhas = data.campanhas; localStorage.setItem('storeDashCampanhasV197', JSON.stringify(globalCampanhas)); renderizarCampanhasPromocoes(); }
+                    if (data.rotinasPorDia) { globalRotinasPorDia = data.rotinasPorDia; localStorage.setItem('storeDashRotinasPorDiaV197', JSON.stringify(globalRotinasPorDia)); renderizarChecklistRotina(); }
+                    if (data.vendasDia) { globalVendasDia = data.vendasDia; localStorage.setItem('storeDashVendasDiaV197', JSON.stringify(globalVendasDia)); renderizarVendasDia(); }
+                    if (data.premioMes) { globalPremioMes = data.premioMes; globalPremioMes.updatedAt = Date.now(); localStorage.setItem('storeDashPremioMesV197', JSON.stringify(globalPremioMes)); renderizarPremioMes(); }
             if (data.vendasSheet && typeof data.vendasSheet === 'object') {
                 globalVendasSheet = data.vendasSheet;
-                localStorage.setItem('storeDashVendasSheetV195', JSON.stringify(globalVendasSheet));
+                localStorage.setItem('storeDashVendasSheetV197', JSON.stringify(globalVendasSheet));
                 atualizarUIVendasSheet();
                 if (globalVendasSheet.ativo && globalVendasSheet.sheetUrl) {
                     iniciarLoopVendasSheet();
@@ -5725,12 +5752,12 @@
                     clearInterval(vendasSheetTimer);
                 }
             }
-                    if (data.kudosBadgesExtra) { globalKudosBadgesExtra = data.kudosBadgesExtra; localStorage.setItem('storeDashKudosBadgesExtraV195', JSON.stringify(globalKudosBadgesExtra)); }
-                    if (data.perfisFotos) { globalPerfisFotos = data.perfisFotos; localStorage.setItem('storeDashPerfisFotosV195', JSON.stringify(globalPerfisFotos)); renderizarEcraLogin(); }
-                    if (data.staffPins) { globalStaffPins = data.staffPins; localStorage.setItem('storeDashStaffPinsV195', JSON.stringify(globalStaffPins)); renderizarEcraLogin(); }
-                    if (data.chatMensagens) { globalChatMensagens = data.chatMensagens; localStorage.setItem('storeDashChatMensagensV195', JSON.stringify(globalChatMensagens)); renderizarChatEquipa(); }
-                    if (data.cloudConfig && data.cloudConfig.ativo) { globalCloudConfig = data.cloudConfig; localStorage.setItem('storeDashCloudConfigV195', JSON.stringify(globalCloudConfig)); document.getElementById('ghTokenInput').value = globalCloudConfig.token; document.getElementById('ghGistIdInput').value = globalCloudConfig.gistId; atualizarIndicadorCloudUI('Nuvem Ativa', 'verde'); iniciarLoopSincronizacaoCloud(); puxarDadosDoGitHub(true); }
-                    if (data.pins) { localStorage.setItem('storeDashAdminPinsMapV195', JSON.stringify(data.pins)); }
+                    if (data.kudosBadgesExtra) { globalKudosBadgesExtra = data.kudosBadgesExtra; localStorage.setItem('storeDashKudosBadgesExtraV197', JSON.stringify(globalKudosBadgesExtra)); }
+                    if (data.perfisFotos) { globalPerfisFotos = data.perfisFotos; localStorage.setItem('storeDashPerfisFotosV197', JSON.stringify(globalPerfisFotos)); renderizarEcraLogin(); }
+                    if (data.staffPins) { globalStaffPins = data.staffPins; localStorage.setItem('storeDashStaffPinsV197', JSON.stringify(globalStaffPins)); renderizarEcraLogin(); }
+                    if (data.chatMensagens) { globalChatMensagens = data.chatMensagens; localStorage.setItem('storeDashChatMensagensV197', JSON.stringify(globalChatMensagens)); renderizarChatEquipa(); }
+                    if (data.cloudConfig && data.cloudConfig.ativo) { globalCloudConfig = data.cloudConfig; localStorage.setItem('storeDashCloudConfigV197', JSON.stringify(globalCloudConfig)); document.getElementById('ghTokenInput').value = globalCloudConfig.token; document.getElementById('ghGistIdInput').value = globalCloudConfig.gistId; atualizarIndicadorCloudUI('Nuvem Ativa', 'verde'); iniciarLoopSincronizacaoCloud(); puxarDadosDoGitHub(true); }
+                    if (data.pins) { localStorage.setItem('storeDashAdminPinsMapV197', JSON.stringify(data.pins)); }
                     atualizarCampainha();
                     atualizarDashboardInicial();
                     alert('Configuração e links restaurados com sucesso!');
@@ -5956,8 +5983,8 @@
             });
             globalVendasDia.updatedAt = Date.now();
             try {
-                localStorage.setItem('storeDashVendasDiaV195', JSON.stringify(globalVendasDia));
-                globalPremioMes.updatedAt = Date.now(); localStorage.setItem('storeDashPremioMesV195', JSON.stringify(globalPremioMes));
+                localStorage.setItem('storeDashVendasDiaV197', JSON.stringify(globalVendasDia));
+                globalPremioMes.updatedAt = Date.now(); localStorage.setItem('storeDashPremioMesV197', JSON.stringify(globalPremioMes));
             } catch (e) {}
             enviarDadosParaGitHub();
             renderizarVendasDia();
@@ -5986,7 +6013,7 @@
             if (!csvUrl) return alert('Link inválido. Cola o endereço da tua folha Google Sheets.');
 
             globalVendasSheet = { ativo: true, sheetUrl: rawUrl, csvUrl: csvUrl, lastSync: '' };
-            try { localStorage.setItem('storeDashVendasSheetV195', JSON.stringify(globalVendasSheet)); } catch (e) {}
+            try { localStorage.setItem('storeDashVendasSheetV197', JSON.stringify(globalVendasSheet)); } catch (e) {}
             atualizarUIVendasSheet();
             iniciarLoopVendasSheet();
             const ok = await sincronizarVendasGoogleSheetsAgora(true);
@@ -5999,7 +6026,7 @@
         function desligarGoogleSheetsVendas() {
             if (!confirm('Desligar a sincronização automática com a folha de Vendas & Sprays?')) return;
             globalVendasSheet = { ativo: false, sheetUrl: '', csvUrl: '', lastSync: '' };
-            localStorage.removeItem('storeDashVendasSheetV195');
+            localStorage.removeItem('storeDashVendasSheetV197');
             if (vendasSheetTimer) clearInterval(vendasSheetTimer);
             const inpAdmin = document.getElementById('googleSheetsVendasUrlInput');
             if (inpAdmin) inpAdmin.value = '';
@@ -6282,9 +6309,9 @@
                     }
 
                     try {
-                        localStorage.setItem('storeDashVendasDiaV195', JSON.stringify(globalVendasDia));
-                        globalPremioMes.updatedAt = Date.now(); localStorage.setItem('storeDashPremioMesV195', JSON.stringify(globalPremioMes));
-                        localStorage.setItem('storeDashVendasSheetV195', JSON.stringify(globalVendasSheet));
+                        localStorage.setItem('storeDashVendasDiaV197', JSON.stringify(globalVendasDia));
+                        globalPremioMes.updatedAt = Date.now(); localStorage.setItem('storeDashPremioMesV197', JSON.stringify(globalPremioMes));
+                        localStorage.setItem('storeDashVendasSheetV197', JSON.stringify(globalVendasSheet));
                     } catch (e) {}
 
                     enviarDadosParaGitHub();
@@ -6380,7 +6407,7 @@
                 }
                 globalVendasDia.fechadoNoMes = false;
                 globalVendasDia.valorFechadoNoMes = 0;
-                try { globalPremioMes.updatedAt = Date.now(); localStorage.setItem('storeDashPremioMesV195', JSON.stringify(globalPremioMes)); } catch (e) {}
+                try { globalPremioMes.updatedAt = Date.now(); localStorage.setItem('storeDashPremioMesV197', JSON.stringify(globalPremioMes)); } catch (e) {}
             }
             globalVendasDia.data = hojeISO;
             globalVendasDia.updatedAt = Date.now();
@@ -6393,7 +6420,7 @@
             globalVendasDia.conv = conv;
             globalVendasDia.registos.push({ hora, valor: atual, sprays, socios, online, pct, autor });
 
-            try { localStorage.setItem('storeDashVendasDiaV195', JSON.stringify(globalVendasDia)); } catch (e) {}
+            try { localStorage.setItem('storeDashVendasDiaV197', JSON.stringify(globalVendasDia)); } catch (e) {}
             enviarDadosParaGitHub();
             registarNotificacao(`Vendas às ${hora}: €${atual.toLocaleString('pt-PT')} (${pct}%) | ${sprays} Sprays | ${socios} Sócios | €${online} Online`, 'dashboard');
             fecharModalVendasDia();
@@ -6414,7 +6441,7 @@
                 conv: '',
                 registos: []
             };
-            try { localStorage.setItem('storeDashVendasDiaV195', JSON.stringify(globalVendasDia)); } catch (e) {}
+            try { localStorage.setItem('storeDashVendasDiaV197', JSON.stringify(globalVendasDia)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarVendasDia();
             renderizarPremioMes();
@@ -6569,7 +6596,7 @@
             if (globalRotinaChecksHoje.semana !== semAtual) {
                 globalRotinaChecksHoje.semana = semAtual;
                 globalRotinaChecksHoje.feitos = {};
-                try { localStorage.setItem('storeDashRotinaChecksV195', JSON.stringify(globalRotinaChecksHoje)); } catch (e) {}
+                try { localStorage.setItem('storeDashRotinaChecksV197', JSON.stringify(globalRotinaChecksHoje)); } catch (e) {}
             }
         }
 
@@ -6604,7 +6631,7 @@
                 texto: texto,
                 tipo: tipo
             });
-            try { localStorage.setItem('storeDashRotinasPorDiaV195', JSON.stringify(globalRotinasPorDia)); } catch (e) {}
+            try { localStorage.setItem('storeDashRotinasPorDiaV197', JSON.stringify(globalRotinasPorDia)); } catch (e) {}
             enviarDadosParaGitHub();
             inp.value = '';
             document.getElementById('boxQuickAddRotinaDash')?.classList.add('hidden');
@@ -6623,7 +6650,7 @@
             } else {
                 globalRotinaChecksHoje.feitos[itemKey] = !globalRotinaChecksHoje.feitos[itemKey];
             }
-            try { localStorage.setItem('storeDashRotinaChecksV195', JSON.stringify(globalRotinaChecksHoje)); } catch (e) {}
+            try { localStorage.setItem('storeDashRotinaChecksV197', JSON.stringify(globalRotinaChecksHoje)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarChecklistRotina();
         }
@@ -6639,7 +6666,7 @@
                 if (item.tipo === 'pontual') delete globalRotinaChecksHoje.feitosPontuais[itemKey];
                 else delete globalRotinaChecksHoje.feitos[itemKey];
             });
-            try { localStorage.setItem('storeDashRotinaChecksV195', JSON.stringify(globalRotinaChecksHoje)); } catch (e) {}
+            try { localStorage.setItem('storeDashRotinaChecksV197', JSON.stringify(globalRotinaChecksHoje)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarChecklistRotina();
         }
@@ -6765,7 +6792,7 @@
                 texto: val,
                 tipo: tipo
             });
-            try { localStorage.setItem('storeDashRotinasPorDiaV195', JSON.stringify(globalRotinasPorDia)); } catch (e) {}
+            try { localStorage.setItem('storeDashRotinasPorDiaV197', JSON.stringify(globalRotinasPorDia)); } catch (e) {}
             enviarDadosParaGitHub();
             input.value = '';
             renderizarModalConfigRotinas();
@@ -6777,7 +6804,7 @@
             item.tipo = (item.tipo === 'pontual') ? 'semanal' : 'pontual';
             localRotinasModifiedAt = Date.now();
             globalRotinasPorDia[diaRotinaConfigurando][idx] = item;
-            try { localStorage.setItem('storeDashRotinasPorDiaV195', JSON.stringify(globalRotinasPorDia)); } catch (e) {}
+            try { localStorage.setItem('storeDashRotinasPorDiaV197', JSON.stringify(globalRotinasPorDia)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarModalConfigRotinas();
         }
@@ -6792,7 +6819,7 @@
             item.texto = limpo;
             localRotinasModifiedAt = Date.now();
             globalRotinasPorDia[diaRotinaConfigurando][idx] = item;
-            try { localStorage.setItem('storeDashRotinasPorDiaV195', JSON.stringify(globalRotinasPorDia)); } catch (e) {}
+            try { localStorage.setItem('storeDashRotinasPorDiaV197', JSON.stringify(globalRotinasPorDia)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarModalConfigRotinas();
         }
@@ -6801,7 +6828,7 @@
             if (!globalRotinasPorDia[diaRotinaConfigurando]) return;
             localRotinasModifiedAt = Date.now();
             globalRotinasPorDia[diaRotinaConfigurando].splice(idx, 1);
-            try { localStorage.setItem('storeDashRotinasPorDiaV195', JSON.stringify(globalRotinasPorDia)); } catch (e) {}
+            try { localStorage.setItem('storeDashRotinasPorDiaV197', JSON.stringify(globalRotinasPorDia)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarModalConfigRotinas();
         }
@@ -6810,7 +6837,7 @@
             if (!confirm('Repor as rotinas predefinidas de Segunda a Domingo?')) return;
             localRotinasModifiedAt = Date.now();
             globalRotinasPorDia = JSON.parse(JSON.stringify(ROTINAS_SEMANA_PADRAO));
-            try { localStorage.setItem('storeDashRotinasPorDiaV195', JSON.stringify(globalRotinasPorDia)); } catch (e) {}
+            try { localStorage.setItem('storeDashRotinasPorDiaV197', JSON.stringify(globalRotinasPorDia)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarModalConfigRotinas();
         }
@@ -6962,7 +6989,7 @@
                 });
             });
 
-            try { localStorage.setItem('storeDashRotinasPorDiaV195', JSON.stringify(globalRotinasPorDia)); } catch (e) {}
+            try { localStorage.setItem('storeDashRotinasPorDiaV197', JSON.stringify(globalRotinasPorDia)); } catch (e) {}
             enviarDadosParaGitHub();
             if (txtArea) txtArea.value = '';
             diaRotinaConfigurando = diasComItens[0];
@@ -7078,7 +7105,7 @@
                 badge = customVal;
                 if (!KUDOS_BADGES_PADRAO.includes(badge) && !globalKudosBadgesExtra.includes(badge)) {
                     globalKudosBadgesExtra.push(badge);
-                    try { localStorage.setItem('storeDashKudosBadgesExtraV195', JSON.stringify(globalKudosBadgesExtra)); } catch (e) {}
+                    try { localStorage.setItem('storeDashKudosBadgesExtraV197', JSON.stringify(globalKudosBadgesExtra)); } catch (e) {}
                 }
             }
 
@@ -7090,7 +7117,7 @@
             localKudosModifiedAt = Date.now();
             globalKudos.unshift({ id: Date.now(), colega, badge, msg, de, dataHora, palmas: 0 });
             if (globalKudos.length > 300) globalKudos = globalKudos.slice(0, 300);
-            try { localStorage.setItem('storeDashKudosV195', JSON.stringify(globalKudos)); } catch (e) {}
+            try { localStorage.setItem('storeDashKudosV197', JSON.stringify(globalKudos)); } catch (e) {}
             enviarDadosParaGitHub();
             registarNotificacao(`Destacou ${colega} (${badge}): "${msg}"`, 'dashboard');
             fecharModalKudos();
@@ -7102,12 +7129,13 @@
             if (!k) return;
             localKudosModifiedAt = Date.now();
             k.palmas = (k.palmas || 0) + 1;
-            try { localStorage.setItem('storeDashKudosV195', JSON.stringify(globalKudos)); } catch (e) {}
+            try { localStorage.setItem('storeDashKudosV197', JSON.stringify(globalKudos)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarKudos();
         }
 
         function apagarKudos(id) {
+            registarIdApagado(id);
             const k = globalKudos.find(x => String(x.id) === String(id));
             if (!k) return;
             const isAdmin = (perfilAtual && perfilAtual.role === 'admin');
@@ -7117,7 +7145,7 @@
             localKudosModifiedAt = Date.now();
             registarIdApagado(id);
             globalKudos = globalKudos.filter(x => String(x.id) !== String(id));
-            try { localStorage.setItem('storeDashKudosV195', JSON.stringify(globalKudos)); } catch (e) {}
+            try { localStorage.setItem('storeDashKudosV197', JSON.stringify(globalKudos)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarKudos();
         }
@@ -7134,7 +7162,7 @@
 
             localKudosModifiedAt = Date.now();
             globalSportCandysResgates[nomeColab] = jaTrocados + 1;
-            try { localStorage.setItem('storeDashSportCandysResgatesV195', JSON.stringify(globalSportCandysResgates)); } catch (e) {}
+            try { localStorage.setItem('storeDashSportCandysResgatesV197', JSON.stringify(globalSportCandysResgates)); } catch (e) {}
             enviarDadosParaGitHub();
             registarNotificacao(`🍫 ${nomeColab} trocou 10 SportCandys por uma Barra de Chocolate!`, 'dashboard');
             renderizarKudos();
@@ -7274,7 +7302,7 @@
             if (!globalFraseAtivaCiclo || globalFraseAtivaCiclo.cicloId !== cicloId || !globalFraseAtivaCiclo.texto) {
                 const escolhida = todasFrases[Math.abs(diaIndex) % todasFrases.length];
                 globalFraseAtivaCiclo = { cicloId, texto: escolhida };
-                try { localStorage.setItem('storeDashFraseAtivaV195', JSON.stringify(globalFraseAtivaCiclo)); } catch (e) {}
+                try { localStorage.setItem('storeDashFraseAtivaV197', JSON.stringify(globalFraseAtivaCiclo)); } catch (e) {}
             enviarDadosParaGitHub();
 
                 // Registar notificação matinal na campainha para o novo ciclo das 08:00
@@ -7321,7 +7349,7 @@
                 tentativas++;
             }
             globalFraseAtivaCiclo = { cicloId, texto: nova };
-            try { localStorage.setItem('storeDashFraseAtivaV195', JSON.stringify(globalFraseAtivaCiclo)); } catch (e) {}
+            try { localStorage.setItem('storeDashFraseAtivaV197', JSON.stringify(globalFraseAtivaCiclo)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarFraseDoDia();
         }
@@ -7342,10 +7370,10 @@
             const { cicloId } = getCiclo24hDesde08h();
             if (!FRASES_COMICAS_PADRAO.includes(txt) && !globalFrasesExtra.includes(txt)) {
                 globalFrasesExtra.push(txt);
-                try { localStorage.setItem('storeDashFrasesExtraV195', JSON.stringify(globalFrasesExtra)); } catch (e) {}
+                try { localStorage.setItem('storeDashFrasesExtraV197', JSON.stringify(globalFrasesExtra)); } catch (e) {}
             }
             globalFraseAtivaCiclo = { cicloId, texto: txt };
-            try { localStorage.setItem('storeDashFraseAtivaV195', JSON.stringify(globalFraseAtivaCiclo)); } catch (e) {}
+            try { localStorage.setItem('storeDashFraseAtivaV197', JSON.stringify(globalFraseAtivaCiclo)); } catch (e) {}
             enviarDadosParaGitHub();
             registarNotificacao(`Atualizou a Frase do Dia: "${txt}"`, 'dashboard');
             fecharModalNovaFrase();
@@ -7381,7 +7409,7 @@
             } else {
                 chatUltimaLeituraTs = Date.now();
             }
-            try { localStorage.setItem('storeDashChatReadTsV195', String(chatUltimaLeituraTs)); } catch (e) {}
+            try { localStorage.setItem('storeDashChatReadTsV197', String(chatUltimaLeituraTs)); } catch (e) {}
             atualizarBadgesChat();
         }
 
@@ -7440,8 +7468,8 @@
 
             chatUltimaLeituraTs = ts;
             try {
-                localStorage.setItem('storeDashChatMensagensV195', JSON.stringify(globalChatMensagens));
-                localStorage.setItem('storeDashChatReadTsV195', String(chatUltimaLeituraTs));
+                localStorage.setItem('storeDashChatMensagensV197', JSON.stringify(globalChatMensagens));
+                localStorage.setItem('storeDashChatReadTsV197', String(chatUltimaLeituraTs));
             } catch (e) {}
 
             enviarDadosParaGitHub();
@@ -7452,7 +7480,7 @@
             if (!perfilAtual || perfilAtual.role !== 'admin') return;
             if (!confirm('Apagar todo o histórico de mensagens do chat da equipa?')) return;
             globalChatMensagens = [];
-            try { localStorage.setItem('storeDashChatMensagensV195', JSON.stringify(globalChatMensagens)); } catch (e) {}
+            try { localStorage.setItem('storeDashChatMensagensV197', JSON.stringify(globalChatMensagens)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarChatEquipa();
         }
@@ -7595,8 +7623,8 @@
             }
 
             try {
-                localStorage.setItem('storeDashCampanhasV195', JSON.stringify(globalCampanhas));
-                localStorage.setItem('storeDashLembretesV195', JSON.stringify(globalLembretes));
+                localStorage.setItem('storeDashCampanhasV197', JSON.stringify(globalCampanhas));
+                localStorage.setItem('storeDashLembretesV197', JSON.stringify(globalLembretes));
             } catch (e) {}
 
             enviarDadosParaGitHub();
@@ -7625,8 +7653,8 @@
                 });
             }
             try {
-                localStorage.setItem('storeDashCampanhasV195', JSON.stringify(globalCampanhas));
-                localStorage.setItem('storeDashLembretesV195', JSON.stringify(globalLembretes));
+                localStorage.setItem('storeDashCampanhasV197', JSON.stringify(globalCampanhas));
+                localStorage.setItem('storeDashLembretesV197', JSON.stringify(globalLembretes));
             } catch (e) {}
             enviarDadosParaGitHub();
             renderizarCampanhasPromocoes();
@@ -7642,8 +7670,8 @@
             globalCampanhas = globalCampanhas.filter(c => c.id !== id);
             globalLembretes = globalLembretes.filter(l => l.campanhaId !== id);
             try {
-                localStorage.setItem('storeDashCampanhasV195', JSON.stringify(globalCampanhas));
-                localStorage.setItem('storeDashLembretesV195', JSON.stringify(globalLembretes));
+                localStorage.setItem('storeDashCampanhasV197', JSON.stringify(globalCampanhas));
+                localStorage.setItem('storeDashLembretesV197', JSON.stringify(globalLembretes));
             } catch (e) {}
             enviarDadosParaGitHub();
             renderizarCampanhasPromocoes();
@@ -7795,7 +7823,7 @@
                 updatedAt: Date.now()
             };
 
-            try { localStorage.setItem('storeDashPremioSpraysQuarterV195', JSON.stringify(globalPremioSpraysQuarter)); } catch (e) {}
+            try { localStorage.setItem('storeDashPremioSpraysQuarterV197', JSON.stringify(globalPremioSpraysQuarter)); } catch (e) {}
             enviarDadosParaGitHub();
             registarNotificacao(`Atualizou Prémio Sprays (${globalPremioSpraysQuarter.quarter}): #${globalPremioSpraysQuarter.posicao || '-'} | ${globalPremioSpraysQuarter.unidades ?? '-'} un.`, 'sprays');
             document.getElementById('boxEditPremioSpraysAdmin')?.classList.add('hidden');
@@ -8182,7 +8210,7 @@
                 updatedAt: Date.now()
             };
 
-            try { localStorage.setItem('storeDashAnaliseVendasV195', JSON.stringify(globalAnaliseVendas)); } catch (e) {}
+            try { localStorage.setItem('storeDashAnaliseVendasV197', JSON.stringify(globalAnaliseVendas)); } catch (e) {}
             enviarDadosParaGitHub();
             registarNotificacao(`Atualizou a Análise de Vendas (${parsed.semana})`, 'analiseVendas');
 
@@ -8214,7 +8242,7 @@
         function selecionarSemanaAnaliseVendas(sem) {
             if (!globalAnaliseVendas.semanas || !globalAnaliseVendas.semanas[sem]) return;
             globalAnaliseVendas.semanaAtiva = sem;
-            try { localStorage.setItem('storeDashAnaliseVendasV195', JSON.stringify(globalAnaliseVendas)); } catch (e) {}
+            try { localStorage.setItem('storeDashAnaliseVendasV197', JSON.stringify(globalAnaliseVendas)); } catch (e) {}
             renderizarAnaliseVendas();
         }
 
@@ -8236,7 +8264,7 @@
             delete globalAnaliseVendas.semanas[sem];
             const restantes = Object.keys(globalAnaliseVendas.semanas);
             globalAnaliseVendas.semanaAtiva = restantes.length ? restantes[restantes.length - 1] : '';
-            try { localStorage.setItem('storeDashAnaliseVendasV195', JSON.stringify(globalAnaliseVendas)); } catch (e) {}
+            try { localStorage.setItem('storeDashAnaliseVendasV197', JSON.stringify(globalAnaliseVendas)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarAnaliseVendas();
         }
@@ -8245,7 +8273,7 @@
             if (!isGestorEquipaAutorizado()) return;
             if (!confirm('Limpar todas as semanas da Análise de Vendas?')) return;
             globalAnaliseVendas = { ano: '2026', lojaDestaque: 'Porto Valongo', semanaAtiva: '', semanas: {} };
-            try { localStorage.setItem('storeDashAnaliseVendasV195', JSON.stringify(globalAnaliseVendas)); } catch (e) {}
+            try { localStorage.setItem('storeDashAnaliseVendasV197', JSON.stringify(globalAnaliseVendas)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarAnaliseVendas();
         }
@@ -8587,7 +8615,7 @@
                 updatedAt: Date.now()
             });
 
-            try { localStorage.setItem('storeDashLinksUteisV195', JSON.stringify(globalLinksUteis)); } catch (e) {}
+            try { localStorage.setItem('storeDashLinksUteisV197', JSON.stringify(globalLinksUteis)); } catch (e) {}
             enviarDadosParaGitHub();
             registarNotificacao(`Adicionou link útil (${cat}): "${nome}"`, 'linksUteis');
 
@@ -8612,7 +8640,7 @@
             item.nota = novaNota.trim();
             item.updatedAt = Date.now();
 
-            try { localStorage.setItem('storeDashLinksUteisV195', JSON.stringify(globalLinksUteis)); } catch (e) {}
+            try { localStorage.setItem('storeDashLinksUteisV197', JSON.stringify(globalLinksUteis)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarLinksUteis();
         }
@@ -8622,7 +8650,7 @@
             const item = (globalLinksUteis || []).find(x => x.id === id);
             if (!item) return;
             item.fixadoInicio = !item.fixadoInicio;
-            try { localStorage.setItem('storeDashLinksUteisV195', JSON.stringify(globalLinksUteis)); } catch (e) {}
+            try { localStorage.setItem('storeDashLinksUteisV197', JSON.stringify(globalLinksUteis)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarLinksUteis();
             renderizarLinksFixadosDashboard();
@@ -8650,7 +8678,7 @@
             if (!confirm('Eliminar este link útil?')) return;
             if (typeof registarIdApagado === 'function') registarIdApagado(id);
             globalLinksUteis = globalLinksUteis.filter(x => x.id !== id);
-            try { localStorage.setItem('storeDashLinksUteisV195', JSON.stringify(globalLinksUteis)); } catch (e) {}
+            try { localStorage.setItem('storeDashLinksUteisV197', JSON.stringify(globalLinksUteis)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarLinksUteis();
         }
@@ -8773,7 +8801,7 @@
                 estado: 'Nova' // 'Nova' | 'Aprovada' | 'Implementada'
             });
 
-            try { localStorage.setItem('storeDashSugestoesV195', JSON.stringify(globalSugestoes)); } catch (e) {}
+            try { localStorage.setItem('storeDashSugestoesV197', JSON.stringify(globalSugestoes)); } catch (e) {}
             enviarDadosParaGitHub();
             registarNotificacao(`Enviou sugestão (${cat}): "${txt}"`, 'sugestoes');
             document.getElementById('sugestaoTexto').value = '';
@@ -8784,7 +8812,7 @@
             const s = globalSugestoes.find(x => x.id === id);
             if (!s) return;
             s.votos = (s.votos || 0) + 1;
-            try { localStorage.setItem('storeDashSugestoesV195', JSON.stringify(globalSugestoes)); } catch (e) {}
+            try { localStorage.setItem('storeDashSugestoesV197', JSON.stringify(globalSugestoes)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarSugestoesMelhoria();
         }
@@ -8793,14 +8821,15 @@
             const s = globalSugestoes.find(x => x.id === id);
             if (!s) return;
             s.estado = novoEstado;
-            try { localStorage.setItem('storeDashSugestoesV195', JSON.stringify(globalSugestoes)); } catch (e) {}
+            try { localStorage.setItem('storeDashSugestoesV197', JSON.stringify(globalSugestoes)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarSugestoesMelhoria();
         }
 
         function apagarSugestao(id) {
+            registarIdApagado(id);
             globalSugestoes = globalSugestoes.filter(x => x.id !== id);
-            try { localStorage.setItem('storeDashSugestoesV195', JSON.stringify(globalSugestoes)); } catch (e) {}
+            try { localStorage.setItem('storeDashSugestoesV197', JSON.stringify(globalSugestoes)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarSugestoesMelhoria();
         }
@@ -9147,7 +9176,7 @@
             if (regHoje && (regHoje.objetivoDia || 0) > 0) {
                 if (globalVendasDia.objetivo !== regHoje.objetivoDia) {
                     globalVendasDia.objetivo = regHoje.objetivoDia;
-                    try { localStorage.setItem('storeDashVendasDiaV195', JSON.stringify(globalVendasDia)); } catch (e) {}
+                    try { localStorage.setItem('storeDashVendasDiaV197', JSON.stringify(globalVendasDia)); } catch (e) {}
                     return true;
                 }
             }
@@ -9193,7 +9222,7 @@
             }
 
             if (alterou) {
-                try { localStorage.setItem('storeDashVendasDiaV195', JSON.stringify(globalVendasDia)); } catch (e) {}
+                try { localStorage.setItem('storeDashVendasDiaV197', JSON.stringify(globalVendasDia)); } catch (e) {}
                 renderizarVendasDia();
                 renderizarPremioMes();
                 if (!silencioso) enviarDadosParaGitHub();
@@ -9242,8 +9271,8 @@
             alvo.valorFechadoNoMes = valorDia;
 
             try {
-                globalPremioMes.updatedAt = Date.now(); localStorage.setItem('storeDashPremioMesV195', JSON.stringify(globalPremioMes));
-                localStorage.setItem('storeDashVendasDiaV195', JSON.stringify(globalVendasDia));
+                globalPremioMes.updatedAt = Date.now(); localStorage.setItem('storeDashPremioMesV197', JSON.stringify(globalPremioMes));
+                localStorage.setItem('storeDashVendasDiaV197', JSON.stringify(globalVendasDia));
             } catch (e) {}
 
             renderizarPremioMes();
@@ -9324,8 +9353,8 @@
             aplicarObjetivoDoPlanoNoDiaAtual();
 
             try {
-                globalPremioMes.updatedAt = Date.now(); localStorage.setItem('storeDashPremioMesV195', JSON.stringify(globalPremioMes));
-                localStorage.setItem('storeDashVendasDiaV195', JSON.stringify(globalVendasDia));
+                globalPremioMes.updatedAt = Date.now(); localStorage.setItem('storeDashPremioMesV197', JSON.stringify(globalPremioMes));
+                localStorage.setItem('storeDashVendasDiaV197', JSON.stringify(globalVendasDia));
             } catch (e) {}
             enviarDadosParaGitHub();
             localVendasModifiedAt = Date.now();
@@ -9465,7 +9494,7 @@
         }
 
         // ============================
-        // SINCRONIZAÇÃO EM TEMPO REAL ENTRE DISPOSITIVOS (GITHUB GIST - V195 MERGE & SERVER VERSION)
+        // SINCRONIZAÇÃO EM TEMPO REAL ENTRE DISPOSITIVOS (GITHUB GIST - V197 MERGE & SERVER VERSION)
         // ============================
         const EMBEDDED_TEAM_CLOUD_KEY = ''; // Opcional: cola aqui a SD_KEY_... se quiseres que qualquer link sem #key= ligue automaticamente
         let globalCloudConfig = { ativo: false, token: '', gistId: '', lastVersion: '' };
@@ -9544,7 +9573,7 @@
 
         var globalDeletedIds = [];
         var localVendasModifiedAt = 0;
-        try { globalDeletedIds = JSON.parse(localStorage.getItem('storeDashDeletedIdsV195') || '[]'); } catch (e) { globalDeletedIds = []; }
+        try { globalDeletedIds = JSON.parse(localStorage.getItem('storeDashDeletedIdsV197') || '[]'); } catch (e) { globalDeletedIds = []; }
         let localCampanhasModifiedAt = 0;
 
         function registarIdApagado(id) {
@@ -9554,7 +9583,7 @@
             if (!globalDeletedIds.includes(s)) {
                 globalDeletedIds.push(s);
                 if (globalDeletedIds.length > 300) globalDeletedIds = globalDeletedIds.slice(-300);
-                try { localStorage.setItem('storeDashDeletedIdsV195', JSON.stringify(globalDeletedIds)); } catch (e) {}
+                try { localStorage.setItem('storeDashDeletedIdsV197', JSON.stringify(globalDeletedIds)); } catch (e) {}
             }
         }
 
@@ -9604,7 +9633,7 @@
                     const stamp = Date.now();
                     globalPdfStamps[tipo] = stamp;
                     localPdfStamps[tipo] = stamp;
-                    try { localStorage.setItem('storeDashPdfStampsV195', JSON.stringify(localPdfStamps)); } catch (e) {}
+                    try { localStorage.setItem('storeDashPdfStampsV197', JSON.stringify(localPdfStamps)); } catch (e) {}
                     await enviarDadosParaGitHub();
                     return true;
                 }
@@ -9643,22 +9672,22 @@
                 if (Array.isArray(parsed.paginas) && parsed.paginas.length > 0) {
                     if (tipo === 'briefing') {
                         globalPaginasBriefing = parsed.paginas;
-                        try { localStorage.setItem('storeDashBriefingV195', JSON.stringify(globalPaginasBriefing)); } catch (e) {}
+                        try { localStorage.setItem('storeDashBriefingV197', JSON.stringify(globalPaginasBriefing)); } catch (e) {}
                         renderizarBriefingSheet();
                         renderizarEspelhoPDF('briefing');
                     } else if (tipo === 'top20') {
                         globalPaginasTop20 = parsed.paginas;
-                        try { localStorage.setItem('storeDashTop20V195', JSON.stringify(globalPaginasTop20)); } catch (e) {}
+                        try { localStorage.setItem('storeDashTop20V197', JSON.stringify(globalPaginasTop20)); } catch (e) {}
                         renderizarEspelhoPDF('top20');
                     } else if (tipo === 'infoSemanal') {
                         globalPaginasInfoSemanal = parsed.paginas;
-                        try { localStorage.setItem('storeDashInfoSemanalV195', JSON.stringify(globalPaginasInfoSemanal)); } catch (e) {}
+                        try { localStorage.setItem('storeDashInfoSemanalV197', JSON.stringify(globalPaginasInfoSemanal)); } catch (e) {}
                         renderizarEspelhoPDF('infoSemanal');
                     }
                     const finalStamp = targetStamp || parsed.updatedAt || Date.now();
                     globalPdfStamps[tipo] = Math.max(globalPdfStamps[tipo] || 0, finalStamp);
                     localPdfStamps[tipo] = finalStamp;
-                    try { localStorage.setItem('storeDashPdfStampsV195', JSON.stringify(localPdfStamps)); } catch (e) {}
+                    try { localStorage.setItem('storeDashPdfStampsV197', JSON.stringify(localPdfStamps)); } catch (e) {}
                     return true;
                 }
                 return false;
@@ -9736,13 +9765,17 @@
 
         function aplicarEstadoPartilhado(data) {
             if (!data || typeof data !== 'object') return;
+            if (Array.isArray(data.deletedIds)) {
+                globalDeletedIds = Array.from(new Set([...(Array.isArray(globalDeletedIds) ? globalDeletedIds : []), ...data.deletedIds.map(String)])).slice(-400);
+                try { localStorage.setItem('storeDashDeletedIdsV197', JSON.stringify(globalDeletedIds)); } catch (e) {}
+            }
             if (data.horarioSheet && data.horarioSheet.ativo && data.horarioSheet.sheetUrl) {
                 globalHorarioSheet = {
                     ...data.horarioSheet,
                     tipo: 'csv',
                     csvUrl: data.horarioSheet.csvUrl || construirCsvUrlGoogleSheets(data.horarioSheet.sheetUrl)
                 };
-                localStorage.setItem('storeDashHorarioSheetV195', JSON.stringify(globalHorarioSheet));
+                localStorage.setItem('storeDashHorarioSheetV197', JSON.stringify(globalHorarioSheet));
             }
             if (data.horariosPorMes && typeof data.horariosPorMes === 'object') {
                 Object.keys(data.horariosPorMes).forEach(mesKey => {
@@ -9750,11 +9783,11 @@
                         globalHorariosPorMes[mesKey] = data.horariosPorMes[mesKey];
                     }
                 });
-                try { localStorage.setItem('storeDashHorariosPorMesV195', JSON.stringify(globalHorariosPorMes)); } catch (e) {}
+                try { localStorage.setItem('storeDashHorariosPorMesV197', JSON.stringify(globalHorariosPorMes)); } catch (e) {}
             }
             if (data.horariosManuaisMeses && typeof data.horariosManuaisMeses === 'object') {
                 globalHorariosManuaisMeses = { ...globalHorariosManuaisMeses, ...data.horariosManuaisMeses };
-                try { localStorage.setItem('storeDashHorariosManuaisV195', JSON.stringify(globalHorariosManuaisMeses)); } catch (e) {}
+                try { localStorage.setItem('storeDashHorariosManuaisV197', JSON.stringify(globalHorariosManuaisMeses)); } catch (e) {}
             }
             if (Array.isArray(globalHorariosPorMes[globalHorarioMesAno])) {
                 globalDataHorario = JSON.parse(JSON.stringify(globalHorariosPorMes[globalHorarioMesAno]));
@@ -9763,13 +9796,13 @@
                 globalHorariosPorMes[globalHorarioMesAno] = JSON.parse(JSON.stringify(globalDataHorario));
             }
             atualizarLabelsCalendarioHorario();
-            if (data.horarioEstagiario && typeof data.horarioEstagiario === 'object') { globalHorarioEstagiario = data.horarioEstagiario; localStorage.setItem('storeDashHorarioEstagiarioV195', JSON.stringify(globalHorarioEstagiario)); renderizarEditorHorarioEstagiario(); }
+            if (data.horarioEstagiario && typeof data.horarioEstagiario === 'object') { globalHorarioEstagiario = data.horarioEstagiario; localStorage.setItem('storeDashHorarioEstagiarioV197', JSON.stringify(globalHorarioEstagiario)); renderizarEditorHorarioEstagiario(); }
             renderizarHorario();
-            if (data.briefingSheet && data.briefingSheet.ativo && data.briefingSheet.sheetUrl) { globalBriefingSheet = data.briefingSheet; localStorage.setItem('storeDashBriefingSheetV195', JSON.stringify(globalBriefingSheet)); renderizarBriefingSheet(); }
-            if (data.salesforceOverrides && typeof data.salesforceOverrides === 'object') { globalSalesforceOverrides = { ...globalSalesforceOverrides, ...data.salesforceOverrides }; localStorage.setItem('storeDashSfOverridesV195', JSON.stringify(globalSalesforceOverrides)); }
+            if (data.briefingSheet && data.briefingSheet.ativo && data.briefingSheet.sheetUrl) { globalBriefingSheet = data.briefingSheet; localStorage.setItem('storeDashBriefingSheetV197', JSON.stringify(globalBriefingSheet)); renderizarBriefingSheet(); }
+            if (data.salesforceOverrides && typeof data.salesforceOverrides === 'object') { globalSalesforceOverrides = { ...globalSalesforceOverrides, ...data.salesforceOverrides }; localStorage.setItem('storeDashSfOverridesV197', JSON.stringify(globalSalesforceOverrides)); }
             if (Array.isArray(data.salesforceLocais) && data.salesforceLocais.length > 0) {
                 globalSalesforceLocais = data.salesforceLocais;
-                try { localStorage.setItem('storeDashSfLocaisV195', JSON.stringify(globalSalesforceLocais)); } catch (e) {}
+                try { localStorage.setItem('storeDashSfLocaisV197', JSON.stringify(globalSalesforceLocais)); } catch (e) {}
             }
             if (data.salesforce && data.salesforce.tipo && !isHeadersSalesforceCorrompidos(data.salesforce.headers)) {
                 if (data.salesforce.tipo === 'embed') {
@@ -9779,30 +9812,39 @@
                 } else if (!Array.isArray(globalSalesforce.rows) || globalSalesforce.rows.length === 0) {
                     globalSalesforce = data.salesforce;
                 }
-                localStorage.setItem('storeDashSalesforceV195', JSON.stringify(globalSalesforce));
+                localStorage.setItem('storeDashSalesforceV197', JSON.stringify(globalSalesforce));
                 renderizarSalesforce();
             }
-            if (data.sprays && data.sprays.tipo && data.sprays.sheetUrl) { globalSprays = data.sprays; localStorage.setItem('storeDashSpraysV195', JSON.stringify(globalSprays)); renderizarSprays(); }
-            if (data.ferias2027 && data.ferias2027.tipo && data.ferias2027.sheetUrl) { globalFerias2027 = data.ferias2027; localStorage.setItem('storeDashFeriasV195', JSON.stringify(globalFerias2027)); renderizarFerias2027(); }
-            if (Array.isArray(data.tarefas)) { globalTarefas = fundirListasPorId(globalTarefas, data.tarefas); localStorage.setItem('storeDashTarefasV195', JSON.stringify(globalTarefas)); renderizarTarefas(); renderizarNavegacaoSeparadores(); }
+            if (data.sprays && data.sprays.tipo && data.sprays.sheetUrl) { globalSprays = data.sprays; localStorage.setItem('storeDashSpraysV197', JSON.stringify(globalSprays)); renderizarSprays(); }
+            if (data.ferias2027 && data.ferias2027.tipo && data.ferias2027.sheetUrl) { globalFerias2027 = data.ferias2027; localStorage.setItem('storeDashFeriasV197', JSON.stringify(globalFerias2027)); renderizarFerias2027(); }
+            if (Array.isArray(data.tarefas)) { globalTarefas = fundirListasPorId(globalTarefas, data.tarefas); localStorage.setItem('storeDashTarefasV197', JSON.stringify(globalTarefas)); renderizarTarefas(); renderizarNavegacaoSeparadores(); }
             if (data.spraysFolhaData && Array.isArray(data.spraysFolhaData.rows) && data.spraysFolhaData.rows.length > 0) {
                 globalSpraysFolhaData = data.spraysFolhaData;
-                try { localStorage.setItem('storeDashSpraysFolhaV195', JSON.stringify(globalSpraysFolhaData)); } catch (e) {}
+                try { localStorage.setItem('storeDashSpraysFolhaV197', JSON.stringify(globalSpraysFolhaData)); } catch (e) {}
             }
-            if (Array.isArray(data.kpiRegistos)) { globalKpiRegistos = data.kpiRegistos; localStorage.setItem('storeDashKpiRegistosV195', JSON.stringify(globalKpiRegistos)); sincronizarTotaisHojeComDashboard(); renderizarKpisSpraysSociosOnline(); }
-            if (Array.isArray(data.pedidosTroca)) { globalPedidosTroca = data.pedidosTroca; localStorage.setItem('storeDashPedidosTrocaV195', JSON.stringify(globalPedidosTroca)); renderizarPedidosTroca(); }
-            if (data.bancoHorasSaldos && typeof data.bancoHorasSaldos === 'object') { globalBancoHorasSaldos = data.bancoHorasSaldos; localStorage.setItem('storeDashBancoHorasSaldosV195', JSON.stringify(globalBancoHorasSaldos)); renderizarBancoHoras(); }
-            if (Array.isArray(data.bancoHorasHistorico)) { globalBancoHorasHistorico = data.bancoHorasHistorico; localStorage.setItem('storeDashBancoHorasHistV195', JSON.stringify(globalBancoHorasHistorico)); renderizarBancoHoras(); }
-            if (Array.isArray(data.ferias2027Pedidos)) { globalFerias2027Pedidos = data.ferias2027Pedidos; localStorage.setItem('storeDashFerias2027PedidosV195', JSON.stringify(globalFerias2027Pedidos)); renderizarFerias2027Gestao(); }
-            if (Array.isArray(data.lembretes) && (Date.now() - localCampanhasModifiedAt) >= 12000) { globalLembretes = fundirListasPorId(globalLembretes, data.lembretes); localStorage.setItem('storeDashLembretesV195', JSON.stringify(globalLembretes)); }
-            if (Array.isArray(data.notificacoes)) { globalNotificacoes = data.notificacoes; localStorage.setItem('storeDashNotificacoesV195', JSON.stringify(globalNotificacoes)); }
+            if (Array.isArray(data.kpiRegistos)) { globalKpiRegistos = fundirListasPorId(globalKpiRegistos, data.kpiRegistos); localStorage.setItem('storeDashKpiRegistosV197', JSON.stringify(globalKpiRegistos)); sincronizarTotaisHojeComDashboard(); renderizarKpisSpraysSociosOnline(); }
+            if (Array.isArray(data.pedidosTroca)) { globalPedidosTroca = fundirListasPorId(globalPedidosTroca, data.pedidosTroca); localStorage.setItem('storeDashPedidosTrocaV197', JSON.stringify(globalPedidosTroca)); renderizarPedidosTroca(); }
+            if (data.bancoHorasSaldos && typeof data.bancoHorasSaldos === 'object') { globalBancoHorasSaldos = data.bancoHorasSaldos; localStorage.setItem('storeDashBancoHorasSaldosV197', JSON.stringify(globalBancoHorasSaldos)); renderizarBancoHoras(); }
+            if (Array.isArray(data.bancoHorasHistorico)) { globalBancoHorasHistorico = data.bancoHorasHistorico; localStorage.setItem('storeDashBancoHorasHistV197', JSON.stringify(globalBancoHorasHistorico)); renderizarBancoHoras(); }
+            if (Array.isArray(data.ferias2027Pedidos)) { globalFerias2027Pedidos = fundirListasPorId(globalFerias2027Pedidos, data.ferias2027Pedidos); localStorage.setItem('storeDashFerias2027PedidosV197', JSON.stringify(globalFerias2027Pedidos)); renderizarFerias2027Gestao(); }
+            if (Array.isArray(data.lembretes) && (Date.now() - localCampanhasModifiedAt) >= 12000) { globalLembretes = fundirListasPorId(globalLembretes, data.lembretes); localStorage.setItem('storeDashLembretesV197', JSON.stringify(globalLembretes)); }
+            if (Array.isArray(data.notificacoes)) {
+                const lidasSet = obterSetNotifLocal('storeDashNotifLidasIdsV197');
+                const apagadasSet = obterSetNotifLocal('storeDashNotifApagadasIdsV197');
+                const delGlobal = new Set((Array.isArray(globalDeletedIds) ? globalDeletedIds : []).map(String));
+                globalNotificacoes = data.notificacoes
+                    .filter(n => n && n.id !== undefined && !apagadasSet.has(String(n.id)) && !delGlobal.has(String(n.id)))
+                    .map(n => lidasSet.has(String(n.id)) ? { ...n, lida: true } : n);
+                localStorage.setItem('storeDashNotificacoesV197', JSON.stringify(globalNotificacoes));
+                atualizarCampainha();
+            }
             if (data.rotinasPorDia && (Date.now() - localRotinasModifiedAt) >= 8000) {
                 globalRotinasPorDia = data.rotinasPorDia;
-                localStorage.setItem('storeDashRotinasPorDiaV195', JSON.stringify(globalRotinasPorDia));
+                localStorage.setItem('storeDashRotinasPorDiaV197', JSON.stringify(globalRotinasPorDia));
             }
             if (data.rotinaChecksHoje && (Date.now() - localRotinasModifiedAt) >= 8000) {
                 globalRotinaChecksHoje = data.rotinaChecksHoje;
-                localStorage.setItem('storeDashRotinaChecksV195', JSON.stringify(globalRotinaChecksHoje));
+                localStorage.setItem('storeDashRotinaChecksV197', JSON.stringify(globalRotinaChecksHoje));
             }
             const remoteVdRev = (data.vendasDia && data.vendasDia.rev) ? Number(data.vendasDia.rev) : 0;
             const localVdRev = Number(globalVendasDia.rev || 0);
@@ -9827,7 +9869,7 @@
                     }
                 }
                 verificarViragemDiaAutomatica(true);
-                localStorage.setItem('storeDashVendasDiaV195', JSON.stringify(globalVendasDia));
+                localStorage.setItem('storeDashVendasDiaV197', JSON.stringify(globalVendasDia));
                 renderizarVendasDia();
                 if (typeof atualizarModoKiosk === 'function') atualizarModoKiosk();
             }
@@ -9835,47 +9877,47 @@
                 const isRemoteOldSeed = (data.premioMes.objetivoMensal === 116500 && data.premioMes.acumuladoOntem === 74000);
                 if (!isRemoteOldSeed) {
                     globalPremioMes = data.premioMes;
-                    globalPremioMes.updatedAt = Date.now(); localStorage.setItem('storeDashPremioMesV195', JSON.stringify(globalPremioMes));
+                    globalPremioMes.updatedAt = Date.now(); localStorage.setItem('storeDashPremioMesV197', JSON.stringify(globalPremioMes));
                     if (aplicarObjetivoDoPlanoNoDiaAtual()) {
                         renderizarVendasDia();
                     }
                 }
                 renderizarPremioMes();
             }
-            if (data.vendasSheet) { globalVendasSheet = data.vendasSheet; localStorage.setItem('storeDashVendasSheetV195', JSON.stringify(globalVendasSheet)); atualizarUIVendasSheet(); if (globalVendasSheet.ativo) { iniciarLoopVendasSheet(); sincronizarVendasGoogleSheetsAgora(false); } }
-            if (data.sportCandysResgates && typeof data.sportCandysResgates === 'object' && (Date.now() - localKudosModifiedAt) >= 12000) { Object.keys(data.sportCandysResgates).forEach(k => { globalSportCandysResgates[k] = Math.max(globalSportCandysResgates[k] || 0, data.sportCandysResgates[k] || 0); }); try { localStorage.setItem('storeDashSportCandysResgatesV195', JSON.stringify(globalSportCandysResgates)); } catch (e) {} }
-            if (Array.isArray(data.kudos) && (Date.now() - localKudosModifiedAt) >= 12000) { globalKudos = fundirListasPorId(globalKudos, data.kudos, 300); localStorage.setItem('storeDashKudosV195', JSON.stringify(globalKudos)); renderizarKudos(); }
-            if (Array.isArray(data.kudosBadgesExtra)) { globalKudosBadgesExtra = data.kudosBadgesExtra; localStorage.setItem('storeDashKudosBadgesExtraV195', JSON.stringify(globalKudosBadgesExtra)); }
-            if (data.fraseAtivaCiclo && data.fraseAtivaCiclo.texto) { globalFraseAtivaCiclo = data.fraseAtivaCiclo; localStorage.setItem('storeDashFraseAtivaV195', JSON.stringify(globalFraseAtivaCiclo)); renderizarFraseDoDia(); }
-            if (Array.isArray(data.frasesExtra)) { globalFrasesExtra = data.frasesExtra; localStorage.setItem('storeDashFrasesExtraV195', JSON.stringify(globalFrasesExtra)); }
+            if (data.vendasSheet) { globalVendasSheet = data.vendasSheet; localStorage.setItem('storeDashVendasSheetV197', JSON.stringify(globalVendasSheet)); atualizarUIVendasSheet(); if (globalVendasSheet.ativo) { iniciarLoopVendasSheet(); sincronizarVendasGoogleSheetsAgora(false); } }
+            if (data.sportCandysResgates && typeof data.sportCandysResgates === 'object' && (Date.now() - localKudosModifiedAt) >= 12000) { Object.keys(data.sportCandysResgates).forEach(k => { globalSportCandysResgates[k] = Math.max(globalSportCandysResgates[k] || 0, data.sportCandysResgates[k] || 0); }); try { localStorage.setItem('storeDashSportCandysResgatesV197', JSON.stringify(globalSportCandysResgates)); } catch (e) {} }
+            if (Array.isArray(data.kudos) && (Date.now() - localKudosModifiedAt) >= 12000) { globalKudos = fundirListasPorId(globalKudos, data.kudos, 300); localStorage.setItem('storeDashKudosV197', JSON.stringify(globalKudos)); renderizarKudos(); }
+            if (Array.isArray(data.kudosBadgesExtra)) { globalKudosBadgesExtra = data.kudosBadgesExtra; localStorage.setItem('storeDashKudosBadgesExtraV197', JSON.stringify(globalKudosBadgesExtra)); }
+            if (data.fraseAtivaCiclo && data.fraseAtivaCiclo.texto) { globalFraseAtivaCiclo = data.fraseAtivaCiclo; localStorage.setItem('storeDashFraseAtivaV197', JSON.stringify(globalFraseAtivaCiclo)); renderizarFraseDoDia(); }
+            if (Array.isArray(data.frasesExtra)) { globalFrasesExtra = data.frasesExtra; localStorage.setItem('storeDashFrasesExtraV197', JSON.stringify(globalFrasesExtra)); }
             const tombKeysAp = Object.keys(window.__tombs || {});
             if (Array.isArray(data.deletedIds) || tombKeysAp.length > 0) {
                 globalDeletedIds = Array.from(new Set([...(globalDeletedIds || []), ...(data.deletedIds || []).map(String), ...tombKeysAp])).slice(-400);
-                try { localStorage.setItem('storeDashDeletedIdsV195', JSON.stringify(globalDeletedIds)); } catch (e) {}
+                try { localStorage.setItem('storeDashDeletedIdsV197', JSON.stringify(globalDeletedIds)); } catch (e) {}
             }
-            if (data.premioSpraysQuarter && typeof data.premioSpraysQuarter === 'object' && Number(data.premioSpraysQuarter.updatedAt || 0) >= Number(globalPremioSpraysQuarter.updatedAt || 0)) { globalPremioSpraysQuarter = data.premioSpraysQuarter; localStorage.setItem('storeDashPremioSpraysQuarterV195', JSON.stringify(globalPremioSpraysQuarter)); renderizarPremioSpraysQuarter(); }
-            if (data.analiseVendas && typeof data.analiseVendas === 'object' && data.analiseVendas.semanas) { globalAnaliseVendas = { ...globalAnaliseVendas, ...data.analiseVendas, semanas: { ...(globalAnaliseVendas.semanas || {}), ...(data.analiseVendas.semanas || {}) } }; localStorage.setItem('storeDashAnaliseVendasV195', JSON.stringify(globalAnaliseVendas)); renderizarAnaliseVendas(); }
-            if (Array.isArray(data.linksUteis)) { globalLinksUteis = fundirListasPorId(globalLinksUteis, data.linksUteis); localStorage.setItem('storeDashLinksUteisV195', JSON.stringify(globalLinksUteis)); renderizarLinksUteis(); }
-            if (Array.isArray(data.sugestoes)) { globalSugestoes = fundirListasPorId(globalSugestoes, data.sugestoes); localStorage.setItem('storeDashSugestoesV195', JSON.stringify(globalSugestoes)); renderizarSugestoesMelhoria(); }
+            if (data.premioSpraysQuarter && typeof data.premioSpraysQuarter === 'object' && Number(data.premioSpraysQuarter.updatedAt || 0) >= Number(globalPremioSpraysQuarter.updatedAt || 0)) { globalPremioSpraysQuarter = data.premioSpraysQuarter; localStorage.setItem('storeDashPremioSpraysQuarterV197', JSON.stringify(globalPremioSpraysQuarter)); renderizarPremioSpraysQuarter(); }
+            if (data.analiseVendas && typeof data.analiseVendas === 'object' && data.analiseVendas.semanas) { globalAnaliseVendas = { ...globalAnaliseVendas, ...data.analiseVendas, semanas: { ...(globalAnaliseVendas.semanas || {}), ...(data.analiseVendas.semanas || {}) } }; localStorage.setItem('storeDashAnaliseVendasV197', JSON.stringify(globalAnaliseVendas)); renderizarAnaliseVendas(); }
+            if (Array.isArray(data.linksUteis)) { globalLinksUteis = fundirListasPorId(globalLinksUteis, data.linksUteis); localStorage.setItem('storeDashLinksUteisV197', JSON.stringify(globalLinksUteis)); renderizarLinksUteis(); }
+            if (Array.isArray(data.sugestoes)) { globalSugestoes = fundirListasPorId(globalSugestoes, data.sugestoes); localStorage.setItem('storeDashSugestoesV197', JSON.stringify(globalSugestoes)); renderizarSugestoesMelhoria(); }
             if (Array.isArray(data.campanhas) && (Date.now() - localCampanhasModifiedAt) >= 12000) {
                 globalCampanhas = fundirListasPorId(globalCampanhas, data.campanhas);
-                localStorage.setItem('storeDashCampanhasV195', JSON.stringify(globalCampanhas));
+                localStorage.setItem('storeDashCampanhasV197', JSON.stringify(globalCampanhas));
                 renderizarCampanhasPromocoes();
             }
-            if (Array.isArray(data.fechosCaixa)) { globalFechosCaixa = fundirListasPorId(globalFechosCaixa, data.fechosCaixa); localStorage.setItem('storeDashFechosCaixaV195', JSON.stringify(globalFechosCaixa)); renderizarFechosCaixa(); }
+            if (Array.isArray(data.fechosCaixa)) { globalFechosCaixa = fundirListasPorId(globalFechosCaixa, data.fechosCaixa); localStorage.setItem('storeDashFechosCaixaV197', JSON.stringify(globalFechosCaixa)); renderizarFechosCaixa(); }
             if (Array.isArray(data.paginasBriefing) && data.paginasBriefing.length > 0) {
                 globalPaginasBriefing = data.paginasBriefing;
-                try { localStorage.setItem('storeDashBriefingV195', JSON.stringify(globalPaginasBriefing)); } catch (e) {}
+                try { localStorage.setItem('storeDashBriefingV197', JSON.stringify(globalPaginasBriefing)); } catch (e) {}
                 renderizarEspelhoPDF('briefing');
             }
             if (Array.isArray(data.paginasTop20) && data.paginasTop20.length > 0) {
                 globalPaginasTop20 = data.paginasTop20;
-                try { localStorage.setItem('storeDashTop20V195', JSON.stringify(globalPaginasTop20)); } catch (e) {}
+                try { localStorage.setItem('storeDashTop20V197', JSON.stringify(globalPaginasTop20)); } catch (e) {}
                 renderizarEspelhoPDF('top20');
             }
             if (Array.isArray(data.paginasInfoSemanal) && data.paginasInfoSemanal.length > 0) {
                 globalPaginasInfoSemanal = data.paginasInfoSemanal;
-                try { localStorage.setItem('storeDashInfoSemanalV195', JSON.stringify(globalPaginasInfoSemanal)); } catch (e) {}
+                try { localStorage.setItem('storeDashInfoSemanalV197', JSON.stringify(globalPaginasInfoSemanal)); } catch (e) {}
                 renderizarEspelhoPDF('infoSemanal');
             }
             if (data.pdfStamps && typeof data.pdfStamps === 'object') {
@@ -9893,36 +9935,36 @@
             if (Array.isArray(data.chatMensagens)) {
                 const prevCount = globalChatMensagens.length;
                 globalChatMensagens = data.chatMensagens;
-                localStorage.setItem('storeDashChatMensagensV195', JSON.stringify(globalChatMensagens));
+                localStorage.setItem('storeDashChatMensagensV197', JSON.stringify(globalChatMensagens));
                 renderizarChatEquipa();
                 if (globalChatMensagens.length > prevCount && !floatingChatAberto) { tocarSomNotificacao(); }
             }
 
             if (!isLocalSecRecente && Array.isArray(data.equipaPerfis) && data.equipaPerfis.length > 0) { PERFIS_LOJA = data.equipaPerfis; garantirPerfisObrigatoriosEquipa(); guardarListaEquipaLocal(); atualizarDropdownsEquipa(); renderizarGestaoEquipaAdmin(); renderizarEcraLogin(); }
-            if (Array.isArray(data.ordemSeparadores) && data.ordemSeparadores.length > 0) { globalOrdemSeparadores = normalizarOrdemSeparadores(data.ordemSeparadores); try { localStorage.setItem('storeDashOrdemSeparadoresV195', JSON.stringify(globalOrdemSeparadores)); } catch (e) {} renderizarNavegacaoSeparadores(); }
+            if (Array.isArray(data.ordemSeparadores) && data.ordemSeparadores.length > 0) { globalOrdemSeparadores = normalizarOrdemSeparadores(data.ordemSeparadores); try { localStorage.setItem('storeDashOrdemSeparadoresV197', JSON.stringify(globalOrdemSeparadores)); } catch (e) {} renderizarNavegacaoSeparadores(); }
             if (Array.isArray(data.comunicadosGestao) && (Date.now() - localComunicadosModifiedAt) >= 12000) {
                 globalComunicadosGestao = fundirListasPorId(globalComunicadosGestao, data.comunicadosGestao, 15);
-                try { localStorage.setItem('storeDashComunicadosGestaoV195', JSON.stringify(globalComunicadosGestao)); } catch (e) {}
+                try { localStorage.setItem('storeDashComunicadosGestaoV197', JSON.stringify(globalComunicadosGestao)); } catch (e) {}
                 renderizarComunicadosGestao();
             }
             const isLocalSecRecente = (Date.now() - localSecurityModifiedAt) < 12000;
             if (!isLocalSecRecente) {
                 if (data.perfisFotos && typeof data.perfisFotos === 'object') {
                     globalPerfisFotos = { ...globalPerfisFotos, ...data.perfisFotos };
-                    try { localStorage.setItem('storeDashPerfisFotosV195', JSON.stringify(globalPerfisFotos)); } catch (e) {}
+                    try { localStorage.setItem('storeDashPerfisFotosV197', JSON.stringify(globalPerfisFotos)); } catch (e) {}
                     atualizarAvatarSidebar();
                     renderizarGestaoEquipaAdmin();
                     renderizarEcraLogin();
                 }
                 if (data.staffPins && typeof data.staffPins === 'object') {
                     globalStaffPins = { ...DEFAULT_STAFF_PINS, ...globalStaffPins, ...data.staffPins };
-                    try { localStorage.setItem('storeDashStaffPinsV195', JSON.stringify(globalStaffPins)); } catch (e) {}
+                    try { localStorage.setItem('storeDashStaffPinsV197', JSON.stringify(globalStaffPins)); } catch (e) {}
                     renderizarGestaoEquipaAdmin();
                     renderizarEcraLogin();
                 }
                 if (data.adminPinsMap && typeof data.adminPinsMap === 'object') {
                     const mergedAdminPins = { ...getAdminPinsMap(), ...data.adminPinsMap };
-                    try { localStorage.setItem('storeDashAdminPinsMapV195', JSON.stringify(mergedAdminPins)); } catch (e) {}
+                    try { localStorage.setItem('storeDashAdminPinsMapV197', JSON.stringify(mergedAdminPins)); } catch (e) {}
                     renderizarGestaoEquipaAdmin();
                 }
             }
@@ -10053,17 +10095,17 @@
                             const remoteData = JSON.parse(remoteCheck.rawContent);
                             if (remoteData.tombstones && typeof remoteData.tombstones === 'object') {
                                 window.__tombs = { ...remoteData.tombstones, ...(window.__tombs || {}) };
-                                try { localStorage.setItem('storeDashTombsV195', JSON.stringify(window.__tombs)); } catch (e) {}
+                                try { localStorage.setItem('storeDashTombsV197', JSON.stringify(window.__tombs)); } catch (e) {}
                             }
                             const tombKeys = Object.keys(window.__tombs || {});
                             if (Array.isArray(remoteData.deletedIds) || tombKeys.length > 0) {
                                 globalDeletedIds = Array.from(new Set([...globalDeletedIds, ...(remoteData.deletedIds || []).map(String), ...tombKeys])).slice(-400);
-                                try { localStorage.setItem('storeDashDeletedIdsV195', JSON.stringify(globalDeletedIds)); } catch (e) {}
+                                try { localStorage.setItem('storeDashDeletedIdsV197', JSON.stringify(globalDeletedIds)); } catch (e) {}
                             }
                             // Fundir fotos, pins, tarefas, chat, kudos, lembretes e sugestões sem perder alterações dos colegas
                             if (remoteData.perfisFotos) globalPerfisFotos = { ...remoteData.perfisFotos, ...globalPerfisFotos };
                             if (remoteData.staffPins) globalStaffPins = { ...remoteData.staffPins, ...globalStaffPins };
-                            if (remoteData.adminPinsMap) { const mergedPins = { ...remoteData.adminPinsMap, ...getAdminPinsMap() }; localStorage.setItem('storeDashAdminPinsMapV195', JSON.stringify(mergedPins)); }
+                            if (remoteData.adminPinsMap) { const mergedPins = { ...remoteData.adminPinsMap, ...getAdminPinsMap() }; localStorage.setItem('storeDashAdminPinsMapV197', JSON.stringify(mergedPins)); }
                             if (Array.isArray(remoteData.tarefas)) globalTarefas = fundirListasPorId(globalTarefas, remoteData.tarefas);
                             if (Array.isArray(remoteData.comunicadosGestao)) globalComunicadosGestao = fundirListasPorId(globalComunicadosGestao, remoteData.comunicadosGestao, 15);
                             if (Array.isArray(remoteData.kpiRegistos)) globalKpiRegistos = fundirListasPorId(globalKpiRegistos, remoteData.kpiRegistos);
@@ -10086,14 +10128,14 @@
                                 const lTs = Number(globalVendasDia.updatedAt || 0);
                                 if ((Date.now() - localVendasModifiedAt) > 15000 && (rRev > lRev || (rRev === lRev && rTs > lTs))) {
                                     globalVendasDia = { ...globalVendasDia, ...remoteData.vendasDia };
-                                    try { localStorage.setItem('storeDashVendasDiaV195', JSON.stringify(globalVendasDia)); } catch (e) {}
+                                    try { localStorage.setItem('storeDashVendasDiaV197', JSON.stringify(globalVendasDia)); } catch (e) {}
                                 } else if (lRev <= rRev) {
                                     globalVendasDia.rev = rRev + 1;
                                 }
                             }
                             if (remoteData.premioMes && (Date.now() - localVendasModifiedAt) > 15000 && (remoteData.premioMes.updatedAt || 0) > (globalPremioMes.updatedAt || 0)) {
                                 globalPremioMes = { ...globalPremioMes, ...remoteData.premioMes };
-                                try { globalPremioMes.updatedAt = Date.now(); localStorage.setItem('storeDashPremioMesV195', JSON.stringify(globalPremioMes)); } catch (e) {}
+                                try { globalPremioMes.updatedAt = Date.now(); localStorage.setItem('storeDashPremioMesV197', JSON.stringify(globalPremioMes)); } catch (e) {}
                             }
                         } catch (e) {}
                     }
@@ -10128,7 +10170,7 @@
                     const rawStr = JSON.stringify(estado);
                     globalCloudConfig.lastVersion = (updatedGist.updated_at || '') + '_' + rawStr.length;
                     if (localVendasModifiedAt > 0) localVendasModifiedAt = Date.now();
-                    localStorage.setItem('storeDashCloudConfigV195', JSON.stringify(globalCloudConfig));
+                    localStorage.setItem('storeDashCloudConfigV197', JSON.stringify(globalCloudConfig));
                     const hhmm = new Date().toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
                     atualizarIndicadorCloudUI('Nuvem ' + hhmm, 'verde');
                     atualizarFeedbackVendasCloud('Gravado na nuvem às ' + hhmm + ' (rev ' + (globalVendasDia.rev || 1) + ')', 'ok');
@@ -10198,7 +10240,7 @@
                     if (forcar || check.versionTag !== globalCloudConfig.lastVersion) {
                         const parsed = JSON.parse(check.rawContent);
                         globalCloudConfig.lastVersion = check.versionTag;
-                        localStorage.setItem('storeDashCloudConfigV195', JSON.stringify(globalCloudConfig));
+                        localStorage.setItem('storeDashCloudConfigV197', JSON.stringify(globalCloudConfig));
                         aplicarEstadoPartilhado(parsed);
                     }
                 }
@@ -10311,7 +10353,7 @@
                 }
 
                 globalCloudConfig = { ativo: true, token: token, gistId: gistId, lastVersion: '' };
-                localStorage.setItem('storeDashCloudConfigV195', JSON.stringify(globalCloudConfig));
+                localStorage.setItem('storeDashCloudConfigV197', JSON.stringify(globalCloudConfig));
                 atualizarIndicadorCloudUI('Nuvem Ativa', 'verde');
                 iniciarLoopSincronizacaoCloud();
                 await puxarDadosDoGitHub(true);
@@ -10335,7 +10377,7 @@
         function desligarSincronizacaoGitHub() {
             if (!confirm('Desligar a sincronização na nuvem neste dispositivo?')) return;
             globalCloudConfig = { ativo: false, token: '', gistId: '', lastVersion: '' };
-            localStorage.removeItem('storeDashCloudConfigV195');
+            localStorage.removeItem('storeDashCloudConfigV197');
             if (cloudSyncTimer) clearInterval(cloudSyncTimer);
             atualizarIndicadorCloudUI('Modo Local', 'local');
         }
@@ -10467,7 +10509,7 @@
         document.addEventListener('DOMContentLoaded', () => { try { renderizarEcraLogin(); } catch(e) {} });
 
         window.onload = () => {
-            const guardadoHorarioSheet = localStorage.getItem('storeDashHorarioSheetV195');
+            const guardadoHorarioSheet = localStorage.getItem('storeDashHorarioSheetV197');
             if (guardadoHorarioSheet) {
                 try { globalHorarioSheet = JSON.parse(guardadoHorarioSheet); } catch(e) {}
             }
@@ -10495,28 +10537,28 @@
                 renderizarEquipaTurnoHoje();
                 renderizarFechosCaixa();
             }
-            const guardadoMesAnoH = localStorage.getItem('storeDashHorarioMesAnoV195');
+            const guardadoMesAnoH = localStorage.getItem('storeDashHorarioMesAnoV197');
             if (guardadoMesAnoH) globalHorarioMesAno = guardadoMesAnoH;
             sincronizarInputsMesAnoHorario();
-            const guardadoEstag = localStorage.getItem('storeDashHorarioEstagiarioV195');
+            const guardadoEstag = localStorage.getItem('storeDashHorarioEstagiarioV197');
             if (guardadoEstag) { try { globalHorarioEstagiario = JSON.parse(guardadoEstag); } catch (e) {} }
             renderizarEditorHorarioEstagiario();
-            let guardadoHorario = localStorage.getItem('storeDashHorarioV195');
+            let guardadoHorario = localStorage.getItem('storeDashHorarioV197');
             if (!guardadoHorario) {
                 try {
                     for (let i = 0; i < localStorage.length; i++) {
                         const k = localStorage.key(i) || '';
                         if (k.startsWith('storeDashHorarioV') && !k.includes('Sheet') && !k.includes('MesAno') && !k.includes('Estagiario')) {
                             const cand = localStorage.getItem(k);
-                            if (cand && cand.length > 5) { guardadoHorario = cand; localStorage.setItem('storeDashHorarioV195', cand); break; }
+                            if (cand && cand.length > 5) { guardadoHorario = cand; localStorage.setItem('storeDashHorarioV197', cand); break; }
                         }
                     }
                 } catch (e) {}
             }
             try {
-                const guardadoMapaMeses = localStorage.getItem('storeDashHorariosPorMesV195');
+                const guardadoMapaMeses = localStorage.getItem('storeDashHorariosPorMesV197');
                 if (guardadoMapaMeses) globalHorariosPorMes = JSON.parse(guardadoMapaMeses) || {};
-                const guardadoManuaisMeses = localStorage.getItem('storeDashHorariosManuaisV195');
+                const guardadoManuaisMeses = localStorage.getItem('storeDashHorariosManuaisV197');
                 if (guardadoManuaisMeses) globalHorariosManuaisMeses = JSON.parse(guardadoManuaisMeses) || {};
             } catch (e) {}
             if (guardadoHorario && (!globalHorarioSheet.ativo || globalHorarioSheet.tipo === 'csv')) {
@@ -10534,11 +10576,11 @@
             }
             if (globalHorarioSheet && globalHorarioSheet.ativo && globalHorarioSheet.tipo === 'csv') { iniciarAutoSyncHorario(); sincronizarHorarioGoogleSheetsAgora(false); }
             
-            const guardadoBriefingSheet = localStorage.getItem('storeDashBriefingSheetV195');
+            const guardadoBriefingSheet = localStorage.getItem('storeDashBriefingSheetV197');
             if (guardadoBriefingSheet) {
                 try { globalBriefingSheet = JSON.parse(guardadoBriefingSheet); } catch (e) {}
             }
-            const guardadoBriefingPdfCheck = localStorage.getItem('storeDashBriefingV195');
+            const guardadoBriefingPdfCheck = localStorage.getItem('storeDashBriefingV197');
             if ((!globalBriefingSheet || !globalBriefingSheet.ativo) && !guardadoBriefingPdfCheck) {
                 const uBr = construirUrlsEmbedGoogleSheets(BRIEFING_SHEET_PADRAO_LOJA);
                 if (uBr) {
@@ -10559,26 +10601,26 @@
                 sincronizarVendasDoBriefingSheet(false);
             }
 
-            const guardadoBriefing = localStorage.getItem('storeDashBriefingV195');
+            const guardadoBriefing = localStorage.getItem('storeDashBriefingV197');
             if(guardadoBriefing) { try { globalPaginasBriefing = JSON.parse(guardadoBriefing); renderizarEspelhoPDF('briefing'); } catch(e) {} }
 
-            const guardadoTop20 = localStorage.getItem('storeDashTop20V195');
+            const guardadoTop20 = localStorage.getItem('storeDashTop20V197');
             if(guardadoTop20) { try { globalPaginasTop20 = JSON.parse(guardadoTop20); renderizarEspelhoPDF('top20'); } catch(e) {} }
 
-            const guardadoInfo = localStorage.getItem('storeDashInfoSemanalV195');
+            const guardadoInfo = localStorage.getItem('storeDashInfoSemanalV197');
             if(guardadoInfo) { try { globalPaginasInfoSemanal = JSON.parse(guardadoInfo); renderizarEspelhoPDF('infoSemanal'); } catch(e) {} }
-            const guardadoPdfStamps = localStorage.getItem('storeDashPdfStampsV195');
+            const guardadoPdfStamps = localStorage.getItem('storeDashPdfStampsV197');
             if (guardadoPdfStamps) { try { localPdfStamps = { ...localPdfStamps, ...JSON.parse(guardadoPdfStamps) }; globalPdfStamps = { ...localPdfStamps }; } catch (e) {} }
 
-            const guardadoSfOv = localStorage.getItem('storeDashSfOverridesV195');
+            const guardadoSfOv = localStorage.getItem('storeDashSfOverridesV197');
             if (guardadoSfOv) {
                 try { globalSalesforceOverrides = JSON.parse(guardadoSfOv) || {}; } catch (e) {}
             }
-            const guardadoSfLoc = localStorage.getItem('storeDashSfLocaisV195');
+            const guardadoSfLoc = localStorage.getItem('storeDashSfLocaisV197');
             if (guardadoSfLoc) {
                 try { globalSalesforceLocais = JSON.parse(guardadoSfLoc) || []; } catch (e) {}
             }
-            const guardadoSf = localStorage.getItem('storeDashSalesforceV195');
+            const guardadoSf = localStorage.getItem('storeDashSalesforceV197');
             if (guardadoSf) {
                 try {
                     globalSalesforce = JSON.parse(guardadoSf);
@@ -10595,7 +10637,7 @@
                     csvUrl: SF_CSV_PADRAO_LOJA,
                     lastSync: 'Base carregada (278 casos)'
                 };
-                try { localStorage.setItem('storeDashSalesforceV195', JSON.stringify(globalSalesforce)); } catch (e) {}
+                try { localStorage.setItem('storeDashSalesforceV197', JSON.stringify(globalSalesforce)); } catch (e) {}
             }
             if (Array.isArray(globalSalesforce.rows) && Array.isArray(globalSalesforce.headers)) {
                 globalSalesforce.rows = fundirCasosLocaisComCsv(globalSalesforce.rows, globalSalesforce.headers);
@@ -10610,7 +10652,7 @@
                 sincronizarGoogleSheetsAgora(false);
             }
 
-            const guardadoSprays = localStorage.getItem('storeDashSpraysV195');
+            const guardadoSprays = localStorage.getItem('storeDashSpraysV197');
             if (guardadoSprays) {
                 try { globalSprays = JSON.parse(guardadoSprays); } catch(e) {}
             }
@@ -10635,7 +10677,7 @@
             }
             renderizarSprays();
 
-            const guardadoFerias = localStorage.getItem('storeDashFeriasV195');
+            const guardadoFerias = localStorage.getItem('storeDashFeriasV197');
             if (guardadoFerias) {
                 try { globalFerias2027 = JSON.parse(guardadoFerias); } catch(e) {}
             }
@@ -10674,56 +10716,56 @@
                 elTopDate.innerText = new Date().toLocaleDateString('pt-PT', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
             }
 
-            const guardadoNotifs = localStorage.getItem('storeDashNotificacoesV195');
+            const guardadoNotifs = localStorage.getItem('storeDashNotificacoesV197');
             if (guardadoNotifs) { try { globalNotificacoes = JSON.parse(guardadoNotifs); } catch (e) {} }
 
-            const guardadoLembretes = localStorage.getItem('storeDashLembretesV195');
+            const guardadoLembretes = localStorage.getItem('storeDashLembretesV197');
             if (guardadoLembretes) { try { globalLembretes = JSON.parse(guardadoLembretes); } catch (e) {} }
 
-            const guardadoCampanhas = localStorage.getItem('storeDashCampanhasV195');
+            const guardadoCampanhas = localStorage.getItem('storeDashCampanhasV197');
             if (guardadoCampanhas) { try { globalCampanhas = JSON.parse(guardadoCampanhas); } catch (e) {} }
-            const guardadoFechos = localStorage.getItem('storeDashFechosCaixaV195');
+            const guardadoFechos = localStorage.getItem('storeDashFechosCaixaV197');
             if (guardadoFechos) { try { globalFechosCaixa = JSON.parse(guardadoFechos); } catch (e) {} }
-            const guardadoLinksUteis = localStorage.getItem('storeDashLinksUteisV195');
+            const guardadoLinksUteis = localStorage.getItem('storeDashLinksUteisV197');
             if (guardadoLinksUteis) { try { globalLinksUteis = JSON.parse(guardadoLinksUteis); } catch (e) {} }
-            const guardadoPsq = localStorage.getItem('storeDashPremioSpraysQuarterV195');
+            const guardadoPsq = localStorage.getItem('storeDashPremioSpraysQuarterV197');
             if (guardadoPsq) { try { globalPremioSpraysQuarter = JSON.parse(guardadoPsq); } catch (e) {} }
-            const guardadoAnaliseVendas = localStorage.getItem('storeDashAnaliseVendasV195');
+            const guardadoAnaliseVendas = localStorage.getItem('storeDashAnaliseVendasV197');
             if (guardadoAnaliseVendas) { try { globalAnaliseVendas = JSON.parse(guardadoAnaliseVendas); } catch (e) {} }
 
-            const guardadoTarefas = localStorage.getItem('storeDashTarefasV195');
+            const guardadoTarefas = localStorage.getItem('storeDashTarefasV197');
             if(guardadoTarefas) { globalTarefas = JSON.parse(guardadoTarefas); }
-            const guardadoKpiRegs = localStorage.getItem('storeDashKpiRegistosV195');
+            const guardadoKpiRegs = localStorage.getItem('storeDashKpiRegistosV197');
             if (guardadoKpiRegs) { try { globalKpiRegistos = JSON.parse(guardadoKpiRegs); } catch (e) {} }
-            const guardadoTrocas = localStorage.getItem('storeDashPedidosTrocaV195');
+            const guardadoTrocas = localStorage.getItem('storeDashPedidosTrocaV197');
             if (guardadoTrocas) { try { globalPedidosTroca = JSON.parse(guardadoTrocas); } catch (e) {} }
-            const guardadoBhSaldos = localStorage.getItem('storeDashBancoHorasSaldosV195');
+            const guardadoBhSaldos = localStorage.getItem('storeDashBancoHorasSaldosV197');
             if (guardadoBhSaldos) { try { globalBancoHorasSaldos = JSON.parse(guardadoBhSaldos); } catch (e) {} }
-            const guardadoBhHist = localStorage.getItem('storeDashBancoHorasHistV195');
+            const guardadoBhHist = localStorage.getItem('storeDashBancoHorasHistV197');
             if (guardadoBhHist) { try { globalBancoHorasHistorico = JSON.parse(guardadoBhHist); } catch (e) {} }
-            const guardadoFeriasPed = localStorage.getItem('storeDashFerias2027PedidosV195');
+            const guardadoFeriasPed = localStorage.getItem('storeDashFerias2027PedidosV197');
             if (guardadoFeriasPed) { try { globalFerias2027Pedidos = JSON.parse(guardadoFeriasPed); } catch (e) {} }
 
-            const guardadoGdMin = localStorage.getItem('storeDashGdMinimizadosV195');
+            const guardadoGdMin = localStorage.getItem('storeDashGdMinimizadosV197');
             if (guardadoGdMin) { try { globalGdCardsMinimizados = JSON.parse(guardadoGdMin); } catch (e) {} }
             aplicarEstadoMinimizadosGestorDados();
-            const guardadoComunicados = localStorage.getItem('storeDashComunicadosGestaoV195');
+            const guardadoComunicados = localStorage.getItem('storeDashComunicadosGestaoV197');
             if (guardadoComunicados) { try { globalComunicadosGestao = JSON.parse(guardadoComunicados); } catch (e) {} }
-            const guardadoOrdem = localStorage.getItem('storeDashOrdemSeparadoresV195');
+            const guardadoOrdem = localStorage.getItem('storeDashOrdemSeparadoresV197');
             if (guardadoOrdem) { try { globalOrdemSeparadores = normalizarOrdemSeparadores(JSON.parse(guardadoOrdem)); } catch (e) {} }
             renderizarNavegacaoSeparadores();
             renderizarComunicadosGestao();
-            const guardadoEquipa = localStorage.getItem('storeDashEquipaPerfisV195');
+            const guardadoEquipa = localStorage.getItem('storeDashEquipaPerfisV197');
             if (guardadoEquipa) { try { const eq = JSON.parse(guardadoEquipa); if (Array.isArray(eq) && eq.length > 0) PERFIS_LOJA = eq; } catch (e) {} }
             garantirPerfisObrigatoriosEquipa();
             atualizarDropdownsEquipa();
-            const guardadoFotos = localStorage.getItem('storeDashPerfisFotosV195');
+            const guardadoFotos = localStorage.getItem('storeDashPerfisFotosV197');
             if (guardadoFotos) { try { globalPerfisFotos = JSON.parse(guardadoFotos); } catch (e) {} }
-            const guardadoStaffPins = localStorage.getItem('storeDashStaffPinsV195');
+            const guardadoStaffPins = localStorage.getItem('storeDashStaffPinsV197');
             if (guardadoStaffPins) { try { globalStaffPins = { ...DEFAULT_STAFF_PINS, ...JSON.parse(guardadoStaffPins) }; } catch (e) {} }
 
             // 1. Ler configuração da nuvem guardada localmente OU vinda no link (?key=... ou #key=...)
-            const guardadoCloud = localStorage.getItem('storeDashCloudConfigV195') || localStorage.getItem('storeDashCloudConfigV195') || localStorage.getItem('storeDashCloudConfigV57') || localStorage.getItem('storeDashCloudConfigV56');
+            const guardadoCloud = localStorage.getItem('storeDashCloudConfigV197') || localStorage.getItem('storeDashCloudConfigV197') || localStorage.getItem('storeDashCloudConfigV57') || localStorage.getItem('storeDashCloudConfigV56');
             if (guardadoCloud) {
                 try { globalCloudConfig = JSON.parse(guardadoCloud); } catch (e) {}
             }
@@ -10748,7 +10790,7 @@
                     const dec = JSON.parse(atob(b64));
                     if (dec.t && dec.g) {
                         globalCloudConfig = { ativo: true, token: dec.t, gistId: dec.g, lastVersion: '' };
-                        try { localStorage.setItem('storeDashCloudConfigV195', JSON.stringify(globalCloudConfig)); } catch (e) {}
+                        try { localStorage.setItem('storeDashCloudConfigV197', JSON.stringify(globalCloudConfig)); } catch (e) {}
                         try { window.name = 'SD_CLOUD:SD_KEY_' + b64; } catch (e) {}
                     }
                 } catch (e) {}
@@ -10762,8 +10804,8 @@
             if (isLinkPartilhado) {
                 // Ao abrir através de um link partilhado, exige sempre login individual e limpa o hash da barra de endereço
                 try {
-                    localStorage.removeItem('storeDashPerfilAtivoV195');
-                    sessionStorage.removeItem('storeDashSessaoVerificadaV195');
+                    localStorage.removeItem('storeDashPerfilAtivoV197');
+                    sessionStorage.removeItem('storeDashSessaoVerificadaV197');
                 } catch (e) {}
                 try {
                     if (window.history && window.history.replaceState) {
@@ -10786,8 +10828,8 @@
             }
 
             renderizarEcraLogin();
-            const sessaoVerificadaTab = (() => { try { return sessionStorage.getItem('storeDashSessaoVerificadaV195'); } catch (e) { return null; } })();
-            const guardadoPerfil = !isLinkPartilhado ? localStorage.getItem('storeDashPerfilAtivoV195') : null;
+            const sessaoVerificadaTab = (() => { try { return sessionStorage.getItem('storeDashSessaoVerificadaV197'); } catch (e) { return null; } })();
+            const guardadoPerfil = !isLinkPartilhado ? localStorage.getItem('storeDashPerfilAtivoV197') : null;
             if (guardadoPerfil && sessaoVerificadaTab) {
                 try {
                     const p = JSON.parse(guardadoPerfil);
@@ -10797,7 +10839,7 @@
                     }
                 } catch(e) {}
             }
-            const guardadoVendasSheet = localStorage.getItem('storeDashVendasSheetV195');
+            const guardadoVendasSheet = localStorage.getItem('storeDashVendasSheetV197');
             if (guardadoVendasSheet) {
                 try { globalVendasSheet = JSON.parse(guardadoVendasSheet); } catch (e) {}
             }
@@ -10814,7 +10856,7 @@
                 iniciarLoopVendasSheet();
             }
 
-            const guardadoPremio = localStorage.getItem('storeDashPremioMesV195');
+            const guardadoPremio = localStorage.getItem('storeDashPremioMesV197');
             if (guardadoPremio) {
                 try { globalPremioMes = { ...globalPremioMes, ...JSON.parse(guardadoPremio) }; } catch (e) {}
             }
@@ -10825,10 +10867,10 @@
                 globalPremioMes.acumuladoOntem = 90266;
                 globalPremioMes.dataFecho = '2026-11-28';
                 globalPremioMes.vendasDiariasColadas = [...NOV_2026_DIAS_SEED];
-                try { globalPremioMes.updatedAt = Date.now(); localStorage.setItem('storeDashPremioMesV195', JSON.stringify(globalPremioMes)); } catch (e) {}
+                try { globalPremioMes.updatedAt = Date.now(); localStorage.setItem('storeDashPremioMesV197', JSON.stringify(globalPremioMes)); } catch (e) {}
             }
 
-            const guardadoVendasDia = localStorage.getItem('storeDashVendasDiaV195');
+            const guardadoVendasDia = localStorage.getItem('storeDashVendasDiaV197');
             if (guardadoVendasDia) {
                 try {
                     const vd = JSON.parse(guardadoVendasDia);
@@ -10843,20 +10885,20 @@
             }
             verificarViragemDiaAutomatica(true);
 
-            const guardadoRotinasDia = localStorage.getItem('storeDashRotinasPorDiaV195');
+            const guardadoRotinasDia = localStorage.getItem('storeDashRotinasPorDiaV197');
             if (guardadoRotinasDia) { try { globalRotinasPorDia = JSON.parse(guardadoRotinasDia); } catch (e) {} }
-            const guardadoRotinaChecks = localStorage.getItem('storeDashRotinaChecksV195');
+            const guardadoRotinaChecks = localStorage.getItem('storeDashRotinaChecksV197');
             if (guardadoRotinaChecks) { try { globalRotinaChecksHoje = JSON.parse(guardadoRotinaChecks); } catch (e) {} }
 
-            const guardadoKudosBadges = localStorage.getItem('storeDashKudosBadgesExtraV195');
+            const guardadoKudosBadges = localStorage.getItem('storeDashKudosBadgesExtraV197');
             if (guardadoKudosBadges) { try { globalKudosBadgesExtra = JSON.parse(guardadoKudosBadges); } catch (e) {} }
-            const guardadoResg = localStorage.getItem('storeDashSportCandysResgatesV195'); if (guardadoResg) { try { globalSportCandysResgates = JSON.parse(guardadoResg) || {}; } catch (e) {} }
-            const guardadoKudos = localStorage.getItem('storeDashKudosV195');
+            const guardadoResg = localStorage.getItem('storeDashSportCandysResgatesV197'); if (guardadoResg) { try { globalSportCandysResgates = JSON.parse(guardadoResg) || {}; } catch (e) {} }
+            const guardadoKudos = localStorage.getItem('storeDashKudosV197');
             if (guardadoKudos) { try { globalKudos = JSON.parse(guardadoKudos); } catch (e) {} }
 
-            const guardadoFrasesExtra = localStorage.getItem('storeDashFrasesExtraV195');
+            const guardadoFrasesExtra = localStorage.getItem('storeDashFrasesExtraV197');
             if (guardadoFrasesExtra) { try { globalFrasesExtra = JSON.parse(guardadoFrasesExtra); } catch (e) {} }
-            const guardadoFraseAtiva = localStorage.getItem('storeDashFraseAtivaV195');
+            const guardadoFraseAtiva = localStorage.getItem('storeDashFraseAtivaV197');
             if (guardadoFraseAtiva) { try { globalFraseAtivaCiclo = JSON.parse(guardadoFraseAtiva); } catch (e) {} }
 
             renderizarKpisSpraysSociosOnline();
@@ -11049,8 +11091,8 @@
             }
             globalDataHorario = parseados;
             globalHorariosManuaisMeses[globalHorarioMesAno] = true;
-            try { localStorage.setItem('storeDashHorariosManuaisV195', JSON.stringify(globalHorariosManuaisMeses)); } catch (e) {}
-            try { localStorage.setItem('storeDashHorarioV195', JSON.stringify(globalDataHorario)); guardarHorarioMesAtualNoMapa(); atualizarLabelsCalendarioHorario(); } catch (e) {}
+            try { localStorage.setItem('storeDashHorariosManuaisV197', JSON.stringify(globalHorariosManuaisMeses)); } catch (e) {}
+            try { localStorage.setItem('storeDashHorarioV197', JSON.stringify(globalDataHorario)); guardarHorarioMesAtualNoMapa(); atualizarLabelsCalendarioHorario(); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarHorario();
             renderizarEquipaTurnoHoje();
@@ -11073,7 +11115,7 @@
                 csvUrl: csvUrl,
                 lastSync: ''
             };
-            try { localStorage.setItem('storeDashHorarioSheetV195', JSON.stringify(globalHorarioSheet)); } catch (e) {}
+            try { localStorage.setItem('storeDashHorarioSheetV197', JSON.stringify(globalHorarioSheet)); } catch (e) {}
             iniciarAutoSyncHorario();
             const ok = await sincronizarHorarioGoogleSheetsAgora(true);
             if (ok) {
@@ -11089,7 +11131,7 @@
             if (!globalHorarioSheet.ativo || globalHorarioSheet.tipo === 'csv') return;
             globalHorarioSheet.modoLimpo = !globalHorarioSheet.modoLimpo;
             try {
-                localStorage.setItem('storeDashHorarioSheetV195', JSON.stringify(globalHorarioSheet));
+                localStorage.setItem('storeDashHorarioSheetV197', JSON.stringify(globalHorarioSheet));
                 enviarDadosParaGitHub();
             } catch (e) {}
             renderizarHorario();
@@ -11121,8 +11163,8 @@
                         globalDataHorario = parseados;
                         globalHorarioSheet.lastSync = new Date().toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
                         try {
-                            localStorage.setItem('storeDashHorarioV195', JSON.stringify(globalDataHorario)); guardarHorarioMesAtualNoMapa(); atualizarLabelsCalendarioHorario();
-                            localStorage.setItem('storeDashHorarioSheetV195', JSON.stringify(globalHorarioSheet));
+                            localStorage.setItem('storeDashHorarioV197', JSON.stringify(globalDataHorario)); guardarHorarioMesAtualNoMapa(); atualizarLabelsCalendarioHorario();
+                            localStorage.setItem('storeDashHorarioSheetV197', JSON.stringify(globalHorarioSheet));
                         } catch (e) {}
                         renderizarHorario();
                         renderizarEquipaTurnoHoje();
@@ -11173,11 +11215,11 @@
                 const parseados = parseLinhasParaDataHorario(matrix);
                 if (parseados.length === 0) return alert('Não foram encontrados turnos válidos nesse ficheiro.');
                 globalHorarioSheet = { ativo: false, sheetUrl: '', editUrl: '', cleanViewUrl: '', modoLimpo: false };
-                localStorage.removeItem('storeDashHorarioSheetV195');
+                localStorage.removeItem('storeDashHorarioSheetV197');
                 globalDataHorario = parseados;
                 globalHorariosManuaisMeses[globalHorarioMesAno] = true;
-                try { localStorage.setItem('storeDashHorariosManuaisV195', JSON.stringify(globalHorariosManuaisMeses)); } catch (e) {}
-                localStorage.setItem('storeDashHorarioV195', JSON.stringify(globalDataHorario)); guardarHorarioMesAtualNoMapa(); atualizarLabelsCalendarioHorario();
+                try { localStorage.setItem('storeDashHorariosManuaisV197', JSON.stringify(globalHorariosManuaisMeses)); } catch (e) {}
+                localStorage.setItem('storeDashHorarioV197', JSON.stringify(globalDataHorario)); guardarHorarioMesAtualNoMapa(); atualizarLabelsCalendarioHorario();
                 enviarDadosParaGitHub();
                 renderizarHorario();
                 renderizarEquipaTurnoHoje();
@@ -11224,8 +11266,8 @@
                     pct: pct,
                     autor: perfilAtual ? perfilAtual.nome.split(' ')[0] : 'Ficheiro'
                 });
-                localStorage.setItem('storeDashVendasDiaV195', JSON.stringify(globalVendasDia));
-                globalPremioMes.updatedAt = Date.now(); localStorage.setItem('storeDashPremioMesV195', JSON.stringify(globalPremioMes));
+                localStorage.setItem('storeDashVendasDiaV197', JSON.stringify(globalVendasDia));
+                globalPremioMes.updatedAt = Date.now(); localStorage.setItem('storeDashPremioMesV197', JSON.stringify(globalPremioMes));
                 enviarDadosParaGitHub();
                 renderizarVendasDia();
                 renderizarPremioMes();
@@ -11268,14 +11310,14 @@
             });
             if(parseados.length > 0) {
                 globalHorarioSheet = { ativo: false, sheetUrl: '', editUrl: '', cleanViewUrl: '', modoLimpo: false };
-                localStorage.removeItem('storeDashHorarioSheetV195');
+                localStorage.removeItem('storeDashHorarioSheetV197');
                 const inpMesGd = document.getElementById('inputHorarioMesAno');
                 if (inpMesGd && inpMesGd.value) globalHorarioMesAno = inpMesGd.value;
-                localStorage.setItem('storeDashHorarioMesAnoV195', globalHorarioMesAno);
+                localStorage.setItem('storeDashHorarioMesAnoV197', globalHorarioMesAno);
                 globalDataHorario = parseados;
                 globalHorariosManuaisMeses[globalHorarioMesAno] = true;
-                try { localStorage.setItem('storeDashHorariosManuaisV195', JSON.stringify(globalHorariosManuaisMeses)); } catch (e) {}
-                localStorage.setItem('storeDashHorarioV195', JSON.stringify(globalDataHorario)); guardarHorarioMesAtualNoMapa(); atualizarLabelsCalendarioHorario();
+                try { localStorage.setItem('storeDashHorariosManuaisV197', JSON.stringify(globalHorariosManuaisMeses)); } catch (e) {}
+                localStorage.setItem('storeDashHorarioV197', JSON.stringify(globalDataHorario)); guardarHorarioMesAtualNoMapa(); atualizarLabelsCalendarioHorario();
                 sincronizarInputsMesAnoHorario();
                 document.getElementById('excelInputHorario').value = '';
                 enviarDadosParaGitHub();
@@ -11311,7 +11353,7 @@
             if (!Array.isArray(staff.cores)) staff.cores = [];
             const atual = staff.cores[diaIdx] || 0;
             staff.cores[diaIdx] = (atual + 1) % paletaCores.length;
-            try { localStorage.setItem('storeDashHorarioV195', JSON.stringify(globalDataHorario)); guardarHorarioMesAtualNoMapa(); atualizarLabelsCalendarioHorario(); } catch (e) {}
+            try { localStorage.setItem('storeDashHorarioV197', JSON.stringify(globalDataHorario)); guardarHorarioMesAtualNoMapa(); atualizarLabelsCalendarioHorario(); } catch (e) {}
             enviarDadosParaGitHub();
             renderDia(diaIdx + 1);
             renderMes();
@@ -11340,8 +11382,8 @@
                 globalDataHorario = [];
             }
             try {
-                localStorage.setItem('storeDashHorarioMesAnoV195', globalHorarioMesAno);
-                localStorage.setItem('storeDashHorarioV195', JSON.stringify(globalDataHorario)); guardarHorarioMesAtualNoMapa(); atualizarLabelsCalendarioHorario();
+                localStorage.setItem('storeDashHorarioMesAnoV197', globalHorarioMesAno);
+                localStorage.setItem('storeDashHorarioV197', JSON.stringify(globalDataHorario)); guardarHorarioMesAtualNoMapa(); atualizarLabelsCalendarioHorario();
             } catch (e) {}
             sincronizarInputsMesAnoHorario();
             atualizarLabelsCalendarioHorario();
@@ -11791,7 +11833,7 @@
 
         function toggleBlocoGestorDados(cardId) {
             globalGdCardsMinimizados[cardId] = !globalGdCardsMinimizados[cardId];
-            try { localStorage.setItem('storeDashGdMinimizadosV195', JSON.stringify(globalGdCardsMinimizados)); } catch (e) {}
+            try { localStorage.setItem('storeDashGdMinimizadosV197', JSON.stringify(globalGdCardsMinimizados)); } catch (e) {}
             aplicarEstadoMinimizadosGestorDados();
         }
 
@@ -11801,7 +11843,7 @@
             allCards.forEach(c => {
                 globalGdCardsMinimizados[c.getAttribute('data-gd-card')] = !todosMin;
             });
-            try { localStorage.setItem('storeDashGdMinimizadosV195', JSON.stringify(globalGdCardsMinimizados)); } catch (e) {}
+            try { localStorage.setItem('storeDashGdMinimizadosV197', JSON.stringify(globalGdCardsMinimizados)); } catch (e) {}
             aplicarEstadoMinimizadosGestorDados();
         }
 
@@ -11844,7 +11886,7 @@
             });
             if (globalComunicadosGestao.length > 15) globalComunicadosGestao = globalComunicadosGestao.slice(0, 15);
 
-            try { localStorage.setItem('storeDashComunicadosGestaoV195', JSON.stringify(globalComunicadosGestao)); } catch (e) {}
+            try { localStorage.setItem('storeDashComunicadosGestaoV197', JSON.stringify(globalComunicadosGestao)); } catch (e) {}
             document.getElementById('comunicadoTextoInput').value = '';
             const inpOutroReset = document.getElementById('comunicadoOutroTagInput');
             if (inpOutroReset) inpOutroReset.value = '';
@@ -11854,10 +11896,11 @@
         }
 
         function apagarComunicadoGestao(id) {
+            registarIdApagado(id);
             if (!isGestorEquipaAutorizado()) return;
             localComunicadosModifiedAt = Date.now();
             globalComunicadosGestao = globalComunicadosGestao.filter(c => c.id !== id);
-            try { localStorage.setItem('storeDashComunicadosGestaoV195', JSON.stringify(globalComunicadosGestao)); } catch (e) {}
+            try { localStorage.setItem('storeDashComunicadosGestaoV197', JSON.stringify(globalComunicadosGestao)); } catch (e) {}
             renderizarComunicadosGestao();
             enviarDadosParaGitHub();
         }
@@ -11961,7 +12004,7 @@
             globalOrdemSeparadores[idx] = globalOrdemSeparadores[novoIdx];
             globalOrdemSeparadores[novoIdx] = temp;
 
-            try { localStorage.setItem('storeDashOrdemSeparadoresV195', JSON.stringify(globalOrdemSeparadores)); } catch (e) {}
+            try { localStorage.setItem('storeDashOrdemSeparadoresV197', JSON.stringify(globalOrdemSeparadores)); } catch (e) {}
             renderizarNavegacaoSeparadores();
             renderizarComunicadosGestao();
             enviarDadosParaGitHub();
@@ -11970,7 +12013,7 @@
         function reporOrdemSeparadoresPadrao() {
             if (!isGestorEquipaAutorizado()) return;
             globalOrdemSeparadores = [...ORDEM_SEPARADORES_PADRAO];
-            try { localStorage.setItem('storeDashOrdemSeparadoresV195', JSON.stringify(globalOrdemSeparadores)); } catch (e) {}
+            try { localStorage.setItem('storeDashOrdemSeparadoresV197', JSON.stringify(globalOrdemSeparadores)); } catch (e) {}
             renderizarNavegacaoSeparadores();
             renderizarComunicadosGestao();
             enviarDadosParaGitHub();
@@ -12154,7 +12197,7 @@
             const inpMes = document.getElementById('kpiMesSelecionadoInput');
             if (inpMes) inpMes.value = mesHoje;
 
-            try { localStorage.setItem('storeDashKpiRegistosV195', JSON.stringify(globalKpiRegistos)); } catch (e) {}
+            try { localStorage.setItem('storeDashKpiRegistosV197', JSON.stringify(globalKpiRegistos)); } catch (e) {}
 
             // Sincronizar automaticamente os totais de HOJE com o painel principal (Início)
             sincronizarTotaisHojeComDashboard();
@@ -12334,8 +12377,8 @@
             globalVendasDia.updatedAt = Date.now();
 
             try {
-                localStorage.setItem('storeDashKpiRegistosV195', JSON.stringify(globalKpiRegistos));
-                localStorage.setItem('storeDashVendasDiaV195', JSON.stringify(globalVendasDia));
+                localStorage.setItem('storeDashKpiRegistosV197', JSON.stringify(globalKpiRegistos));
+                localStorage.setItem('storeDashVendasDiaV197', JSON.stringify(globalVendasDia));
             } catch (e) {}
 
             sincronizarTotaisHojeComDashboard();
@@ -12347,12 +12390,13 @@
 
 
         function apagarRegistoKPI(id) {
+            registarIdApagado(id);
             const item = globalKpiRegistos.find(x => String(x.id) === String(id));
             if (!item) return;
             const podeApagar = isGestorEquipaAutorizado() || (perfilAtual && item.autor === perfilAtual.nome);
             if (!podeApagar) return alert('Só podes anular os teus próprios registos (ou a gestão).');
             globalKpiRegistos = globalKpiRegistos.filter(x => String(x.id) !== String(id));
-            try { localStorage.setItem('storeDashKpiRegistosV195', JSON.stringify(globalKpiRegistos)); } catch (e) {}
+            try { localStorage.setItem('storeDashKpiRegistosV197', JSON.stringify(globalKpiRegistos)); } catch (e) {}
             sincronizarTotaisHojeComDashboard();
             renderizarKpisSpraysSociosOnline();
             enviarDadosParaGitHub();
@@ -12375,7 +12419,7 @@
                 globalVendasDia.socios = Math.max(globalVendasDia.socios || 0, sociosHoje);
                 globalVendasDia.online = Math.max(globalVendasDia.online || 0, onlineHojeEuro);
             }
-            try { localStorage.setItem('storeDashVendasDiaV195', JSON.stringify(globalVendasDia)); } catch (e) {}
+            try { localStorage.setItem('storeDashVendasDiaV197', JSON.stringify(globalVendasDia)); } catch (e) {}
             renderizarVendasDia();
         }
 
@@ -12577,7 +12621,7 @@
                 criadoEm: criadoEm
             });
 
-            try { localStorage.setItem('storeDashPedidosTrocaV195', JSON.stringify(globalPedidosTroca)); } catch (e) {}
+            try { localStorage.setItem('storeDashPedidosTrocaV197', JSON.stringify(globalPedidosTroca)); } catch (e) {}
             document.getElementById('trocaDetalhesInput').value = '';
             renderizarPedidosTroca();
             enviarDadosParaGitHub();
@@ -12590,15 +12634,16 @@
             if (!item) return;
             item.estado = novoEstado;
             item.decididoPor = perfilAtual.nome.split(' ')[0];
-            try { localStorage.setItem('storeDashPedidosTrocaV195', JSON.stringify(globalPedidosTroca)); } catch (e) {}
+            try { localStorage.setItem('storeDashPedidosTrocaV197', JSON.stringify(globalPedidosTroca)); } catch (e) {}
             renderizarPedidosTroca();
             enviarDadosParaGitHub();
             registarNotificacao(`${novoEstado} pedido de troca de ${item.autor} (${formatarDataPT(item.data)})`, 'horario');
         }
 
         function apagarPedidoTroca(id) {
+            registarIdApagado(id);
             globalPedidosTroca = globalPedidosTroca.filter(x => x.id !== id);
-            try { localStorage.setItem('storeDashPedidosTrocaV195', JSON.stringify(globalPedidosTroca)); } catch (e) {}
+            try { localStorage.setItem('storeDashPedidosTrocaV197', JSON.stringify(globalPedidosTroca)); } catch (e) {}
             renderizarPedidosTroca();
             enviarDadosParaGitHub();
         }
@@ -12695,8 +12740,8 @@
             if (globalBancoHorasHistorico.length > 40) globalBancoHorasHistorico = globalBancoHorasHistorico.slice(0, 40);
 
             try {
-                localStorage.setItem('storeDashBancoHorasSaldosV195', JSON.stringify(globalBancoHorasSaldos));
-                localStorage.setItem('storeDashBancoHorasHistV195', JSON.stringify(globalBancoHorasHistorico));
+                localStorage.setItem('storeDashBancoHorasSaldosV197', JSON.stringify(globalBancoHorasSaldos));
+                localStorage.setItem('storeDashBancoHorasHistV197', JSON.stringify(globalBancoHorasHistorico));
             } catch (e) {}
 
             document.getElementById('bhHorasInput').value = '';
@@ -12850,7 +12895,7 @@
                 criadoEm: criadoEm
             });
 
-            try { localStorage.setItem('storeDashFerias2027PedidosV195', JSON.stringify(globalFerias2027Pedidos)); } catch (e) {}
+            try { localStorage.setItem('storeDashFerias2027PedidosV197', JSON.stringify(globalFerias2027Pedidos)); } catch (e) {}
             document.getElementById('feriasNotasInput').value = '';
             renderizarFerias2027Gestao();
             enviarDadosParaGitHub();
@@ -12867,7 +12912,7 @@
             item.estado = 'Aprovado';
             item.aprovadoPor = perfilAtual.nome.split(' ')[0];
             item.updatedAt = Date.now();
-            try { localStorage.setItem('storeDashFerias2027PedidosV195', JSON.stringify(globalFerias2027Pedidos)); } catch (e) {}
+            try { localStorage.setItem('storeDashFerias2027PedidosV197', JSON.stringify(globalFerias2027Pedidos)); } catch (e) {}
             renderizarFerias2027Gestao();
             enviarDadosParaGitHub();
             registarNotificacao(`Aprovou férias 2027 de ${item.colaborador} (${formatarDataPT(item.dataInicio)} a ${formatarDataPT(item.dataFim)})`, 'ferias2027');
@@ -12880,7 +12925,7 @@
             item.estado = 'Recusado';
             item.aprovadoPor = perfilAtual.nome.split(' ')[0];
             item.updatedAt = Date.now();
-            try { localStorage.setItem('storeDashFerias2027PedidosV195', JSON.stringify(globalFerias2027Pedidos)); } catch (e) {}
+            try { localStorage.setItem('storeDashFerias2027PedidosV197', JSON.stringify(globalFerias2027Pedidos)); } catch (e) {}
             renderizarFerias2027Gestao();
             enviarDadosParaGitHub();
         }
@@ -12892,12 +12937,13 @@
             item.estado = 'Pendente';
             item.aprovadoPor = '';
             item.updatedAt = Date.now();
-            try { localStorage.setItem('storeDashFerias2027PedidosV195', JSON.stringify(globalFerias2027Pedidos)); } catch (e) {}
+            try { localStorage.setItem('storeDashFerias2027PedidosV197', JSON.stringify(globalFerias2027Pedidos)); } catch (e) {}
             renderizarFerias2027Gestao();
             enviarDadosParaGitHub();
         }
 
         function apagarPedidoFerias2027(id) {
+            registarIdApagado(id);
             const item = globalFerias2027Pedidos.find(x => x.id === id);
             if (!item) return;
             const isGestor = isGestorEquipaAutorizado();
@@ -12905,7 +12951,7 @@
             if (!confirm('Eliminar este registo de férias?')) return;
             registarIdEliminado(id);
             globalFerias2027Pedidos = globalFerias2027Pedidos.filter(x => x.id !== id);
-            try { localStorage.setItem('storeDashFerias2027PedidosV195', JSON.stringify(globalFerias2027Pedidos)); } catch (e) {}
+            try { localStorage.setItem('storeDashFerias2027PedidosV197', JSON.stringify(globalFerias2027Pedidos)); } catch (e) {}
             renderizarFerias2027Gestao();
             enviarDadosParaGitHub();
         }
@@ -13109,7 +13155,7 @@
                 updatedAt: Date.now()
             });
 
-            localStorage.setItem('storeDashTarefasV195', JSON.stringify(globalTarefas));
+            localStorage.setItem('storeDashTarefasV197', JSON.stringify(globalTarefas));
             enviarDadosParaGitHub();
             registarNotificacao(`Atribuiu nova tarefa a ${encarregue}: "${desc}"`, 'tarefas');
             document.getElementById('tarefaDescricao').value = '';
@@ -13133,7 +13179,7 @@
             } else {
                 tarefa.concluidaPor = '';
             }
-            localStorage.setItem('storeDashTarefasV195', JSON.stringify(globalTarefas));
+            localStorage.setItem('storeDashTarefasV197', JSON.stringify(globalTarefas));
             enviarDadosParaGitHub();
             renderizarKpisSpraysSociosOnline();
             renderizarTarefas();
@@ -13145,7 +13191,7 @@
         function apagarTarefa(id) {
             registarIdApagado(id);
             globalTarefas = globalTarefas.filter(t => t.id !== id);
-            localStorage.setItem('storeDashTarefasV195', JSON.stringify(globalTarefas));
+            localStorage.setItem('storeDashTarefasV197', JSON.stringify(globalTarefas));
             enviarDadosParaGitHub();
             renderizarKpisSpraysSociosOnline();
             renderizarTarefas();
@@ -13308,7 +13354,7 @@
                 csvUrl: csvUrl,
                 lastSync: ''
             };
-            try { localStorage.setItem('storeDashSalesforceV195', JSON.stringify(globalSalesforce)); } catch (e) {}
+            try { localStorage.setItem('storeDashSalesforceV197', JSON.stringify(globalSalesforce)); } catch (e) {}
             const ok = await sincronizarGoogleSheetsAgora(true);
             iniciarAutoSyncSalesforce();
             if (ok) {
@@ -13322,7 +13368,7 @@
             if (globalSalesforce.tipo !== 'embed') return;
             globalSalesforce.modoLimpo = !globalSalesforce.modoLimpo;
             try {
-                localStorage.setItem('storeDashSalesforceV195', JSON.stringify(globalSalesforce));
+                localStorage.setItem('storeDashSalesforceV197', JSON.stringify(globalSalesforce));
                 enviarDadosParaGitHub();
             } catch (e) {}
             renderizarSalesforce();
@@ -13365,7 +13411,7 @@
                 globalSalesforce.rows = rows;
                 globalSalesforce.lastSync = `${hhmm} (${rows.length} casos)`;
 
-                try { localStorage.setItem('storeDashSalesforceV195', JSON.stringify(globalSalesforce)); } catch (e) {}
+                try { localStorage.setItem('storeDashSalesforceV197', JSON.stringify(globalSalesforce)); } catch (e) {}
                 renderizarSalesforce();
                 atualizarCampainha();
                 atualizarDashboardInicial();
@@ -13471,13 +13517,13 @@
             });
 
             globalSalesforceLocais.push(novaLinha);
-            try { localStorage.setItem('storeDashSfLocaisV195', JSON.stringify(globalSalesforceLocais)); } catch (e) {}
+            try { localStorage.setItem('storeDashSfLocaisV197', JSON.stringify(globalSalesforceLocais)); } catch (e) {}
 
             globalSalesforce.tipo = 'tabela';
             globalSalesforce.headers = headers;
             globalSalesforce.rows = [...(globalSalesforce.rows || []), novaLinha];
 
-            try { localStorage.setItem('storeDashSalesforceV195', JSON.stringify(globalSalesforce)); } catch (e) {}
+            try { localStorage.setItem('storeDashSalesforceV197', JSON.stringify(globalSalesforce)); } catch (e) {}
             enviarDadosParaGitHub();
             fecharModalNovoCasoSf();
             renderizarSalesforce();
@@ -13565,7 +13611,7 @@
                         globalSalesforceLocais.push(r);
                     }
                 });
-                try { localStorage.setItem('storeDashSfLocaisV195', JSON.stringify(globalSalesforceLocais)); } catch (e) {}
+                try { localStorage.setItem('storeDashSfLocaisV197', JSON.stringify(globalSalesforceLocais)); } catch (e) {}
             }
 
             const hhmm = new Date().toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
@@ -13578,7 +13624,7 @@
                 csvUrl: globalSalesforce.csvUrl || '',
                 lastSync: `Atualizado às ${hhmm} (${rowsFinal.length} casos)`
             };
-            try { localStorage.setItem('storeDashSalesforceV195', JSON.stringify(globalSalesforce)); } catch (e) {}
+            try { localStorage.setItem('storeDashSalesforceV197', JSON.stringify(globalSalesforce)); } catch (e) {}
             enviarDadosParaGitHub();
             fecharModalColarSalesforce();
             renderizarSalesforce();
@@ -13622,7 +13668,7 @@
                 }
 
                 try {
-                    localStorage.setItem('storeDashSalesforceV195', JSON.stringify(globalSalesforce));
+                    localStorage.setItem('storeDashSalesforceV197', JSON.stringify(globalSalesforce));
                     enviarDadosParaGitHub();
                 } catch (e) {}
                 registarNotificacao('Importou novo ficheiro no Salesforce', 'salesforce');
@@ -13714,8 +13760,8 @@
             }
 
             try {
-                localStorage.setItem('storeDashSfOverridesV195', JSON.stringify(globalSalesforceOverrides));
-                localStorage.setItem('storeDashSalesforceV195', JSON.stringify(globalSalesforce));
+                localStorage.setItem('storeDashSfOverridesV197', JSON.stringify(globalSalesforceOverrides));
+                localStorage.setItem('storeDashSalesforceV197', JSON.stringify(globalSalesforce));
             } catch (e) {}
 
             enviarDadosParaGitHub();
@@ -13835,7 +13881,7 @@
                     csvUrl: globalSalesforce.csvUrl || SF_CSV_PADRAO_LOJA,
                     lastSync: `Ficheiro importado às ${hhmm} (${rows.length} casos)`
                 };
-                try { localStorage.setItem('storeDashSalesforceV195', JSON.stringify(globalSalesforce)); } catch (e) {}
+                try { localStorage.setItem('storeDashSalesforceV197', JSON.stringify(globalSalesforce)); } catch (e) {}
                 enviarDadosParaGitHub();
                 renderizarSalesforce();
                 atualizarCampainha();
@@ -14367,8 +14413,8 @@
             }
 
             try {
-                localStorage.setItem('storeDashVendasDiaV195', JSON.stringify(globalVendasDia));
-                globalPremioMes.updatedAt = Date.now(); localStorage.setItem('storeDashPremioMesV195', JSON.stringify(globalPremioMes));
+                localStorage.setItem('storeDashVendasDiaV197', JSON.stringify(globalVendasDia));
+                globalPremioMes.updatedAt = Date.now(); localStorage.setItem('storeDashPremioMesV197', JSON.stringify(globalPremioMes));
             } catch (e) {}
 
             renderizarVendasDia();
@@ -14482,9 +14528,9 @@
             };
 
             globalPaginasBriefing = [];
-            localStorage.removeItem('storeDashBriefingV195');
+            localStorage.removeItem('storeDashBriefingV197');
 
-            try { localStorage.setItem('storeDashBriefingSheetV195', JSON.stringify(globalBriefingSheet)); } catch (e) {}
+            try { localStorage.setItem('storeDashBriefingSheetV197', JSON.stringify(globalBriefingSheet)); } catch (e) {}
             enviarDadosParaGitHub();
             registarNotificacao('Ligou/atualizou o link do Briefing Diário', 'briefing');
             renderizarBriefingSheet();
@@ -14500,7 +14546,7 @@
         function alternarModoEmbedBriefing() {
             if (!globalBriefingSheet.ativo) return;
             globalBriefingSheet.modoLimpo = !globalBriefingSheet.modoLimpo;
-            try { localStorage.setItem('storeDashBriefingSheetV195', JSON.stringify(globalBriefingSheet)); } catch (e) {}
+            try { localStorage.setItem('storeDashBriefingSheetV197', JSON.stringify(globalBriefingSheet)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarBriefingSheet();
         }
@@ -14709,9 +14755,9 @@
 
                 if (tipo === 'briefing') {
                     globalBriefingSheet = { ativo: false, sheetUrl: '', editUrl: '', cleanViewUrl: '', modoLimpo: false };
-                    try { localStorage.removeItem('storeDashBriefingSheetV195'); } catch(e) {}
+                    try { localStorage.removeItem('storeDashBriefingSheetV197'); } catch(e) {}
                     globalPaginasBriefing = paginasProcessadas;
-                    try { localStorage.setItem('storeDashBriefingV195', JSON.stringify(globalPaginasBriefing)); } catch(e) {}
+                    try { localStorage.setItem('storeDashBriefingV197', JSON.stringify(globalPaginasBriefing)); } catch(e) {}
                     const extraidosPdf = await extrairMetricasDeTextoPDFBriefing(file);
                     const atualizouPainel = aplicarMetricasBriefingNoPainel(extraidosPdf, 'Briefing PDF');
                     document.getElementById('fileNameBriefing').innerHTML = `<i class="fas fa-check-circle text-emerald-400 mr-1"></i> Briefing Carregado (${paginasProcessadas.length} pág.)${atualizouPainel ? ' • Vendas & Mês atualizados!' : ''}`;
@@ -14722,7 +14768,7 @@
                     showTab('briefing');
                 } else if (tipo === 'top20') {
                     globalPaginasTop20 = paginasProcessadas;
-                    try { localStorage.setItem('storeDashTop20V195', JSON.stringify(globalPaginasTop20)); } catch(e) {}
+                    try { localStorage.setItem('storeDashTop20V197', JSON.stringify(globalPaginasTop20)); } catch(e) {}
                     document.getElementById('fileNameTop20').innerHTML = "Top 20 Carregado!";
                     await enviarPdfParaGitHub('top20', paginasProcessadas);
                     registarNotificacao('Atualizou o ficheiro Top 20', 'top20');
@@ -14730,7 +14776,7 @@
                     showTab('top20');
                 } else {
                     globalPaginasInfoSemanal = paginasProcessadas;
-                    try { localStorage.setItem('storeDashInfoSemanalV195', JSON.stringify(globalPaginasInfoSemanal)); } catch(e) {}
+                    try { localStorage.setItem('storeDashInfoSemanalV197', JSON.stringify(globalPaginasInfoSemanal)); } catch(e) {}
                     document.getElementById('fileNameInfoSemanal').innerHTML = "Info Semanal Carregada!";
                     await enviarPdfParaGitHub('infoSemanal', paginasProcessadas);
                     registarNotificacao('Atualizou a Informação Semanal', 'infoSemanal');
@@ -14812,14 +14858,14 @@
 
                 if (tipo === 'sprays') {
                     globalSprays = resultado;
-                    try { localStorage.setItem('storeDashSpraysV195', JSON.stringify(globalSprays)); } catch (e) {}
+                    try { localStorage.setItem('storeDashSpraysV197', JSON.stringify(globalSprays)); } catch (e) {}
             enviarDadosParaGitHub();
                     registarNotificacao('Carregou novo ficheiro de Sprays', 'sprays');
                     renderizarSprays();
                     showTab('sprays');
                 } else {
                     globalFerias2027 = resultado;
-                    try { localStorage.setItem('storeDashFeriasV195', JSON.stringify(globalFerias2027)); } catch (e) {}
+                    try { localStorage.setItem('storeDashFeriasV197', JSON.stringify(globalFerias2027)); } catch (e) {}
             enviarDadosParaGitHub();
                     registarNotificacao('Carregou novo ficheiro de Férias 2027', 'ferias2027');
                     renderizarPedidosTroca();
@@ -14853,7 +14899,7 @@
                 modoLimpo: false
             };
 
-            try { localStorage.setItem('storeDashSpraysV195', JSON.stringify(globalSprays)); } catch (e) {}
+            try { localStorage.setItem('storeDashSpraysV197', JSON.stringify(globalSprays)); } catch (e) {}
             enviarDadosParaGitHub();
             registarNotificacao('Ligou/atualizou o Google Sheets de Sprays', 'sprays');
             renderizarSprays();
@@ -14863,7 +14909,7 @@
         function alternarModoEmbedSprays() {
             if (globalSprays.tipo !== 'embed') return;
             globalSprays.modoLimpo = !globalSprays.modoLimpo;
-            try { localStorage.setItem('storeDashSpraysV195', JSON.stringify(globalSprays)); } catch (e) {}
+            try { localStorage.setItem('storeDashSpraysV197', JSON.stringify(globalSprays)); } catch (e) {}
             enviarDadosParaGitHub();
             renderizarSprays();
         }
@@ -14930,8 +14976,8 @@
 
         function limparDados(tipo) {
             if(tipo === 'horario' && confirm('Desligar e apagar Horário?')) {
-                localStorage.removeItem('storeDashHorarioV195');
-                localStorage.removeItem('storeDashHorarioSheetV195');
+                localStorage.removeItem('storeDashHorarioV197');
+                localStorage.removeItem('storeDashHorarioSheetV197');
                 globalDataHorario = [];
                 globalHorarioSheet = { ativo: false, sheetUrl: '', editUrl: '', cleanViewUrl: '', modoLimpo: false };
                 const inpH = document.getElementById('googleSheetsHorarioUrlInput'); if (inpH) inpH.value = '';
@@ -14945,8 +14991,8 @@
                 document.getElementById('horario-views').classList.add('hidden');
             }
             if(tipo === 'briefing' && confirm('Desligar e apagar Briefing Diário?')) {
-                localStorage.removeItem('storeDashBriefingV195');
-                localStorage.removeItem('storeDashBriefingSheetV195');
+                localStorage.removeItem('storeDashBriefingV197');
+                localStorage.removeItem('storeDashBriefingSheetV197');
                 globalPaginasBriefing = [];
                 globalBriefingSheet = { ativo: false, sheetUrl: '', editUrl: '', cleanViewUrl: '', modoLimpo: false };
                 const inpBr = document.getElementById('googleSheetsBriefingUrlInput'); if (inpBr) inpBr.value = '';
@@ -14962,7 +15008,7 @@
                 enviarDadosParaGitHub();
             }
             if(tipo === 'top20' && confirm('Apagar Top 20?')) {
-                localStorage.removeItem('storeDashTop20V195');
+                localStorage.removeItem('storeDashTop20V197');
                 globalPaginasTop20 = [];
                 document.getElementById('top20-empty').classList.remove('hidden');
                 document.getElementById('top20-views').classList.add('hidden');
@@ -14970,7 +15016,7 @@
                 document.getElementById('btnProcessTop20Container').classList.add('hidden');
             }
             if(tipo === 'infoSemanal' && confirm('Apagar Informação Semanal?')) {
-                localStorage.removeItem('storeDashInfoSemanalV195');
+                localStorage.removeItem('storeDashInfoSemanalV197');
                 globalPaginasInfoSemanal = [];
                 document.getElementById('infoSemanal-empty').classList.remove('hidden');
                 document.getElementById('infoSemanal-views').classList.add('hidden');
@@ -14979,7 +15025,7 @@
             }
             if(tipo === 'salesforce' && confirm('Desligar e apagar dados do Salesforce?')) {
                 if (sfAutoSyncInterval) clearInterval(sfAutoSyncInterval);
-                localStorage.removeItem('storeDashSalesforceV195');
+                localStorage.removeItem('storeDashSalesforceV197');
                 globalSalesforce = { tipo: '', headers: [], rows: [], paginas: [], sheetUrl: '', csvUrl: '' };
                 document.getElementById('googleSheetsUrlInput').value = '';
                 document.getElementById('badgeSfLive')?.classList.add('hidden');
@@ -14991,7 +15037,7 @@
                 document.getElementById('btnProcessSalesforceManual').classList.add('hidden');
             }
             if(tipo === 'sprays' && confirm('Desligar e apagar dados de Sprays?')) {
-                localStorage.removeItem('storeDashSpraysV195');
+                localStorage.removeItem('storeDashSpraysV197');
                 globalSprays = { tipo: '', headers: [], rows: [], paginas: [], sheetUrl: '', editUrl: '', cleanViewUrl: '', modoLimpo: false };
                 (() => { const _el = document.getElementById('googleSheetsSpraysUrlInput'); if (_el) _el.value = ''; })();
                 document.getElementById('badgeSpraysLive')?.classList.add('hidden');
@@ -15006,7 +15052,7 @@
                 if (document.getElementById('btnProcessSpraysManual')) document.getElementById('btnProcessSpraysManual')?.classList.add('hidden');
             }
             if(tipo === 'ferias2027' && confirm('Desligar e apagar dados de Férias 2027?')) {
-                localStorage.removeItem('storeDashFeriasV195');
+                localStorage.removeItem('storeDashFeriasV197');
                 globalFerias2027 = { tipo: '', headers: [], rows: [], paginas: [], sheetUrl: '', editUrl: '', cleanViewUrl: '', modoLimpo: false };
                 (() => { const _el = document.getElementById('googleSheetsFeriasUrlInput'); if (_el) _el.value = ''; })();
                 document.getElementById('badgeFeriasLive')?.classList.add('hidden');
@@ -15024,7 +15070,7 @@
     </script>
 
 <script>
-/* StoreDash — patch v195. Colar no fim do index.html. Para desfazer, apagar este bloco. */
+/* StoreDash — patch v197. Colar no fim do index.html. Para desfazer, apagar este bloco. */
 (function () {
   'use strict';
 
@@ -15105,7 +15151,7 @@
 
 
     window.__tombs = {};
-    try { window.__tombs = JSON.parse(localStorage.getItem('storeDashTombsV195') || '{}'); } catch (e) {}
+    try { window.__tombs = JSON.parse(localStorage.getItem('storeDashTombsV197') || '{}'); } catch (e) {}
 
     const TOMB = {
       apagarTarefa: () => globalTarefas,
@@ -15134,7 +15180,7 @@
           if (ks.length > 800) {
             ks.sort((a, b) => window.__tombs[a] - window.__tombs[b]).slice(0, ks.length - 800).forEach(k => delete window.__tombs[k]);
           }
-          try { localStorage.setItem('storeDashTombsV195', JSON.stringify(window.__tombs)); } catch (e) {}
+          try { localStorage.setItem('storeDashTombsV197', JSON.stringify(window.__tombs)); } catch (e) {}
         }
         return r;
       };
@@ -15147,7 +15193,7 @@
     window.aplicarEstadoPartilhado = function (d) {
       if (d && d.tombstones) {
         window.__tombs = { ...d.tombstones, ...window.__tombs };
-        try { localStorage.setItem('storeDashTombsV195', JSON.stringify(window.__tombs)); } catch (e) {}
+        try { localStorage.setItem('storeDashTombsV197', JSON.stringify(window.__tombs)); } catch (e) {}
       }
       const r = _aplicar(d);
       const dUtc = new Date().toISOString().split('T')[0];
@@ -15205,7 +15251,7 @@
             await enviarDadosParaGitHub(false);
           } else {
             globalCloudConfig.lastVersion = check.versionTag;
-            localStorage.setItem('storeDashCloudConfigV195', JSON.stringify(globalCloudConfig));
+            localStorage.setItem('storeDashCloudConfigV197', JSON.stringify(globalCloudConfig));
             aplicarEstadoPartilhado(parsed);
             renderizarVendasDia();
             renderizarPremioMes();
@@ -15239,7 +15285,7 @@
         if (check.rawContent && (forcar || check.versionTag !== globalCloudConfig.lastVersion)) {
           const parsed = JSON.parse(check.rawContent);
           globalCloudConfig.lastVersion = check.versionTag;
-          localStorage.setItem('storeDashCloudConfigV195', JSON.stringify(globalCloudConfig));
+          localStorage.setItem('storeDashCloudConfigV197', JSON.stringify(globalCloudConfig));
           aplicarEstadoPartilhado(parsed);
         }
         atualizarIndicadorCloudUI('Nuvem ' + new Date().toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' }), 'verde');
@@ -15364,7 +15410,7 @@
         }
         globalVendasDia.fechadoNoMes = false;
         globalVendasDia.valorFechadoNoMes = 0;
-        try { globalPremioMes.updatedAt = Date.now(); localStorage.setItem('storeDashPremioMesV195', JSON.stringify(globalPremioMes)); } catch (e) {}
+        try { globalPremioMes.updatedAt = Date.now(); localStorage.setItem('storeDashPremioMesV197', JSON.stringify(globalPremioMes)); } catch (e) {}
       }
 
       const agoraTs = Date.now();
@@ -15379,7 +15425,7 @@
         autor: perfilAtual ? perfilAtual.nome.split(' ')[0] : 'Equipa'
       });
 
-      try { localStorage.setItem('storeDashVendasDiaV195', JSON.stringify(globalVendasDia)); } catch (e) {}
+      try { localStorage.setItem('storeDashVendasDiaV197', JSON.stringify(globalVendasDia)); } catch (e) {}
       if (!globalCloudConfig || !globalCloudConfig.ativo || !globalCloudConfig.token || !globalCloudConfig.gistId) {
         alert('Aviso: Este dispositivo está em "Modo Local" (nuvem desligada). As vendas ficaram guardadas só aqui. Abre o Link Completo da equipa para sincronizar com todos.');
       } else {
@@ -15404,7 +15450,7 @@
         registos: [],
         fechadoNoMes: false, valorFechadoNoMes: 0
       };
-      try { localStorage.setItem('storeDashVendasDiaV195', JSON.stringify(globalVendasDia)); } catch (e) {}
+      try { localStorage.setItem('storeDashVendasDiaV197', JSON.stringify(globalVendasDia)); } catch (e) {}
       enviarDadosParaGitHub();
       renderizarVendasDia();
       renderizarPremioMes();
@@ -15437,7 +15483,7 @@
         globalVendasDia.socios = Math.max(globalVendasDia.socios || 0, so);
         globalVendasDia.online = Math.max(globalVendasDia.online || 0, onl);
       }
-      try { localStorage.setItem('storeDashVendasDiaV195', JSON.stringify(globalVendasDia)); } catch (e) {}
+      try { localStorage.setItem('storeDashVendasDiaV197', JSON.stringify(globalVendasDia)); } catch (e) {}
       renderizarVendasDia();
     };
 
